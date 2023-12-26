@@ -1,0 +1,28 @@
+spring:
+  jpa:
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+    defer-datasource-initialization: true
+
+  h2:
+    console:
+      enabled: true
+  sql:
+    init:
+      mode: always
+
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: 1034791814473-1muneq64hrujan49vdlhdfd7stmm1ig0.apps.googleusercontent.com
+            client-secret: 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
+            scope:
+              - email
+              - profile
+jwt:
+  issuer: ceskim493@naver.com
+  secret_key: springboot-projecshst
