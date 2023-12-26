@@ -3,7 +3,6 @@ plugins {
     id("org.springframework.boot") version("3.0.2")
     id("io.spring.dependency-management") version("1.1.0")
 }
-
 group = "me.ceskim493"
 version = "1.0-SNAPSHOT"
 
@@ -33,4 +32,8 @@ dependencies {
 
 tasks.test {
     useJUnitPlatform()
+}
+
+tasks.getByName("jar") {
+    enabled = false
 }
