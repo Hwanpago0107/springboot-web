@@ -1,4 +1,4 @@
-package me.ceskim493.springbootdeveloper.dto;
+package me.ceskim493.springbootdeveloper.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
