@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 @Setter
 @Getter
 @Component
-@PropertySource("classpath:secure.properties")
+@PropertySource("classpath:/secure.properties")
 @ConfigurationProperties("jwt")
 public class JwtProperties {
     @Value("${jwt.issuer}")
