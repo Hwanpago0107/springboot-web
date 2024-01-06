@@ -16,7 +16,6 @@ out/
 !**/src/main/**/out/
 !**/src/test/**/out/
 application-secret.properties
-secure.properties
 
 ### Eclipse ###
 .apt_generated
