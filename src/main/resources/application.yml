@@ -23,6 +23,3 @@ spring:
             scope:
               - email
               - profile
-jwt:
-  issuer: ceskim493@naver.com
-  secret_key: study-springboot
