@@ -18,11 +18,8 @@ spring:
       client:
         registration:
           google:
-            client-id: 1034791814473-1muneq64hrujan49vdlhdfd7stmm1ig0.apps.googleusercontent.com
-            client-secret: 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
+            client-id: ${security.oauth2.client.registration.google.client-id}
+            client-secret: ${security.oauth2.client.registration.google.client-secret}
             scope:
               - email
               - profile
-jwt:
-  issuer: ceskim493@naver.com
-  secret_key: study-springboot
