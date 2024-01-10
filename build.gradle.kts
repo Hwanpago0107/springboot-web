@@ -27,7 +27,7 @@ dependencies {
     testImplementation("org.springframework.security:spring-security-test")
     testImplementation("org.projectlombok:lombok")
     testAnnotationProcessor("org.projectlombok:lombok")
-    implementation("mysql:mysql-connector-j")
+    implementation("com.mysql:mysql-connector-j")
 }
 
 tasks.test {
