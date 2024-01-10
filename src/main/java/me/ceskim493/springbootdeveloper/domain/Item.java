@@ -1,7 +1,6 @@
 package me.ceskim493.springbootdeveloper.domain;
 
 import jakarta.persistence.*;
-import jdk.jfr.Category;
 import lombok.Getter;
 import lombok.Setter;
 
