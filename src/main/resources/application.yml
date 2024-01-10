@@ -1,4 +1,6 @@
 spring:
+  profiles:
+    default: local
   jpa:
     show-sql: true
     properties:
@@ -8,5 +10,3 @@ spring:
   h2:
     console:
       enabled: true
-  profiles:
-    active: local
