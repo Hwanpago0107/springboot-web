@@ -15,6 +15,19 @@ jobs:
           distribution: 'corretto'
           java-version: '17'
 
+      - name: Set Yaml
+        uses: microsoft/variable-substitution@v1
+        with:
+          files: ./src/main/resources/application-prod.yml
+          env:
+            spring.security.oauth2.client.registration.google.client-id: ${{ secrets.OAUTH_GOOGLE_CLIENT_ID }}
+            spring.security.oauth2.client.registration.google.client-secret: ${{ secrets.OAUTH_GOOGLE_CLIENT_SECRET }}
+            spring.datasource.url: ${{ secrets.RDS_URL }}
+            spring.datasource.username: ${{ secrets.RDS_USERNAME }}
+            spring.datasource.password: ${{ secrets.RDS_PASSWORD }}
+            spring.jwt.issuer: ${{ secrets.JWT_ISSUER }}
+            spring.jwt.secret_key: ${{ secrets.JWT_SECRET_KEY }}
+
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
 
