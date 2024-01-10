@@ -20,6 +20,7 @@ dependencies {
     implementation("io.jsonwebtoken:jjwt:0.9.1")
     implementation("javax.xml.bind:jaxb-api:2.3.1")
     implementation("org.springframework.boot:spring-boot-starter-oauth2-client")
+    implementation("com.mysql:mysql-connector-j")
     runtimeOnly("com.h2database:h2")
     compileOnly("org.projectlombok:lombok")
     annotationProcessor("org.projectlombok:lombok")
@@ -27,7 +28,6 @@ dependencies {
     testImplementation("org.springframework.security:spring-security-test")
     testImplementation("org.projectlombok:lombok")
     testAnnotationProcessor("org.projectlombok:lombok")
-    implementation("com.mysql:mysql-connector-j")
 }
 
 tasks.test {
