@@ -47,3 +47,9 @@ tasks.test {
 tasks.getByName("jar") {
     enabled = false
 }
+
+tasks {
+    processResources {
+        duplicatesStrategy = org.gradle.api.file.DuplicatesStrategy.INCLUDE
+    }
+}
