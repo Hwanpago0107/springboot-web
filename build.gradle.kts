@@ -7,7 +7,7 @@ group = "me.ceskim493"
 version = "1.0-SNAPSHOT"
 
 val profile = if (project.hasProperty("profile"))
-    project.property("profile").toString() else "local"
+    project.property("profile").toString() else "prod"
 sourceSets {
     main {
         resources {
