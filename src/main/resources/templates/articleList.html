@@ -9,6 +9,7 @@
 <div class="p-5 mb-5 text-center</> bg-light">
     <h1 class="mb-3" th:onclick="|location.href='@{/articles}'|" style="cursor:pointer;">My Blog</h1>
     <h4 class="mb-3">블로그에 오신걸 환영합니다.</h4>
+    <h5 class="mb-3" th:text="${userName}"></h5>
 </div>
 
 <div class="container">
@@ -29,7 +30,7 @@
         <br>
     </div>
 
-    <button type="button" class="btn btn-secondary" onclick="location.href='/logout'">로그아웃</button>
+    <button th:if="${userName} != 'Guest'" type="button" class="btn btn-secondary" onclick="location.href='/logout'">로그아웃</button>
 </div>
 
 <script src="/js/token.js"></script>

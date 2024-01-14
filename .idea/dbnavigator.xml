@@ -13,16 +13,14 @@
   </component>
   <component name="DBNavigator.Project.DatabaseConsoleManager">
     <connection id="12732e9a-4eff-4876-9ca1-8a0cd59fc2f9">
-      <console name="Connection" type="STANDARD" schema="ebdb" session="Main"><![CDATA[select * from ebdb.article;]]></console>
+      <console name="Connection" type="STANDARD" schema="ebdb" session="Main"><![CDATA[select * from Article;]]></console>
     </connection>
   </component>
   <component name="DBNavigator.Project.DatabaseEditorStateManager">
     <last-used-providers />
   </component>
   <component name="DBNavigator.Project.DatabaseFileManager">
-    <open-files>
-      <object connection-id="12732e9a-4eff-4876-9ca1-8a0cd59fc2f9" object-ref="consoles/Connection" />
-    </open-files>
+    <open-files />
   </component>
   <component name="DBNavigator.Project.DatabaseSessionManager">
     <connection id="12732e9a-4eff-4876-9ca1-8a0cd59fc2f9" />
@@ -33,6 +31,7 @@
         <condition column="id" operator="=" value="1" active="true" />
       </filter>
     </filter-actions>
+    <filter-actions connection-id="12732e9a-4eff-4876-9ca1-8a0cd59fc2f9" dataset="ebdb.Article" active-filter-id="" />
   </component>
   <component name="DBNavigator.Project.ExecutionManager">
     <retain-sticky-names value="false" />

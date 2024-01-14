@@ -18,7 +18,7 @@ jobs:
       - name: Set Yaml
         uses: microsoft/variable-substitution@v1
         with:
-          files: ./src/main/resources-prod/application-prod.yml
+          files: ./src/main/resources/application-prod.yml
         env:
           spring.security.oauth2.client.registration.google.client-id: ${{ secrets.OAUTH_GOOGLE_CLIENT_ID }}
           spring.security.oauth2.client.registration.google.client-secret: ${{ secrets.OAUTH_GOOGLE_CLIENT_SECRET }}

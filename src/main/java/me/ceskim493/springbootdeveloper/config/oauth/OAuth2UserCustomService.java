@@ -1,6 +1,8 @@
 package me.ceskim493.springbootdeveloper.config.oauth;
 
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
+import me.ceskim493.springbootdeveloper.domain.SessionUser;
 import me.ceskim493.springbootdeveloper.domain.User;
 import me.ceskim493.springbootdeveloper.repository.UserRepository;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
@@ -15,12 +17,14 @@ import java.util.Map;
 @Service
 public class OAuth2UserCustomService extends DefaultOAuth2UserService {
     private final UserRepository userRepository;
+    private final HttpSession httpSession;
 
     @Override
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
-        OAuth2User user = super.loadUser(userRequest);
-        saveOrUpdate(user);
-        return user;
+        OAuth2User oAuth2User = super.loadUser(userRequest);
+        User user = saveOrUpdate(oAuth2User);
+        httpSession.setAttribute("user", new SessionUser(user));
+        return oAuth2User;
     }
 
     private User saveOrUpdate(OAuth2User oAuth2User) {

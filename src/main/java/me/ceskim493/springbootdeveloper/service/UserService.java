@@ -1,6 +1,7 @@
 package me.ceskim493.springbootdeveloper.service;
 
 import lombok.RequiredArgsConstructor;
+import me.ceskim493.springbootdeveloper.domain.SessionUser;
 import me.ceskim493.springbootdeveloper.domain.User;
 import me.ceskim493.springbootdeveloper.dto.AddUserRequest;
 import me.ceskim493.springbootdeveloper.repository.UserRepository;
@@ -31,5 +32,9 @@ public class UserService {
     public User findByEmail(String email) {
         return userRepository.findByEmail(email)
                 .orElseThrow(() -> new IllegalArgumentException("Unexpected user"));
+    }
+
+    public String getSessionUserName(SessionUser user) {
+        return user == null ? "Guest" : user.getName();
     }
 }

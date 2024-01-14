@@ -1,6 +1,9 @@
 spring:
   profiles:
-    default: prod
+    group:
+      local: local
+      prod: prod
+    default: local
   jpa:
     show-sql: true
     hibernate:

@@ -8,14 +8,6 @@ version = "1.0-SNAPSHOT"
 
 val profile = if (project.hasProperty("profile"))
     project.property("profile").toString() else "prod"
-sourceSets {
-    main {
-        resources {
-            srcDirs(listOf("src/main/resources", "src/main/resources-$profile"))
-        }
-    }
-}
-
 
 repositories {
     mavenCentral()
