@@ -23,6 +23,7 @@ dependencies {
     implementation("javax.xml.bind:jaxb-api:2.3.1")
     implementation("org.springframework.boot:spring-boot-starter-oauth2-client")
     implementation("com.mysql:mysql-connector-j")
+    implementation("nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect")
     runtimeOnly("com.h2database:h2")
     compileOnly("org.projectlombok:lombok")
     annotationProcessor("org.projectlombok:lombok")
