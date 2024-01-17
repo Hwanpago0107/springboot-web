@@ -48,4 +48,12 @@ public class ItemApiController {
         return ResponseEntity.ok()
                 .body(updatedItem);
     }
+
+    @DeleteMapping("/api/items/{id}")
+    public ResponseEntity<Void> deleteItem(@PathVariable long id) {
+        itemService.delete(id);
+
+        return ResponseEntity.ok()
+                .build();
+    }
 }

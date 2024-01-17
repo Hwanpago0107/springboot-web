@@ -38,7 +38,7 @@
                                 th:onclick="|location.href='@{/new-item?id={itemId}(itemId=${item.id})}'|"
                                 class="btn btn-primary btn-sm">수정</button>
                         <button type="button" id="delete-item-btn"
-                                class="btn btn-secondary btn-sm">삭제</button></td>
+                                class="btn btn-secondary btn-sm" th:onclick="|deleteItem([[${item.id}]])|">삭제</button></td>
                 </tr>
                 </tbody>
             </table>

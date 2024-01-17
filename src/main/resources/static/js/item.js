@@ -46,3 +46,20 @@ if (modifyItemButton) {
         httpRequest("PUT", "/api/items/" + id, body, success, fail);
     });
 }
+
+// 삭제 기능
+function deleteItem(id) {
+    if (confirm("상품을 정말 삭제하시겠습니까?")) {
+        function success() {
+            alert("삭제가 완료되었습니다.");
+            location.replace("/adminItems");
+        }
+
+        function fail() {
+            alert("삭제가 실패했습니다.");
+            location.replace("/adminItems");
+        }
+
+        httpRequest("DELETE", "/api/items/" + id, null, success, fail);
+    }
+}

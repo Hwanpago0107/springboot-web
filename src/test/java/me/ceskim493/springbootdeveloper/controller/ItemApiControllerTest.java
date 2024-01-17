@@ -127,6 +127,23 @@ class ItemApiControllerTest {
         assertThat(item.getStockQuantity()).isEqualTo(newStock);
     }
 
+    @DisplayName("deleteItem: 상품 삭제에 성공한다.")
+    @Test
+    public void deleteItem() throws Exception {
+        //given : 상품 항목을 저장하고
+        final String url = "/api/items/{id}";
+        Item savedItem = createDefaultItem();
+
+        // when : 저장한 상품의 id값으로 삭제 API로 호출하고
+        mockMvc.perform(delete(url, savedItem.getId()))
+                .andExpect(status().isOk());
+
+        // then : 응답코드가 200이고, 상품 리스트를 조회해 조회한 배열의 크기가 0인지 확인한다.\
+        List<Item> items = itemRepository.findAll();
+
+        assertThat(items).isEmpty();
+    }
+
     private Item createDefaultItem() {
         return itemRepository.save(Item.builder()
                 .name("test")

@@ -37,4 +37,11 @@ public class ItemService {
 
         return item;
     }
+
+    public void delete(long id) {
+        Item item = itemRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("not found " + id));
+
+        itemRepository.delete(item);
+    }
 }
