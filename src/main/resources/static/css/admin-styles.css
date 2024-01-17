@@ -10967,9 +10967,17 @@ body {
   z-index: 1039;
 }
 .sb-topnav .navbar-brand {
-  width: 225px;
+   width: 150px;
+   margin: 0;
+}
+
+.sb-topnav .navbar-brand + .home {
+  width: 75px;
+  font-size: 15px;
+  padding-top: 15px;
   margin: 0;
 }
+
 .sb-topnav.navbar-dark #sidebarToggle {
   color: rgba(255, 255, 255, 0.5);
 }
