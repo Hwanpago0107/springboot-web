@@ -1,3 +1,4 @@
-INSERT INTO article (title, content, author, created_at, updated_at) values ('제목 111', '내용 1', '사용자 1', NOW(), NOW());
-INSERT INTO article (title, content, author, created_at, updated_at) values ('제목 222', '내용 2', '사용자 2',  NOW(), NOW());
-INSERT INTO article (title, content, author, created_at, updated_at) values ('제목 333', '내용 3', '사용자 3', NOW(), NOW());
+INSERT INTO ITEM (dtype, item_id, name, price, stockquantity) values  ('item', 1, '상품 1', 1000, 1);
+INSERT INTO ITEM (dtype, item_id, name, price, stockquantity) values  ('item', 2, '상품 2', 10000, 12);
+INSERT INTO ITEM (dtype, item_id, name, price, stockquantity) values  ('item', 3, '상품 3', 2000, 11);
+INSERT INTO ITEM (dtype, item_id, name, price, stockquantity) values  ('item', 4, '상품 4', 5000, 900);

@@ -8,6 +8,8 @@ import me.ceskim493.springbootdeveloper.repository.UserRepository;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @RequiredArgsConstructor
 @Service
 public class UserService {
@@ -32,6 +34,10 @@ public class UserService {
     public User findByEmail(String email) {
         return userRepository.findByEmail(email)
                 .orElseThrow(() -> new IllegalArgumentException("Unexpected user"));
+    }
+
+    public List<User> findAll() {
+        return userRepository.findAll();
     }
 
     public String getSessionUserName(SessionUser user) {

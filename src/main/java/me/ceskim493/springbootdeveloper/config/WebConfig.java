@@ -1,4 +1,4 @@
-package me.ceskim493.springbootdeveloper.config.oauth;
+package me.ceskim493.springbootdeveloper.config;
 
 import lombok.RequiredArgsConstructor;
 import me.ceskim493.springbootdeveloper.resolver.LoginUserArgumentResolver;

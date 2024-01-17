@@ -2,17 +2,20 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>블로그 글 목록</title>
+    <title>쇼핑몰 글 목록</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
 </head>
 <body>
 <div class="p-5 mb-5 text-center</> bg-light">
-    <h1 class="mb-3" th:onclick="|location.href='@{/articles}'|" style="cursor:pointer;">My Blog</h1>
-    <h4 class="mb-3">블로그에 오신걸 환영합니다.</h4>
+    <h1 class="mb-3" th:onclick="|location.href='@{/articles}'|" style="cursor:pointer;">HWANPAGO SHOP</h1>
+    <h4 class="mb-3">MY SHOP에 오신걸 환영합니다.</h4>
     <h5 class="mb-3" th:text="${userName}"></h5>
 </div>
 
 <div class="container">
+    <button type="button" id="create-item-btn"
+            th:onclick="|location.href='@{/new-item}'|"
+            class="btn btn-secondary btn-sm mb-3">아이템 등록</button>
     <button type="button" id="create-btn"
             th:onclick="|location.href='@{/new-article}'|"
             class="btn btn-secondary btn-sm mb-3">글 등록</button>
