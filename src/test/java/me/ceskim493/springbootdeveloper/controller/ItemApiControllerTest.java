@@ -3,6 +3,7 @@ package me.ceskim493.springbootdeveloper.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import me.ceskim493.springbootdeveloper.domain.Item;
 import me.ceskim493.springbootdeveloper.dto.AddItemRequest;
+import me.ceskim493.springbootdeveloper.dto.UpdateItemRequest;
 import me.ceskim493.springbootdeveloper.repository.ItemRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -20,8 +21,7 @@ import org.springframework.web.context.WebApplicationContext;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -97,6 +97,34 @@ class ItemApiControllerTest {
                 .andExpect(jsonPath("$[0].name").value(savedItem.getName()))
                 .andExpect(jsonPath("$[0].price").value(savedItem.getPrice()))
                 .andExpect(jsonPath("$[0].stockQuantity").value(savedItem.getStockQuantity()));
+    }
+
+    @DisplayName("updateItem: 상품 내용 수정에 성공한다.")
+    @Test
+    public void updateItem() throws Exception {
+        //given : 상품 항목 항나를 저장
+        final String url = "/api/items/{id}";
+        Item savedItem = createDefaultItem();
+
+        final String newName = "new name";
+        final int newPrice = 2000;
+        final int newStock = 10000;
+
+        UpdateItemRequest request = new UpdateItemRequest(newName, newPrice, newStock);
+
+        // when : update api로 수정 요청을 보내고, 이때 요청 타입은 JSON이고 given절에서 만들어둔 객체를 요청 본문으로 함계 보낸다.
+        ResultActions result = mockMvc.perform(put(url, savedItem.getId())
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .content(objectMapper.writeValueAsString(request)));
+
+        // then : 응답코드가 200이고, 상품 id로 조회한 후에 값이 수정되었는지 확인한다.
+        result.andExpect(status().isOk());
+
+        Item item = itemRepository.findById(savedItem.getId()).get();
+
+        assertThat(item.getName()).isEqualTo(newName);
+        assertThat(item.getPrice()).isEqualTo(newPrice);
+        assertThat(item.getStockQuantity()).isEqualTo(newStock);
     }
 
     private Item createDefaultItem() {

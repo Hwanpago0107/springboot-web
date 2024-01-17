@@ -47,4 +47,15 @@ public class ItemViewController {
 
         return  "redirect:/main";
     }
+
+    @GetMapping("/adminItems")
+    public String getAdminItems(Model model) {
+        List<ItemListViewResponse> items = itemService.findAll().stream()
+                .map(ItemListViewResponse::new)
+                .toList();
+
+        model.addAttribute("items", items);
+
+        return  "itemList";
+    }
 }

@@ -4,13 +4,11 @@ import lombok.RequiredArgsConstructor;
 import me.ceskim493.springbootdeveloper.domain.Item;
 import me.ceskim493.springbootdeveloper.dto.AddItemRequest;
 import me.ceskim493.springbootdeveloper.dto.ItemResponse;
+import me.ceskim493.springbootdeveloper.dto.UpdateItemRequest;
 import me.ceskim493.springbootdeveloper.service.ItemService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -40,5 +38,14 @@ public class ItemApiController {
 
         return ResponseEntity.ok()
                 .body(items);
+    }
+
+    @PutMapping("/api/items/{id}")
+    public ResponseEntity<Item> update(@PathVariable long id,
+                                                 @RequestBody UpdateItemRequest request) {
+        Item updatedItem = itemService.update(id, request);
+
+        return ResponseEntity.ok()
+                .body(updatedItem);
     }
 }
