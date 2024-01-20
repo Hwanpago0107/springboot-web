@@ -29,15 +29,24 @@ public class Item {
 
     private int stockQuantity;
 
+    private String fileName;
+
+    private String filePath;
+
+    private long fileSize;
+
     @ManyToMany(mappedBy = "items")
     private List<Category> categories = new ArrayList<>();
 
     @Builder // 빌더 패턴으로 객체 생성
-    public Item(Long id, String name, int price, int stockQuantity){
+    public Item(Long id, String name, int price, int stockQuantity, String fileName, String filePath, Long fileSize){
         this.id = id;
         this.name = name;
         this.price = price;
         this.stockQuantity = stockQuantity;
+        this.fileName = fileName;
+        this.filePath = filePath;
+        this.fileSize = fileSize;
     }
 
     public void addStock(int stockQuantity) {
@@ -50,9 +59,12 @@ public class Item {
         this.stockQuantity = restStock;
     }
 
-    public void update(String name, int price, int stockQuantity) {
+    public void update(String name, int price, int stockQuantity, String fileName, String filePath, Long fileSize) {
         this.name = name;
         this.price = price;
         this.stockQuantity = stockQuantity;
+        this.fileName= fileName;
+        this.filePath = filePath;
+        this.fileSize = fileSize;
     }
 }

@@ -15,6 +15,7 @@
                     <th>상품명</th>
                     <th>가격</th>
                     <th>재고(수량)</th>
+                    <th>이미지</th>
                     <th>상세페이지</th>
                     <th>관리</th>
                 </tr>
@@ -24,6 +25,7 @@
                     <th>상품명</th>
                     <th>가격</th>
                     <th>재고(수량)</th>
+                    <th>이미지</th>
                     <th>상세페이지</th>
                     <th>관리</th>
                 </tr>
@@ -33,6 +35,7 @@
                     <td th:text="${item.getName()}"></td>
                     <td th:text="${item.getPrice()}"></td>
                     <td th:text="${item.getStockQuantity()}"></td>
+                    <td><img th:src="${item.getFilePath()}" style="width: 30%;"></td>
                     <td></td>
                     <td><button type="button" id="modify-btn"
                                 th:onclick="|location.href='@{/new-item?id={itemId}(itemId=${item.id})}'|"

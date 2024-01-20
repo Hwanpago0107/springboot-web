@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
     <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
@@ -55,9 +55,11 @@
         </nav>
         <!-- Header-->
         <header class="bg-dark py-5 gradient-custom">
-            <div class="container px-4 px-lg-5 my-5">
+            <div class="container px-4 px-lg-5">
                 <div class="text-center text-white">
-                    <h1 class="display-4 fw-bolder">HWANPAGO</h1>
+                    <div class="display-4">
+                        <img src="/img/hwanpago-logo-white.png" style="width: 30%;">
+                    </div>
                     <p class="lead fw-normal text-white-50 mb-0">Welcome! Hwanpago's shop</p>
                 </div>
             </div>
@@ -69,7 +71,7 @@
                     <div class="col mb-5" th:each="item : ${items}">
                         <div class="card h-100">
                             <!-- Product image-->
-                            <img class="card-img-top" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="..." />
+                            <img class="card-img-top" th:src="${item.filePath}"/>
                             <!-- Product details-->
                             <div class="card-body p-4">
                                 <div class="text-center">

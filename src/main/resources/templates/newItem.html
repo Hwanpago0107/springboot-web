@@ -10,21 +10,25 @@
             <div class="adm-small-title" th:if="${aItem.id} != null">상품수정</div>
         </div>
         <div class="card-body">
-            <!-- 아이디 정보 저장 -->
-            <input type="hidden" id="item-id" th:value="${aItem.id}">
-
-            <header class="mb-4">
-                <input type="text" class="form-control" placeholder="상품명" id="name" th:value="${aItem.name}">
-            </header>
-            <section class="mb-4">
-                <input type="number" class="form-control" placeholder="가격" id="price" th:value="${aItem.price}">
-            </section>
-            <section class="mb-4">
-                <input type="number" class="form-control" placeholder="수량" id="stockQuantity" th:value="${aItem.stockQuantity}">
-            </section>
-            <!-- id가 있을 때는 [수정] 버튼을, 없을 때는 [등록] 버튼이 보이게 함 -->
-            <button th:if="${aItem.id} == null" type="button" id="create-item-btn" class="btn btn-primary btn-sm">등록</button>
-            <button th:if="${aItem.id} != null" type="button" id="modify-item-btn" class="btn btn-primary btn-sm">수정</button>
+            <form name="form" enctype="multipart/form-data">
+                <!-- 아이디 정보 저장 -->
+                <input type="hidden" id="item-id" th:value="${aItem.id}">
+                <header class="mb-4">
+                    <input type="text" class="form-control" placeholder="상품명" id="name" th:value="${aItem.name}">
+                </header>
+                <section class="mb-4">
+                    <input type="number" class="form-control" placeholder="가격" id="price" th:value="${aItem.price}">
+                </section>
+                <section class="mb-4">
+                    <input type="number" class="form-control" placeholder="수량" id="stockQuantity" th:value="${aItem.stockQuantity}">
+                </section>
+                <section class="mb-4">
+                    <input type="file" class="form-control" placeholder=".jpg .png 파일" id="imgFile" name="imgFile">
+                </section>
+                <!-- id가 있을 때는 [수정] 버튼을, 없을 때는 [등록] 버튼이 보이게 함 -->
+                <button th:if="${aItem.id} == null" type="button" id="create-item-btn" class="btn btn-primary btn-sm">등록</button>
+                <button th:if="${aItem.id} != null" type="button" id="modify-item-btn" class="btn btn-primary btn-sm">수정</button>
+            </form>
         </div>
     </div>
 </div>

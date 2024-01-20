@@ -12,11 +12,17 @@ public class ItemListViewResponse {
     private String name;
     private int price;
     private int stockQuantity;
+    private String fileName;
+    private String filePath;
+    private Long fileSize;
 
     public ItemListViewResponse(Item item) {
         this.id = item.getId();
         this.name = item.getName();
         this.price = item.getPrice();
         this.stockQuantity = item.getStockQuantity();
+        this.fileName = item.getFileName();
+        this.filePath = item.getFilePath();
+        this.fileSize = item.getFileSize();
     }
 }

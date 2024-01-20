@@ -3,21 +3,27 @@ const createItemButton = document.getElementById("create-item-btn");
 
 if (createItemButton) {
     createItemButton.addEventListener("click", (event) => {
+        console.log("====File Upload1====");
+        const formData = new FormData();
         body = JSON.stringify({
             name: document.getElementById("name").value,
             price: document.getElementById("price").value,
             stockQuantity: document.getElementById("stockQuantity").value
         });
+        const blob = new Blob([body], {type: 'application/json'});
+        formData.append("request", blob);
+        formData.append("file", this.imgFile.files[0]);
+        console.log("====File Upload2====");
         function success() {
             alert("등록이 완료되었습니다.");
-            location.replace("/items");
+            location.replace("/adminItems");
         }
         function fail() {
             alert("등록이 실패했습니다.");
-            location.replace("/items");
+            location.replace("/adminItems");
         }
 
-        httpRequest("POST", "/api/items", body, success, fail);
+        httpRequest("POST", "/api/items", formData, success, fail);
     });
 }
 

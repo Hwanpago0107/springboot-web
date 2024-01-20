@@ -13,12 +13,18 @@ public class AddItemRequest {
     private String name;
     private int price;
     private int stockQuantity;
+    private String fileName;
+    private String filePath;
+    private Long fileSize;
 
-    public Item toEntity() { // 생성자를 사용해 객체 생성
+    public Item toEntity(Item item) { // 생성자를 사용해 객체 생성
         return Item.builder()
                 .name(name)
                 .price(price)
                 .stockQuantity(stockQuantity)
+                .fileName(item.getFileName())
+                .filePath(item.getFilePath())
+                .fileSize(item.getFileSize())
                 .build();
     }
 }
