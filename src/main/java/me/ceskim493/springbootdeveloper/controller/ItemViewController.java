@@ -12,7 +12,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 
@@ -38,18 +37,7 @@ public class ItemViewController {
     }
 
     @GetMapping("/items")
-    public String getItems(RedirectAttributes attributes) {
-        List<ItemListViewResponse> items = itemService.findAll().stream()
-                .map(ItemListViewResponse::new)
-                .toList();
-
-        attributes.addFlashAttribute("items", items);
-
-        return  "redirect:/main";
-    }
-
-    @GetMapping("/adminItems")
-    public String getAdminItems(Model model) {
+    public String getItems(Model model) {
         List<ItemListViewResponse> items = itemService.findAll().stream()
                 .map(ItemListViewResponse::new)
                 .toList();

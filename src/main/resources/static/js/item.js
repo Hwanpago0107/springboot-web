@@ -16,11 +16,11 @@ if (createItemButton) {
         console.log("====File Upload2====");
         function success() {
             alert("등록이 완료되었습니다.");
-            location.replace("/adminItems");
+            location.replace("/items");
         }
         function fail() {
             alert("등록이 실패했습니다.");
-            location.replace("/adminItems");
+            location.replace("/items");
         }
 
         httpRequest("POST", "/api/items", formData, success, fail);
@@ -42,11 +42,11 @@ if (modifyItemButton) {
         })
         function success() {
             alert("수정이 완료되었습니다.");
-            location.replace("/adminItems");
+            location.replace("/items");
         }
         function fail() {
             alert("수정이 실패했습니다.");
-            location.replace("/adminItems");
+            location.replace("/items");
         }
 
         httpRequest("PUT", "/api/items/" + id, body, success, fail);
@@ -58,12 +58,12 @@ function deleteItem(id) {
     if (confirm("상품을 정말 삭제하시겠습니까?")) {
         function success() {
             alert("삭제가 완료되었습니다.");
-            location.replace("/adminItems");
+            location.replace("/items");
         }
 
         function fail() {
             alert("삭제가 실패했습니다.");
-            location.replace("/adminItems");
+            location.replace("/items");
         }
 
         httpRequest("DELETE", "/api/items/" + id, null, success, fail);
