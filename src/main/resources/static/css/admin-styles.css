@@ -11258,3 +11258,27 @@ body {
 .adm-small-title {
   display: inline-block;
 }
+
+.cell-width-10{
+  width: 10%;
+}
+
+.cell-width-15{
+  width: 15%;
+}
+
+.cell-width-20{
+  width: 20%;
+}
+
+.cell-width-25{
+  width: 25%;
+}
+
+.cell-width-30{
+  width: 30%;
+}
+
+.cell-width-35{
+  width: 35%;
+}

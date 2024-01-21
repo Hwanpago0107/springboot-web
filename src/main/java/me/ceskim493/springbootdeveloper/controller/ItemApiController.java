@@ -6,11 +6,14 @@ import me.ceskim493.springbootdeveloper.dto.AddItemRequest;
 import me.ceskim493.springbootdeveloper.dto.ItemResponse;
 import me.ceskim493.springbootdeveloper.dto.UpdateItemRequest;
 import me.ceskim493.springbootdeveloper.service.ItemService;
+import org.springframework.core.io.UrlResource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.net.MalformedURLException;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -58,5 +61,17 @@ public class ItemApiController {
 
         return ResponseEntity.ok()
                 .build();
+    }
+
+    @ResponseBody
+    @GetMapping("/images/{filename}")
+    public UrlResource showImage(@PathVariable String filename) throws MalformedURLException {
+
+        String projectPath = System.getProperty("user.dir") + "/src/main/resources/static/upload/img/";
+        // 파일 유무 확인
+        File file = new File(projectPath, filename);
+        if (!file.exists()) return null;
+
+        return new UrlResource("file:" + file.getAbsolutePath());
     }
 }

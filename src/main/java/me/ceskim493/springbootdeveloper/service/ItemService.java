@@ -45,7 +45,7 @@ public class ItemService {
 
         Item item = new Item();
         item.setFileName(imgName);
-        item.setFilePath("/upload/img/" + imgName);
+        item.setFilePath("/static/upload/img/" + imgName);
 
         return itemRepository.save(request.toEntity(item));
     }

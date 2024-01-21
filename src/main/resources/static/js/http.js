@@ -34,7 +34,7 @@ function httpRequest(method, url, body, success, fail) {
                 method: "POST",
                 headers: {
                     Authorization: "Bearer " + localStorage.getItem("access_token"),
-                    // "Content-Type": "application/json",
+                     "Content-Type": "application/json",
                     //"Content-Type": "multipart/form-data",
                 },
                 body: JSON.stringify({
