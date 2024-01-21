@@ -20,11 +20,51 @@ public class ItemService {
     private final ItemRepository itemRepository;
 
     public Item save(AddItemRequest request, MultipartFile imgFile) throws Exception {
+        Item item = makeFile(imgFile);
+
+        return itemRepository.save(request.toEntity(item));
+    }
+
+    public Item findById(Long id) {
+        return itemRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("unexpected Item"));
+    }
+    public List<Item> findAll() {
+        return itemRepository.findAll();
+    }
+
+    @Transactional
+    public Item update(long id, UpdateItemRequest request, MultipartFile imgFile) throws Exception {
+        Item item = itemRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("not found " + id));
+
+        //수정 시 업로드 되는 파일이 있으면 파일도 추가
+        System.out.println("FILE TEST====" + imgFile);
+        if (imgFile != null) {
+            Item newItem = makeFile(imgFile);
+            item.setFileName(newItem.getFileName());
+            item.setFilePath(newItem.getFilePath());
+            item.setFileSize(newItem.getFileSize());
+        }
+
+        item.update(request.getName(), request.getPrice(), request.getStockQuantity(), item.getFileName(), item.getFilePath(), item.getFileSize());
+
+        return item;
+    }
+
+    public void delete(long id) {
+        Item item = itemRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("not found " + id));
+
+        itemRepository.delete(item);
+    }
+
+    public Item makeFile(MultipartFile imgFile) throws Exception {
         String originFileName = imgFile.getOriginalFilename();
         String imgName = "";
+        Long fileSize = imgFile.getSize();
 
         String projectPath = System.getProperty("user.dir") + "/src/main/resources/static/upload/img/";
-
 
         // UUID 생성하여 서로 다른 이미지 이름 생성
         UUID uuid = UUID.randomUUID();
@@ -46,32 +86,8 @@ public class ItemService {
         Item item = new Item();
         item.setFileName(imgName);
         item.setFilePath("/static/upload/img/" + imgName);
-
-        return itemRepository.save(request.toEntity(item));
-    }
-
-    public Item findById(Long id) {
-        return itemRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("unexpected Item"));
-    }
-    public List<Item> findAll() {
-        return itemRepository.findAll();
-    }
-
-    @Transactional
-    public Item update(long id, UpdateItemRequest request) {
-        Item item = itemRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("not found " + id));
-
-        item.update(request.getName(), request.getPrice(), request.getStockQuantity(), request.getFileName(), request.getFilePath(), request.getFileSize());
+        item.setFileSize(fileSize);
 
         return item;
-    }
-
-    public void delete(long id) {
-        Item item = itemRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("not found " + id));
-
-        itemRepository.delete(item);
     }
 }

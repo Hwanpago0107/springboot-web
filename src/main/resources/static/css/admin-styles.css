@@ -11259,6 +11259,11 @@ body {
   display: inline-block;
 }
 
+.adm-small-head {
+  display: inline-block;
+  width: 10%;
+}
+
 .cell-width-10{
   width: 10%;
 }
@@ -11281,4 +11286,15 @@ body {
 
 .cell-width-35{
   width: 35%;
+}
+
+.form-control.adm-small-input {
+  display: inline-block;
+  width: 85%;
+}
+
+.adm-content-img {
+  background-size: cover;
+  background-position: center;
+  max-height: 100px;
 }

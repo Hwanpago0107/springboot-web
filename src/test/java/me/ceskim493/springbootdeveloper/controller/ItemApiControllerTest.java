@@ -102,15 +102,19 @@ class ItemApiControllerTest {
     @DisplayName("updateItem: 상품 내용 수정에 성공한다.")
     @Test
     public void updateItem() throws Exception {
-        //given : 상품 항목 항나를 저장
+        //given : 상품 항목 하나를 저장
         final String url = "/api/items/{id}";
         Item savedItem = createDefaultItem();
 
         final String newName = "new name";
         final int newPrice = 2000;
         final int newStock = 10000;
+        final String newFileName = "1.jpg";
+        final String newFilePath = "/upload/img/1.jpg";
+        final Long newFileSize = 1L;
 
-        UpdateItemRequest request = new UpdateItemRequest(newName, newPrice, newStock, "", "", 1L);
+        UpdateItemRequest request = new UpdateItemRequest(newName, newPrice, newStock,
+                newFileName, newFilePath, newFileSize);
 
         // when : update api로 수정 요청을 보내고, 이때 요청 타입은 JSON이고 given절에서 만들어둔 객체를 요청 본문으로 함계 보낸다.
         ResultActions result = mockMvc.perform(put(url, savedItem.getId())
@@ -125,6 +129,9 @@ class ItemApiControllerTest {
         assertThat(item.getName()).isEqualTo(newName);
         assertThat(item.getPrice()).isEqualTo(newPrice);
         assertThat(item.getStockQuantity()).isEqualTo(newStock);
+        assertThat(item.getFileName()).isEqualTo(newFileName);
+        assertThat(item.getFilePath()).isEqualTo(newFilePath);
+        assertThat(item.getFileSize()).isEqualTo(newFileSize);
     }
 
     @DisplayName("deleteItem: 상품 삭제에 성공한다.")
@@ -149,6 +156,9 @@ class ItemApiControllerTest {
                 .name("test")
                 .price(1000)
                 .stockQuantity(100)
+                .fileName("2.jpg")
+                .filePath("/upload/img/2.jpg")
+                .fileSize(2L)
                 .build());
     }
 }

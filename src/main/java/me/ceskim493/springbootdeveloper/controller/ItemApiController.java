@@ -48,8 +48,9 @@ public class ItemApiController {
 
     @PutMapping("/api/items/{id}")
     public ResponseEntity<Item> update(@PathVariable long id,
-                                                 @RequestBody UpdateItemRequest request) {
-        Item updatedItem = itemService.update(id, request);
+                                       @RequestPart(value = "request") UpdateItemRequest request,
+                                       @RequestPart(value = "file", required = false) MultipartFile imgFile) throws Exception {
+        Item updatedItem = itemService.update(id, request, imgFile);
 
         return ResponseEntity.ok()
                 .body(updatedItem);
