@@ -88,7 +88,7 @@ function httpRequestWithMF(method, url, body, success, fail) {
                 })
                 .then((result) => {
                     localStorage.setItem("access_token", result.accessToken);
-                    httpRequest(method, url, body, success, fail);
+                    httpRequestWithMF(method, url, body, success, fail);
                 })
                 .catch((error) => fail());
         } else {
