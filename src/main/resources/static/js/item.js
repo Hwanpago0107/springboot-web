@@ -21,7 +21,7 @@ if (createItemButton) {
             location.replace("/items");
         }
 
-        httpRequest("POST", "/api/items", formData, success, fail);
+        httpRequestWithMF("POST", "/api/items", formData, success, fail);
     });
 }
 
@@ -53,7 +53,7 @@ if (modifyItemButton) {
             location.replace("/items");
         }
 
-        httpRequest("PUT", "/api/items/" + id, formData, success, fail);
+        httpRequestWithMF("PUT", "/api/items/" + id, formData, success, fail);
     });
 }
 

@@ -10843,3 +10843,19 @@ textarea.form-control-lg {
     display: none !important;
   }
 }
+
+.modal-img {
+  width: 100px;
+  height: 100%;
+  object-fit: cover;
+}
+
+.modal-check {
+  width: 5%;
+  text-align: center;
+}
+
+.modal-row {
+  height: 70px;
+  line-height: 70px;
+}

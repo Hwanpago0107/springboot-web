@@ -39,7 +39,6 @@ public class ItemService {
                 .orElseThrow(() -> new IllegalArgumentException("not found " + id));
 
         //수정 시 업로드 되는 파일이 있으면 파일도 추가
-        System.out.println("FILE TEST====" + imgFile);
         if (imgFile != null) {
             Item newItem = makeFile(imgFile);
             item.setFileName(newItem.getFileName());

@@ -1,0 +1,45 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<th:block th:fragment="showCart()">
+    <div class="modal-body">
+        <div class="container-fluid">
+<!--            <div class="row" th:each="item : ${cartItems}">-->
+<!--                <div class="modal-check modal-row">-->
+<!--                    <input type="checkbox" name="checkbox-item-id" th:checked="false"></input>-->
+<!--                </div>-->
+<!--                <div class="col-md-2 modal-row">-->
+<!--                    <img class="modal-img" th:src="|/images/${item.getItem().fileName}|"/>-->
+<!--                </div>-->
+<!--                <div class="col-md-2 modal-row" th:text="${item.getItem().name}"></div>-->
+<!--                <div class="col-md-2 modal-row" th:text="${item.getItem().price}"></div>-->
+<!--                <div class="col-md-2 modal-row" th:text="${item.quantity}"></div>-->
+<!--            </div>-->
+            <table class="table table-hover table-striped">
+                <thead>
+                <tr>
+                    <th scope="col" class="modal-check">
+                        <input type="checkbox" disabled></input>
+                    </th>
+                    <th scope="col">이미지</th>
+                    <th scope="col">상품명</th>
+                    <th scope="col">총가격 (상품가격)</th>
+                    <th scope="col">갯수</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="item : ${cartItems}">
+                    <th scope="row" class="modal-check modal-row">
+                        <input type="checkbox" name="checkbox-item-id" th:checked="false" th:value="${item.id}"></input>
+                    </th>
+                    <td class="col-md-2 modal-row">
+                        <img class="modal-img" th:src="|/images/${item.getItem().fileName}|"/>
+                    </td>
+                    <td class="col-md-2 modal-row" th:text="${item.getItem().name}"></td>
+                    <td class="col-md-2 modal-row" th:text="|${#numbers.formatDecimal(item.getItem().price * item.quantity, 0, 'DEFAULT', 0, 'DEFAULT')} (${#numbers.formatDecimal(item.getItem().price, 0, 'DEFAULT', 0, 'DEFAULT')})|"></td>
+                    <td class="col-md-2 modal-row" th:text="${item.quantity}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</th:block>
