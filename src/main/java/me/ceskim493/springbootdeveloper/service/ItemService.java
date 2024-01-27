@@ -46,7 +46,8 @@ public class ItemService {
             item.setFileSize(newItem.getFileSize());
         }
 
-        item.update(request.getName(), request.getPrice(), request.getStockQuantity(), item.getFileName(), item.getFilePath(), item.getFileSize());
+        item.update(request.getName(), request.getPrice(), request.getStockQuantity(),
+                item.getDiscount(), item.getFileName(), item.getFilePath(), item.getFileSize());
 
         return item;
     }

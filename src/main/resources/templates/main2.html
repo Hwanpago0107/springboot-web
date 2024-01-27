@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{mainLayout}">
+<body>
+<div layout:fragment="content">
+    <!-- Header-->
+    <header class="bg-dark py-5 gradient-custom">
+        <div class="container px-4 px-lg-5">
+            <div class="text-center text-white">
+                <div class="display-4">
+                    <img src="/img/hwanpago-logo-white.png" style="width: 30%;">
+                </div>
+                <p class="lead fw-normal text-white-50 mb-0">Welcome! Hwanpago's shop</p>
+            </div>
+        </div>
+    </header>
+    <!-- Section-->
+    <section class="py-5">
+        <div class="container px-4 px-lg-5 mt-5">
+            <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+                <div class="col mb-5" th:each="item : ${items}">
+                    <div class="card h-100">
+                        <!-- Product image-->
+                        <img class="card-img-top" th:src="|/images/${item.getFileName()}|"/>
+                        <!-- Product details-->
+                        <div class="card-body p-4">
+                            <div class="text-center">
+                                <!-- Product name-->
+                                <h5 class="fw-bolder" th:text="${item.name}"></h5>
+                                <!-- Product price-->
+                                <h6 th:text="${item.price}"></h6>
+                                <h6 th:text="|(${item.stockQuantity})|"></h6>
+                            </div>
+                        </div>
+                        <!-- Product actions-->
+                        <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                            <div class="text-center">
+                                <a class="btn btn-outline-dark mt-auto mb-1 create-cart-btn" th:onclick="|createCart([[${item.id}]])|">
+                                    <i class="bi-cart-fill me-1"></i>
+                                    + Cart
+                                </a>
+                                <i th:onclick="|plusOne([${item.id}],[${item.stockQuantity}])|" style="cursor: pointer">▲</i>
+                                <i th:id="|addedQuantity${item.id}|" th:text="0"></i>
+                                <i th:onclick="|minusOne([[${item.id}]])|" style="cursor: pointer">▼</i>
+                            </div>
+                            <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">View options</a></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+</body>
+</html>

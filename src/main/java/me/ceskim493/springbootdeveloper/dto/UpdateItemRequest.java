@@ -11,6 +11,7 @@ public class UpdateItemRequest {
     private String name;
     private int price;
     private int stockQuantity;
+    private Long discount;
     private String fileName;
     private String filePath;
     private Long fileSize;

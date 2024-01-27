@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{mainLayout}">
+<body>
+<div layout:fragment="content">
+	<!-- BREADCRUMB -->
+	<div id="breadcrumb" class="section">
+		<!-- container -->
+		<div class="container">
+			<!-- row -->
+			<div class="row">
+				<div class="col-md-12">
+					<h3 class="breadcrumb-header">장바구니</h3>
+					<ul class="breadcrumb-tree">
+						<li><a th:href="@{/main/home}">Home</a></li>
+						<li class="active">Cart</li>
+					</ul>
+				</div>
+			</div>
+			<!-- /row -->
+		</div>
+		<!-- /container -->
+	</div>
+	<!-- /BREADCRUMB -->
+
+	<!-- SECTION -->
+	<div class="section">
+		<!-- container -->
+		<div class="container">
+			<!-- row -->
+			<div class="row" th:if="${cartItems.size() == 0}">
+				<div class="col-md-11 carts-details" style="padding: 0px;">
+					<div class="section-title" style="text-align: center">
+						<h3 class="title">장바구니에 상품이 없습니다.</h3>
+					</div>
+				</div>
+			</div>
+			<div class="row" th:if="${cartItems.size() > 0}">
+				<div class="col-md-7 carts-details">
+					<div class="section-title">
+						<h3 class="title">내 장바구니 목록</h3>
+					</div>
+					<div class="carts-summary">
+						<div class="carts-col">
+							<div><input type="checkbox" onclick="selectAll(this)"></input></div>
+							<div><strong>상품명</strong></div>
+							<div><strong>이미지</strong></div>
+							<div><strong>가격</strong></div>
+							<div><strong>수량</strong></div>
+							<div><strong>TOTAL</strong></div>
+						</div>
+						<div class="carts-col carts-content" th:each="cart : ${cartItems}">
+							<div>
+								<input type="checkbox" name="checkbox-item-id" th:checked="false" th:value="${cart.id}"></input>
+							</div>
+							<div><strong th:text="${cart.getItem().name}"></strong></div>
+							<div style="width: 150px;">
+								<img style="width: 100%;" th:src="|/images/${cart.getItem().fileName}|"/>
+							</div>
+							<div th:text="${#numbers.formatDecimal(cart.getItem().price * (1 - cart.getItem().getDiscount()), 0, 'DEFAULT', 0, 'DEFAULT')}"></div>
+							<div th:text="${cart.getQuantity()}"></div>
+							<div><strong th:text="${#numbers.formatDecimal(cart.getItem().price * (1 - cart.getItem().getDiscount()) * cart.getQuantity(), 0, 'DEFAULT', 0, 'DEFAULT')}"></strong></div>
+						</div>
+					</div>
+					<a id="delete-cart-chk-btn" class="primary-btn order-submit"
+					   style="cursor: pointer; float: right;">선택 상품 삭제</a>
+				</div>
+
+				<div class="col-md-1"></div>
+
+				<!-- Order Details -->
+				<div class="col-md-4 order-details">
+					<div class="section-title text-center">
+						<h3 class="title">Your Order</h3>
+					</div>
+					<div class="order-summary">
+						<div class="order-col">
+							<div><strong>PRODUCT</strong></div>
+							<div><strong>TOTAL</strong></div>
+						</div>
+						<div class="order-products">
+							<div class="order-col" th:each="cart : ${cartItems}">
+								<div>
+									<span th:text="|${cart.getQuantity()}x|"></span>
+									<span th:text="${cart.getItem().name}"></span>
+								</div>
+								<div th:text="|￦${#numbers.formatDecimal(cart.getItem().price * (1 - cart.getItem().getDiscount()) * cart.getQuantity(), 0, 'DEFAULT', 0, 'DEFAULT')}|"></div>
+							</div>
+						</div>
+						<div class="order-col">
+							<div>배송비</div>
+							<div><strong>FREE</strong></div>
+						</div>
+						<div class="order-col">
+							<div><strong>TOTAL</strong></div>
+							<div><strong class="order-total" th:text="|￦${#numbers.formatDecimal(totalPrice, 0, 'DEFAULT', 0, 'DEFAULT')}|"></strong></div>
+						</div>
+					</div>
+					<div class="payment-method">
+						<div class="input-radio">
+							<input type="radio" name="payment" id="payment-1">
+							<label for="payment-1">
+								<span></span>
+								계좌이체
+							</label>
+							<div class="caption">
+								<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+							</div>
+						</div>
+						<div class="input-radio">
+							<input type="radio" name="payment" id="payment-2">
+							<label for="payment-2">
+								<span></span>
+								카드결제
+							</label>
+							<div class="caption">
+								<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+							</div>
+						</div>
+						<div class="input-radio">
+							<input type="radio" name="payment" id="payment-3">
+							<label for="payment-3">
+								<span></span>
+								Npay
+							</label>
+							<div class="caption">
+								<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+							</div>
+						</div>
+					</div>
+					<div class="input-checkbox">
+						<input type="checkbox" id="terms">
+						<label for="terms">
+							<span></span>
+							<a href="#">이용약관</a>을 읽었으며 이에 동의합니다.
+						</label>
+					</div>
+					<a id="pre-order-btn" class="primary-btn order-submit">주문하기</a>
+				</div>
+				<!-- /Order Details -->
+			</div>
+			<!-- /row -->
+		</div>
+		<!-- /container -->
+	</div>
+	<!-- /SECTION -->
+</div>
+</body>
+</html>

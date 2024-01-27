@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{mainLayout}">
+<body>
+<div layout:fragment="content">
+	<!-- BREADCRUMB -->
+	<div id="breadcrumb" class="section">
+		<!-- container -->
+		<div class="container">
+			<!-- row -->
+			<div class="row">
+				<div class="col-md-12">
+					<h3 class="breadcrumb-header">내 주문 목록</h3>
+					<ul class="breadcrumb-tree">
+						<li><a th:href="@{/main/home}">Home</a></li>
+						<li class="active">Order</li>
+					</ul>
+				</div>
+			</div>
+			<!-- /row -->
+		</div>
+		<!-- /container -->
+	</div>
+	<!-- /BREADCRUMB -->
+
+	<!-- SECTION -->
+	<div class="section">
+		<!-- container -->
+		<div class="container">
+			<!-- row -->
+			<div class="row" th:if="${orders.size() == 0}">
+				<div class="col-md-11 carts-details" style="padding: 0px;">
+					<div class="section-title" style="text-align: center">
+						<h3 class="title">주문 내역이 없습니다.</h3>
+					</div>
+				</div>
+			</div>
+			<div class="row" th:each="order : ${orders}">
+				<div class="col-md-9 carts-details">
+					<div class="section-title">
+						<h3 class="title" th:text="|내 주문 #${orderStat.count}|"></h3>
+					</div>
+					<div class="carts-summary">
+						<div class="carts-col">
+							<div><strong>상품명</strong></div>
+							<div style="width: 150px;"><strong >이미지</strong></div>
+							<div><strong>가격</strong></div>
+							<div><strong>수량</strong></div>
+							<div><strong>TOTAL</strong></div>
+						</div>
+						<div class="carts-col carts-content" th:each="orderItem : ${order.orderItems}">
+							<div><strong th:text="${orderItem.item.name}"></strong></div>
+							<div style="width: 150px;">
+								<img style="width: 100%;" th:src="|/images/${orderItem.item.fileName}|"/>
+							</div>
+							<div th:text="${#numbers.formatDecimal(orderItem.item.price * (1 - orderItem.item.discount), 0, 'DEFAULT', 0, 'DEFAULT')}"></div>
+							<div th:text="${orderItem.count}"></div>
+							<div><strong th:text="${#numbers.formatDecimal(orderItem.orderPrice , 0, 'DEFAULT', 0, 'DEFAULT')}"></strong></div>
+						</div>
+					</div>
+					<a class="primary-btn order-submit" th:onclick="|deleteOrder([${order.id}])|"
+					  style="cursor: pointer; float: right;">주문 취소</a>
+				</div>
+			</div>
+			<!-- /row -->
+		</div>
+		<!-- /container -->
+	</div>
+	<!-- /SECTION -->
+</div>
+</body>
+</html>

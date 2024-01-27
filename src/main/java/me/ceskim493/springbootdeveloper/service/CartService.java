@@ -43,7 +43,18 @@ public class CartService {
         }
 
         Cart cart = cartRepository.findCartByUser(user).get();
-        CartItem cartItem = new CartItem(cart, item, request.getQuantity());
+        CartItem cartItem = null;
+
+        // 저장할 상품이 동일한 경우 해당 상품의 수량만 업데이트 해준다.
+        List<CartItem> cartItems = cartItemRepository.findCartItemByItem_Id(request.getItem_id());
+        if (cartItems != null && cartItems.size() > 0) {
+            cartItem = cartItems.get(0);
+            int newQuantity = cartItem.getQuantity() + request.getQuantity();
+            cartItem.setQuantity(newQuantity);
+        } else {
+            cartItem = new CartItem(cart, item, request.getQuantity());
+        }
+
         return cartItemRepository.save(cartItem);
     }
 

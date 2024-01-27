@@ -41,11 +41,11 @@ if (deleteCartChkBtn) {
         console.log(checked);
         function success() {
             alert("상품 삭제가 완료되었습니다.");
-            location.replace("/main");
+            location.replace("/main/myCarts");
         }
         function fail() {
             alert("상품 삭제가 실패했습니다.");
-            location.replace("/main");
+            location.replace("/main/myCarts");
         }
 
         httpRequest("DELETE", "/api/carts/checked", body, success, fail);
@@ -87,3 +87,7 @@ function minusOne(id) {
     addedQuantity.textContent =  Number(addedQuantity.textContent) - 1;
 }
 
+function selectAll(el) {
+    const checkboxes = document.getElementsByName("checkbox-item-id");
+    checkboxes.forEach((checkbox) => {   checkbox.checked = el.checked; });
+}

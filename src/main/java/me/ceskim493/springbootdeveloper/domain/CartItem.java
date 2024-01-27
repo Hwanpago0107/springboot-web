@@ -36,4 +36,11 @@ public class CartItem {
         this.item = item;
         this.quantity = quantity;
     }
+
+    public void update(Long id, Cart cart, Item item, int quantity) {
+        this.id = id;
+        this.cart = cart;
+        this.item = item;
+        this.quantity = quantity;
+    }
 }

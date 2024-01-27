@@ -12,6 +12,7 @@ public class ItemListViewResponse {
     private String name;
     private int price;
     private int stockQuantity;
+    private float discount;
     private String fileName;
     private String filePath;
     private Long fileSize;
@@ -21,6 +22,7 @@ public class ItemListViewResponse {
         this.name = item.getName();
         this.price = item.getPrice();
         this.stockQuantity = item.getStockQuantity();
+        this.discount = item.getDiscount();
         this.fileName = item.getFileName();
         this.filePath = item.getFilePath();
         this.fileSize = item.getFileSize();
