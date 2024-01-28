@@ -12,24 +12,22 @@
     <loaded-nodes />
   </component>
   <component name="DBNavigator.Project.DatabaseConsoleManager">
-    <connection id="97009c03-3229-450f-83e5-4b4d8b26c7ea">
-      <console name="Connection 1" type="STANDARD" schema="ebdb" session="Main"><![CDATA[select * from Item]]></console>
+    <connection id="2e96c5f8-9f5c-479f-b3fc-4f28e932a7da">
+      <console name="Connection" type="STANDARD" schema="" session="Main" />
     </connection>
   </component>
   <component name="DBNavigator.Project.DatabaseEditorStateManager">
     <last-used-providers />
   </component>
   <component name="DBNavigator.Project.DatabaseFileManager">
-    <open-files>
-      <object connection-id="97009c03-3229-450f-83e5-4b4d8b26c7ea" object-ref="consoles/Connection 1" />
-      <object connection-id="97009c03-3229-450f-83e5-4b4d8b26c7ea" object-ref="schemas/ebdb/tables/Item" />
-    </open-files>
+    <open-files />
   </component>
   <component name="DBNavigator.Project.DatabaseSessionManager">
-    <connection id="97009c03-3229-450f-83e5-4b4d8b26c7ea" />
+    <connection id="2e96c5f8-9f5c-479f-b3fc-4f28e932a7da" />
   </component>
   <component name="DBNavigator.Project.DatasetFilterManager">
-    <filter-actions connection-id="97009c03-3229-450f-83e5-4b4d8b26c7ea" dataset="ebdb.Item" active-filter-id="" />
+    <filter-actions connection-id="2e96c5f8-9f5c-479f-b3fc-4f28e932a7da" dataset="ebdb.Delivery" active-filter-id="" />
+    <filter-actions connection-id="2e96c5f8-9f5c-479f-b3fc-4f28e932a7da" dataset="ebdb.Item" active-filter-id="" />
   </component>
   <component name="DBNavigator.Project.ExecutionManager">
     <retain-sticky-names value="false" />
@@ -48,9 +46,9 @@
   </component>
   <component name="DBNavigator.Project.Settings">
     <connections>
-      <connection id="97009c03-3229-450f-83e5-4b4d8b26c7ea" active="true" signed="true">
+      <connection id="2e96c5f8-9f5c-479f-b3fc-4f28e932a7da" active="true" signed="true">
         <database>
-          <name value="Connection 1" />
+          <name value="Connection" />
           <description value="" />
           <database-type value="MYSQL" />
           <config-type value="BASIC" />
@@ -59,7 +57,7 @@
           <driver-library value="" />
           <driver value="" />
           <url-type value="DATABASE" />
-          <host value="awseb-e-2pypwp39gf-stack-awsebrdsdatabase-p5areojxhbdv.cz7i2zlhu9op.ap-northeast-2.rds.amazonaws.com" />
+          <host value="awseb-e-2pypwp39gf-stack-awsebrdsdatabase-lv0h4ufrlztm.cz7i2zlhu9op.ap-northeast-2.rds.amazonaws.com" />
           <port value="3306" />
           <database value="ebdb" />
           <tns-folder value="" />
