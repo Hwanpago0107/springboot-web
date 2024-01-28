@@ -2,6 +2,7 @@ package me.ceskim493.springbootdeveloper.domain;
 
 import jakarta.persistence.*;
 import lombok.*;
+import me.ceskim493.springbootdeveloper.dto.UserViewResponse;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -28,8 +29,14 @@ public class User implements UserDetails {
     @Column(name = "password")
     private String password;
 
+    @Column(name = "name")
+    private String name;
+
     @Column(name = "nickname")
     private String nickname;
+
+    @Column(name = "phone")
+    private String phone;
 
     @Embedded
     private Address address;
@@ -38,9 +45,10 @@ public class User implements UserDetails {
     private List<Order> orders = new ArrayList<>();
 
     @Builder
-    public User(String email, String password, String nickname) {
+    public User(String email, String password, String name, String nickname) {
         this.email = email;
         this.password = password;
+        this.name = name;
         this.nickname = nickname;
     }
 
@@ -86,10 +94,20 @@ public class User implements UserDetails {
     }
 
     // 사용자 이름 변경
-    public User update(String nickname) {
+    public User update(String nickname, String name) {
         this.nickname = nickname;
-
+        this.name = name;
         return this;
+    }
+    public void update(String nickname, String name, String phone, Address address) {
+        this.nickname = nickname;
+        this.name = name;
+        this.phone = phone;
+        this.address = address;
+    }
+
+    public UserViewResponse createUserView() {
+        return new UserViewResponse(this);
     }
 
 }

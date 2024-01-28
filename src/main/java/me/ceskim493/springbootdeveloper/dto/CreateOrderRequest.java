@@ -3,6 +3,7 @@ package me.ceskim493.springbootdeveloper.dto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import me.ceskim493.springbootdeveloper.domain.Address;
 
 import java.util.List;
 
@@ -11,4 +12,8 @@ import java.util.List;
 @Getter
 public class CreateOrderRequest {
     private List<Long> cart_item_id;
+    private Address address;
+    private String orderNote;
+    private String payment;
+    private String receiver;
 }

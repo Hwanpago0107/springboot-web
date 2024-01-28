@@ -1,5 +1,6 @@
 package me.ceskim493.springbootdeveloper.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

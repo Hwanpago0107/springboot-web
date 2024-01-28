@@ -7,9 +7,7 @@ import me.ceskim493.springbootdeveloper.domain.User;
 
 @NoArgsConstructor
 @Getter
-public class UserViewResponse {
-
-    private Long id;
+public class UserResponse {
 
     private String email;
 
@@ -21,8 +19,7 @@ public class UserViewResponse {
 
     private Address address;
 
-    public UserViewResponse(User user) {
-        this.id = user.getId();
+    public UserResponse(User user) {
         this.email = user.getEmail();
         this.name = user.getName();
         this.nickname = user.getNickname();

@@ -6,6 +6,7 @@ import me.ceskim493.springbootdeveloper.domain.*;
 import me.ceskim493.springbootdeveloper.dto.CartViewResponse;
 import me.ceskim493.springbootdeveloper.dto.ItemListViewResponse;
 import me.ceskim493.springbootdeveloper.dto.OrderListViewResponse;
+import me.ceskim493.springbootdeveloper.dto.UserViewResponse;
 import me.ceskim493.springbootdeveloper.service.CartService;
 import me.ceskim493.springbootdeveloper.service.ItemService;
 import me.ceskim493.springbootdeveloper.service.OrderService;
@@ -69,10 +70,12 @@ public class MainController {
                     .toList();
 
             model.addAttribute("items", items);
-        } else if (pageName.equals("myCart")) {
-            return "myCart";
-        } else if (pageName.equals("myInfo")) {
-            return "myInfo";
+        } else if (pageName.equals("myInfo") || pageName.equals("myCart")) {
+            // 사용자의 정보를 가지고 온다.
+            UserViewResponse userInfo = user.createUserView();
+
+            model.addAttribute("userInfo", userInfo);
+            return pageName;
         } else if (pageName.equals("myOrder")) {
             // 내가 주문한 상품 내역
             List<OrderListViewResponse> orders = orderService.findAll(user).stream()

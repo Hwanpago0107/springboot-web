@@ -17,9 +17,20 @@ public class Delivery {
     @OneToOne(fetch = FetchType.LAZY, mappedBy = "delivery")
     private Order order;
 
+    @Column(name="receiver")
+    private String receiver;
+
     @Embedded
     private Address address;
 
     @Enumerated(EnumType.STRING)
     private DeliveryStatus status;
+
+    public Delivery createDelivery(Address address, String receiver) {
+        this.setAddress(address);
+        this.setReceiver(receiver);
+        this.setStatus(DeliveryStatus.READY);
+
+        return this;
+    }
 }

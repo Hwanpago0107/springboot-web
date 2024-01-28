@@ -22,7 +22,7 @@ public class OrderService {
     private final OrderItemRepository orderItemRepository;
 
     @Transactional
-    public Order save(CreateOrderRequest request, User user, Delivery delivery) {
+    public Order save(CreateOrderRequest request, User user) {
 
         // 장바구니에서 주문한 상품을 검색하여 주문 상품 객체를 만든다.
         List<OrderItem> orderItems = new ArrayList<>();
@@ -37,7 +37,11 @@ public class OrderService {
             orderItemRepository.save(orderItem);
         }
 
-        Order order = Order.createOrder(user, delivery, orderItems);
+        // 배송정보를 같이 입력해준다.
+        Delivery delivery = new Delivery();
+        delivery.createDelivery(request.getAddress(), request.getReceiver());
+
+        Order order = Order.createOrder(user, delivery, orderItems, request.getOrderNote(), request.getPayment());
 
         return orderRepository.save(order);
     }

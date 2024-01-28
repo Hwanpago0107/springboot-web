@@ -1,6 +1,7 @@
 package me.ceskim493.springbootdeveloper.controller;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import me.ceskim493.springbootdeveloper.domain.Item;
 import me.ceskim493.springbootdeveloper.dto.AddItemRequest;
 import me.ceskim493.springbootdeveloper.dto.ItemResponse;
@@ -18,6 +19,7 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @RestController // http Response Body에 객체 데이터를 JSON 형식으로 변환하는 컨트롤러
+@Slf4j
 public class ItemApiController {
 
     private final ItemService itemService;
@@ -69,9 +71,13 @@ public class ItemApiController {
     public UrlResource showImage(@PathVariable String filename) throws MalformedURLException {
 
         String projectPath = System.getProperty("user.dir") + "/src/main/resources/static/upload/img/";
+        log.info("projectPath: {}", filename);
+        log.info("filename: {}", filename);
         // 파일 유무 확인
         File file = new File(projectPath, filename);
         if (!file.exists()) return null;
+
+        log.info("file.getAbsolutePath(): {}", file.getAbsolutePath());
 
         return new UrlResource("file:" + file.getAbsolutePath());
     }

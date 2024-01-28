@@ -41,31 +41,14 @@ if (deleteCartChkBtn) {
         console.log(checked);
         function success() {
             alert("상품 삭제가 완료되었습니다.");
-            location.replace("/main/myCarts");
+            location.replace("/main/myCart");
         }
         function fail() {
             alert("상품 삭제가 실패했습니다.");
-            location.replace("/main/myCarts");
+            location.replace("/main/myCart");
         }
 
         httpRequest("DELETE", "/api/carts/checked", body, success, fail);
-    });
-}
-
-const deleteCartAllBtn = document.getElementById("delete-cart-all-btn");
-
-if (deleteCartAllBtn) {
-    deleteCartAllBtn.addEventListener("click", (event) => {
-        function success() {
-            alert("장바구니 삭제가 완료되었습니다.");
-            location.replace("/main");
-        }
-        function fail() {
-            alert("장바구니 삭제가 실패했습니다.");
-            location.replace("/main");
-        }
-
-        httpRequest("DELETE", "/api/carts", null, success, fail);
     });
 }
 

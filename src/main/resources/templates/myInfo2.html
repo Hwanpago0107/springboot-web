@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{mainLayout}">
+<body>
+<div layout:fragment="content">
+	<!-- BREADCRUMB -->
+	<div id="breadcrumb" class="section">
+		<!-- container -->
+		<div class="container">
+			<!-- row -->
+			<div class="row">
+				<div class="col-md-12">
+					<h3 class="breadcrumb-header">내 정보</h3>
+					<ul class="breadcrumb-tree">
+						<li><a th:href="@{/main/home}">Home</a></li>
+						<li class="active">Info</li>
+					</ul>
+				</div>
+			</div>
+			<!-- /row -->
+		</div>
+		<!-- /container -->
+	</div>
+	<!-- /BREADCRUMB -->
+
+	<!-- SECTION -->
+	<div class="section">
+		<!-- container -->
+		<div class="container">
+			<!-- row -->
+			<div class="row">
+				<div class="col-md-7">
+					<!-- Billing Details -->
+					<div class="billing-details">
+						<div class="section-title">
+							<h3 class="title">내 정보 수정</h3>
+						</div>
+
+						<div class="form-group">
+							<h4 class="title">이름</h4>
+							<input class="input" type="text" th:value="${userInfo.getName()}" name="name" placeholder="이름">
+						</div>
+						<div class="form-group">
+							<h4 class="title">닉네임</h4>
+							<input class="input" type="text" th:value="${userInfo.getNickname()}" name="nickname" placeholder="nickname">
+						</div>
+						<div class="form-group">
+							<h4 class="title">이메일</h4>
+							<input class="input" type="email" th:value="${userInfo.getEmail()}" name="email" placeholder="Email" disabled>
+						</div>
+						<div class="form-group">
+							<h4 class="title">주소</h4>
+							<input class="input" type="text" th:value="${userInfo.getAddress().getZipcode()}" name="zipcode" placeholder="ZIP Code" id="zipcode">
+						</div>
+						<div class="form-group">
+							<input class="input" type="text" th:value="${userInfo.getAddress().getStreetAddr()}" name="street" placeholder="Street" id="streetAddr">
+						</div>
+						<div class="form-group">
+							<input class="input" type="text" th:value="${userInfo.getAddress().getDetailAddr()}" name="detail" placeholder="detail" id="detailAddr">
+						</div>
+						<div class="form-group">
+							<input class="input" type="tel" th:value="${userInfo.getPhone()}" name="tel" placeholder="Telephone">
+						</div>
+						<div class="form-group">
+							<div class="input-checkbox">
+								<input type="checkbox" id="create-account">
+								<label for="create-account">
+									<span></span>
+									Create Account?
+								</label>
+								<div class="caption">
+									<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt.</p>
+									<input class="input" type="password" name="password" placeholder="Enter Your Password">
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- /Billing Details -->
+
+					<!-- Shiping Details -->
+					<div class="shiping-details">
+						<div class="section-title">
+							<h3 class="title">Shiping address</h3>
+						</div>
+						<div class="input-checkbox">
+							<input type="checkbox" id="shiping-address">
+							<label for="shiping-address">
+								<span></span>
+								Ship to a diffrent address?
+							</label>
+							<div class="caption">
+								<div class="form-group">
+									<input class="input" type="text" name="first-name" placeholder="First Name">
+								</div>
+								<div class="form-group">
+									<input class="input" type="text" name="last-name" placeholder="Last Name">
+								</div>
+								<div class="form-group">
+									<input class="input" type="email" name="email" placeholder="Email">
+								</div>
+								<div class="form-group">
+									<input class="input" type="text" name="address" placeholder="Address">
+								</div>
+								<div class="form-group">
+									<input class="input" type="text" name="city" placeholder="City">
+								</div>
+								<div class="form-group">
+									<input class="input" type="text" name="country" placeholder="Country">
+								</div>
+								<div class="form-group">
+									<input class="input" type="text" name="zip-code" placeholder="ZIP Code">
+								</div>
+								<div class="form-group">
+									<input class="input" type="tel" name="tel" placeholder="Telephone">
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- /Shiping Details -->
+
+					<!-- Order notes -->
+					<div class="order-notes">
+						<textarea class="input" placeholder="Order Notes"></textarea>
+					</div>
+					<!-- /Order notes -->
+				</div>
+			</div>
+			<!-- /row -->
+		</div>
+		<!-- /container -->
+	</div>
+	<!-- /SECTION -->
+</div>
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script>
+	new daum.Postcode({
+		oncomplete: function(data) {
+			var addr = "";
+			var extraAddr = "";
+
+			if (data.userSelectedType == "R") {
+				addr = data.roadAddress;
+			} else {
+				addr = data.jibunAddress;
+			}
+
+			if (data.userSelectedType == "R") {
+				if (data.bname != "" && /[동|로|가]$/g.test(data.bname)) {
+					extraAddr += data.bname;
+				}
+				if (data.buildingName != "" && data.apartment == "Y") {
+					extraAddr += (extraAddr != "" ? ", " + data.buildingName : data.buildingName);
+				}
+				if (extraAddr != "") {
+					extraAddr = " (" + extraAddr + ")";
+				}
+
+				document.getElementById("detailAddr").value = extraAddr;
+			} else {
+				document.getElementById("detailAddr").value = "";
+			}
+			document.getElementById("zipcode").value = data.zonecode;
+			document.getElementById("streetAddr").value = addr;
+			document.getElementById("detailAddr").focus();
+		}
+	}).open();
+</script>
+</body>
+</html>

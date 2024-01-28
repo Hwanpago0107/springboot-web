@@ -98,7 +98,7 @@
 					</div>
 					<div class="payment-method">
 						<div class="input-radio">
-							<input type="radio" name="payment" id="payment-1">
+							<input type="radio" name="payment" id="payment-1" value="1">
 							<label for="payment-1">
 								<span></span>
 								계좌이체
@@ -108,7 +108,7 @@
 							</div>
 						</div>
 						<div class="input-radio">
-							<input type="radio" name="payment" id="payment-2">
+							<input type="radio" name="payment" id="payment-2" value="2">
 							<label for="payment-2">
 								<span></span>
 								카드결제
@@ -118,7 +118,7 @@
 							</div>
 						</div>
 						<div class="input-radio">
-							<input type="radio" name="payment" id="payment-3">
+							<input type="radio" name="payment" id="payment-3" value="3">
 							<label for="payment-3">
 								<span></span>
 								Npay
@@ -135,15 +135,32 @@
 							<a href="#">이용약관</a>을 읽었으며 이에 동의합니다.
 						</label>
 					</div>
-					<a id="pre-order-btn" class="primary-btn order-submit">주문하기</a>
+					<a id="pre-order-btn" class="primary-btn order-submit"
+					   data-target="#deliveryModal" style="cursor: pointer;">주문하기</a>
 				</div>
 				<!-- /Order Details -->
 			</div>
 			<!-- /row -->
 		</div>
-		<!-- /container -->
 	</div>
 	<!-- /SECTION -->
+	<!-- Modal -->
+	<div class="modal fade" id="deliveryModal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-lg modal-dialog-scrollable" style="width:50%;">
+			<div class="modal-content">
+				<div class="modal-body">
+					<th:block th:replace="~{deliveryModal :: showModal()}"></th:block>
+				</div>
+				<div class="modal-footer">
+					<a class="secondary-btn order-submit" data-dismiss="modal" style="cursor: pointer;">닫기</a>
+					<a id="create-order-btn" class="primary-btn order-submit" style="cursor: pointer;">주문하기</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!--Modal-->
+</div>
+<!-- /container -->
 </div>
 </body>
 </html>

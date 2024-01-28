@@ -32,15 +32,26 @@ public class Order {
 
     private LocalDateTime orderDate;
 
+    @Column(name="payment")
+    private String payment;
+
+    @Column(name="order_note")
+    private String orderNote;
+
     @Enumerated(EnumType.STRING)
     private OrderStatus status;
+
+    private void setDelivery(Delivery delivery) {
+        this.delivery = delivery;
+        delivery.setOrder(this);
+    }
 
     private void addOrderItem(OrderItem orderItem) {
         orderItems.add(orderItem);
         orderItem.setOrder(this);
     }
 
-    public static Order createOrder(User user, Delivery delivery, List<OrderItem> orderItems) {
+    public static Order createOrder(User user, Delivery delivery, List<OrderItem> orderItems, String orderNote, String payment) {
         Order order = new Order();
         order.setUser(user);
         order.setDelivery(delivery);
@@ -49,6 +60,8 @@ public class Order {
         }
         order.setStatus(OrderStatus.ORDER);
         order.setOrderDate(LocalDateTime.now());
+        order.setOrderNote(orderNote);
+        order.setPayment(payment);
 
         return order;
     }

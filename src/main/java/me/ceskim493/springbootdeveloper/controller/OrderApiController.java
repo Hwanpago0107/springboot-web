@@ -1,7 +1,6 @@
 package me.ceskim493.springbootdeveloper.controller;
 
 import lombok.RequiredArgsConstructor;
-import me.ceskim493.springbootdeveloper.domain.Delivery;
 import me.ceskim493.springbootdeveloper.domain.Order;
 import me.ceskim493.springbootdeveloper.domain.User;
 import me.ceskim493.springbootdeveloper.dto.CreateOrderRequest;
@@ -31,10 +30,7 @@ public class OrderApiController {
         String userName = SecurityContextHolder.getContext().getAuthentication().getName();
         User user = userService.findByEmail(userName);
 
-        // 배송
-        Delivery delivery = new Delivery();
-
-        Order orderedItem = orderService.save(request, user, delivery);
+        Order orderedItem = orderService.save(request, user);
 
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(orderedItem);

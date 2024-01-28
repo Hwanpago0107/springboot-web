@@ -1,0 +1,84 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<th:block th:fragment="showModal()">
+    <div class="modal-body">
+        <!-- SECTION -->
+        <div class="section">
+            <!-- container -->
+            <div class="container">
+                <!-- row -->
+                <div class="row">
+                    <div class="col-md-7">
+                        <!-- Shiping Details -->
+                        <div class="shiping-details">
+                            <div class="section-title">
+                                <h3 class="title">배송지</h3>
+                                <input type="checkbox" id="shiping-address" style="margin-left: 10px;">
+                                <label for="shiping-address">
+                                    <span></span>
+                                    내정보에서 배송지 가져오기
+                                </label>
+                            </div>
+                            <!-- Billing Details -->
+                            <div class="billing-details">
+                                <div class="form-group">
+                                    <h4 class="title">주문자 성명</h4>
+                                    <input class="input" type="text"
+                                           name="name" placeholder="주문자" id="name">
+                                    <input class="input" type="hidden" th:value="${userInfo.getName()}"
+                                           name="name" placeholder="이름" id="hiddenName">
+                                </div>
+                                <div class="form-group">
+                                    <h4 class="title">받는분 성명</h4>
+                                    <input class="input" type="text"
+                                           name="name" placeholder="받는분" id="receiver">
+                                    <input class="input" type="hidden" th:value="${userInfo.getName()}"
+                                           name="name" placeholder="이름" id="hiddenReceiver">
+                                </div>
+                                <div class="form-group">
+                                    <h4 class="title">전화번호</h4>
+                                    <input class="input" type="tel"
+                                           name="tel" placeholder="Telephone" id="phone">
+                                    <input class="input" type="hidden" th:value="${userInfo.getPhone()}"
+                                           name="tel" placeholder="Telephone" id="hiddenPhone">
+                                </div>
+                                <div class="form-group">
+                                    <h4 class="title">주소</h4>
+                                    <input class="input" type="text"
+                                           name="zipcode" placeholder="ZIP Code" id="zipcode" style="width: 81%;">
+                                    <input class="input" type="hidden" th:value="${userInfo.getAddress()?.getZipcode()}"
+                                           name="zipcode" placeholder="ZIP Code" id="hiddenZipcode" style="width: 81%;">
+                                    <div style="width: 14%; display: inline-block;">
+                                        <button th:onclick="|findAddr()|" type="button" class="btn btn-info"
+                                                style="margin-left: 5px; margin-bottom: 5px;">주소 찾기</button>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <input class="input" type="text"
+                                           name="street" placeholder="Street" id="streetAddr">
+                                    <input class="input" type="hidden" th:value="${userInfo.getAddress()?.getStreetAddr()}"
+                                           name="street" placeholder="Street" id="hiddenStreetAddr">
+                                </div>
+                                <div class="form-group">
+                                    <input class="input" type="text"
+                                           name="detail" placeholder="detail" id="detailAddr">
+                                    <input class="input" type="hidden" th:value="${userInfo.getAddress()?.getDetailAddr()}"
+                                           name="detail" placeholder="detail" id="hiddenDetailAddr">
+                                </div>
+                            </div>
+                            <!-- /Billing Details -->
+                        <!-- Order notes -->
+                        <div class="order-notes">
+                            <h4 class="title">배송 메시지</h4>
+                            <textarea class="input" placeholder="Order Notes" id="orderNote"></textarea>
+                        </div>
+                        <!-- /Order notes -->
+                    </div>
+                </div>
+                <!-- /row -->
+            </div>
+            <!-- /container -->
+        </div>
+        <!-- /SECTION -->
+    </div>
+</th:block>
