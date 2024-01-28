@@ -13,14 +13,16 @@
   </component>
   <component name="DBNavigator.Project.DatabaseConsoleManager">
     <connection id="2e96c5f8-9f5c-479f-b3fc-4f28e932a7da">
-      <console name="Connection" type="STANDARD" schema="" session="Main" />
+      <console name="Connection" type="STANDARD" schema="ebdb" session="Main"><![CDATA[select * from `Item`]]></console>
     </connection>
   </component>
   <component name="DBNavigator.Project.DatabaseEditorStateManager">
     <last-used-providers />
   </component>
   <component name="DBNavigator.Project.DatabaseFileManager">
-    <open-files />
+    <open-files>
+      <object connection-id="2e96c5f8-9f5c-479f-b3fc-4f28e932a7da" object-ref="consoles/Connection" />
+    </open-files>
   </component>
   <component name="DBNavigator.Project.DatabaseSessionManager">
     <connection id="2e96c5f8-9f5c-479f-b3fc-4f28e932a7da" />
