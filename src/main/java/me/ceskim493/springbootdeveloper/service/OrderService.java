@@ -31,7 +31,7 @@ public class OrderService {
             OrderItem orderItem = new OrderItem();
             CartItem cartItem = cartItemRepository.findById(id).get();
             orderItem = OrderItem.createOrderItem(cartItem.getItem()
-                    , (int) (cartItem.getItem().getPrice() * cartItem.getItem().getDiscount() * cartItem.getQuantity())
+                    , (int) (cartItem.getItem().getPrice() * (1 - cartItem.getItem().getDiscount()) * cartItem.getQuantity())
                     , cartItem.getQuantity());
             orderItems.add(orderItem);
             orderItemRepository.save(orderItem);

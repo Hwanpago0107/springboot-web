@@ -13,7 +13,33 @@
   </component>
   <component name="DBNavigator.Project.DatabaseConsoleManager">
     <connection id="2e96c5f8-9f5c-479f-b3fc-4f28e932a7da">
-      <console name="Connection" type="STANDARD" schema="ebdb" session="Main"><![CDATA[select * from `Item`]]></console>
+      <console name="Connection" type="STANDARD" schema="ebdb" session="Main"><![CDATA[SET FOREIGN_KEY_CHECKS = 0;
+
+SELECT
+    table_name
+FROM
+    information_schema.tables
+WHERE
+    table_schema = 'ebdb';
+    
+    SELECT * FROM `Article`;
+
+DROP TABLE IF EXISTS `Article`;
+DROP TABLE IF EXISTS Cart;
+DROP TABLE IF EXISTS CartItem;
+DROP TABLE IF EXISTS Category;
+DROP TABLE IF EXISTS Category_SEQ;
+DROP TABLE IF EXISTS Delivery;
+DROP TABLE IF EXISTS Item;
+DROP TABLE IF EXISTS OrderItem;
+DROP TABLE IF EXISTS RefreshToken;
+DROP TABLE IF EXISTS category_item;
+DROP TABLE IF EXISTS orders;
+DROP TABLE IF EXISTS users;
+
+SET FOREIGN_KEY_CHECKS = 1;
+
+commit;]]></console>
     </connection>
   </component>
   <component name="DBNavigator.Project.DatabaseEditorStateManager">
@@ -28,6 +54,7 @@
   <component name="DBNavigator.Project.DatasetFilterManager">
     <filter-actions connection-id="2e96c5f8-9f5c-479f-b3fc-4f28e932a7da" dataset="ebdb.Delivery" active-filter-id="" />
     <filter-actions connection-id="2e96c5f8-9f5c-479f-b3fc-4f28e932a7da" dataset="ebdb.Item" active-filter-id="" />
+    <filter-actions connection-id="2e96c5f8-9f5c-479f-b3fc-4f28e932a7da" dataset="ebdb.Article" active-filter-id="" />
   </component>
   <component name="DBNavigator.Project.ExecutionManager">
     <retain-sticky-names value="false" />

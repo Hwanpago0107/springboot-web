@@ -20,15 +20,20 @@ public class OrderListViewResponse {
 
     private Delivery delivery;
 
+    private String orderNote;
+
     private LocalDateTime orderDate;
 
     private OrderStatus status;
+
+    private int totalPrice;
 
     public OrderListViewResponse(Order order) {
         this.id = order.getId();
         this.user = order.getUser();
         this.orderItems = order.getOrderItems();
         this.delivery = order.getDelivery();
+        this.orderNote = order.getOrderNote();
         this.orderDate = order.getOrderDate();
         this.status = order.getStatus();
     }

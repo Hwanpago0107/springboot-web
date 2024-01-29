@@ -2279,3 +2279,59 @@ textarea.input {
   border-width: thin;
   border-bottom-style: ridge;
 }
+
+.carts-end-details {
+  position: relative;
+  padding: 0px 25px 0px;
+  border-right: 1px solid #E4E7ED;
+  border-left: 1px solid #E4E7ED;
+  border-bottom: 1px solid #E4E7ED;
+}
+
+.carts-end-details:first-child:before {
+  content: "";
+  position: absolute;
+  left: -1px;
+  right: -1px;
+  height: 30px;
+  border-top: 1px solid #E4E7ED;
+  border-left: 1px solid #E4E7ED;
+  border-right: 1px solid #E4E7ED;
+}
+
+.carts-end-summary {
+  margin: 10px 0px;
+}
+
+.carts-end-summary .carts-end-col {
+  display: table;
+  width: 100%;
+}
+
+.carts-end-summary .carts-end-col:after {
+  content: "";
+  display: block;
+  clear: both;
+}
+
+.carts-end-summary .carts-end-col>div {
+  display: table-cell;
+  padding: 10px 0px;
+  width: 180px;
+  text-align: center;
+}
+
+.carts-end-summary .carts-end-col .carts-end-total {
+  font-size: 24px;
+  color: #D10024;
+}
+
+.carts-end-content {
+  border-width: thin;
+  border-bottom-style: ridge;
+}
+
+.carts-end-summary .carts-end-col .cart-end-sub {
+  width: 85%;
+  text-align: left;
+}

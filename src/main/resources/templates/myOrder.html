@@ -58,8 +58,35 @@
 							<div><strong th:text="${#numbers.formatDecimal(orderItem.orderPrice , 0, 'DEFAULT', 0, 'DEFAULT')}"></strong></div>
 						</div>
 					</div>
-					<a class="primary-btn order-submit" th:onclick="|deleteOrder([${order.id}])|"
-					  style="cursor: pointer; float: right;">주문 취소</a>
+					<div class="row" style="margin: 20px 0px 0px 0px; display: inline-block; width: 100%;">
+						<div class="col-md-10 carts-end-details">
+							<div class="carts-end-summary">
+								<div class="carts-end-col">
+									<strong>받는분</strong><div class="cart-end-sub" th:text="${order.getDelivery().getReceiver()}"></div>
+								</div>
+								<div class="carts-end-col">
+									<strong>배송지</strong><div class="cart-end-sub"
+															 th:text="|(${order.getDelivery().getAddress().getZipcode()})
+															 ${order.getDelivery().getAddress().getStreetAddr()},
+															 ${order.getDelivery().getAddress().getDetailAddr()}|"></div>
+								</div>
+								<div class="carts-end-col">
+									<strong>요청사항</strong><div class="cart-end-sub" th:text="${order.getOrderNote()}"></div>
+								</div>
+								<div class="carts-end-col">
+									<strong>주문금액</strong><div class="cart-end-sub" th:text="${order.getOrderNote()}"></div>
+								</div>
+							</div>
+						</div>
+						<div style="display:inline-block; margin-left: 15px;">
+							<h4 style="text-align: center;" th:if="${order.getStatus().toString().equals('ORDER')}">주문완료</h4>
+							<h4 style="text-align: center;" th:if="${order.getStatus().toString().equals('READY')}">배송준비</h4>
+							<h4 style="text-align: center;" th:if="${order.getStatus().toString().equals('CANCEL')}">주문취소</h4>
+							<h4 style="text-align: center;" th:if="${order.getStatus().toString().equals('COMP')}">배송완료</h4>
+							<a class="primary-btn order-submit" th:onclick="|deleteOrder([${order.id}])|"
+							  style="cursor: pointer; float: right;">주문 취소</a>
+						</div>
+					</div>
 				</div>
 			</div>
 			<!-- /row -->

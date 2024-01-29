@@ -69,7 +69,18 @@ public class MainController {
                     .map(ItemListViewResponse::new)
                     .toList();
 
+            // 핫딜 상품리스트
+            List<ItemListViewResponse> hotdeals = itemService.findByDiscountGreaterThanEqual(0.3F).stream()
+                    .map(ItemListViewResponse::new)
+                    .toList();
+
+            List<ItemListViewResponse> top5 = itemService.findBySaleCountsLimit5().stream()
+                    .map(ItemListViewResponse::new)
+                    .toList();
+
             model.addAttribute("items", items);
+            model.addAttribute("hotdeals", hotdeals);
+            model.addAttribute("top5", top5);
         } else if (pageName.equals("myInfo") || pageName.equals("myCart")) {
             // 사용자의 정보를 가지고 온다.
             UserViewResponse userInfo = user.createUserView();

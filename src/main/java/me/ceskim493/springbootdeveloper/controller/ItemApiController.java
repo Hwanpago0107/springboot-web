@@ -76,8 +76,8 @@ public class ItemApiController {
         // 파일 유무 확인
         File file = new File(projectPath, filename);
         if (!file.exists()) {
-            log.info("file is empty");
-            return null;
+                                    log.info("file is empty");
+                                    return null;
         }
 
         log.info("file.getAbsolutePath(): {}", file.getAbsolutePath());

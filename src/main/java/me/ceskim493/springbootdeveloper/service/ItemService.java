@@ -29,6 +29,15 @@ public class ItemService {
         return itemRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("unexpected Item"));
     }
+
+    public List<Item> findByDiscountGreaterThanEqual(Float discount) {
+        return itemRepository.findByDiscountGreaterThanEqual(discount);
+    }
+
+    public List<Item> findBySaleCountsLimit5() {
+        return itemRepository.findBySaleCountsLimit5();
+    }
+
     public List<Item> findAll() {
         return itemRepository.findAll();
     }
