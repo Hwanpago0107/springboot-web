@@ -2,12 +2,10 @@ package me.ceskim493.springbootdeveloper.controller;
 
 import lombok.RequiredArgsConstructor;
 import me.ceskim493.springbootdeveloper.annotation.LoginUser;
-import me.ceskim493.springbootdeveloper.domain.Item;
+import me.ceskim493.springbootdeveloper.domain.Category;
 import me.ceskim493.springbootdeveloper.domain.SessionUser;
-import me.ceskim493.springbootdeveloper.dto.ItemListViewResponse;
-import me.ceskim493.springbootdeveloper.dto.ItemViewResponse;
+import me.ceskim493.springbootdeveloper.dto.CategoryViewResponse;
 import me.ceskim493.springbootdeveloper.service.CategoryService;
-import me.ceskim493.springbootdeveloper.service.ItemService;
 import me.ceskim493.springbootdeveloper.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,36 +16,35 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @Controller
-public class ItemViewController {
+public class CategoryViewController {
 
-    private final ItemService itemService;
-    private final UserService userService;
     private final CategoryService categoryService;
+    private final UserService userService;
 
-    @GetMapping("/new-item")
+    @GetMapping("/newCategory")
     public String newItem(@RequestParam(required = false) Long id, Model model, @LoginUser SessionUser user) {
         if (id == null) {
-            model.addAttribute("aItem", new ItemViewResponse());
+            model.addAttribute("category", new CategoryViewResponse());
         } else {
-            Item item = itemService.findById(id);
-            model.addAttribute("aItem", new ItemViewResponse(item));
+            Category category = categoryService.findById(id);
+            model.addAttribute("category", new CategoryViewResponse(category));
         }
 
         model.addAttribute("categories", categoryService.findAll());
 
         model.addAttribute("userName", userService.getSessionUserName(user)); // session에 저장된 유저이름 setting
 
-        return "newItem";
+        return "newCategory";
     }
 
-    @GetMapping("/items")
-    public String getItems(Model model) {
-        List<ItemListViewResponse> items = itemService.findAll().stream()
-                .map(ItemListViewResponse::new)
+    @GetMapping("/categories")
+    public String getCategories(Model model) {
+        List<CategoryViewResponse> categories = categoryService.findAll().stream()
+                .map(CategoryViewResponse::new)
                 .toList();
 
-        model.addAttribute("items", items);
+        model.addAttribute("categories", categories);
 
-        return  "itemList";
+        return  "categoryList";
     }
 }

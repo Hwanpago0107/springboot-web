@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{adminLayout}">
+<body>
+<div layout:fragment="content">
+    <div class="card mb-4">
+        <div class="card-header">
+            <i class="fas fa-table me-1"></i>
+            <div class="adm-small-title" th:if="${category?.id} == null">카테고리등록</div>
+            <div class="adm-small-title" th:if="${category?.id} != null">카테고리수정</div>
+        </div>
+        <div class="card-body">
+            <form name="form" enctype="multipart/form-data">
+                <!-- 아이디 정보 저장 -->
+                <input type="hidden" id="category-id" th:value="${category?.id}">
+                <header class="mb-4">
+                    <div class="adm-small-head">카테고리 이름</div>
+                    <input type="text" class="form-control adm-small-input" placeholder="이름" id="name" th:value="${category?.name}">
+                </header>
+                <section class="mb-4">
+                    <div class="adm-small-head">부모카테고리</div>
+                    <select class="form-select" id="parents">
+                        <option value="0">==부모카테고리 선택==</option>
+                        <option th:each="item : ${categories}" th:value="${item.id}"
+                                th:text="${item.name}" th:selected="${item.id} == ${category?.getParent()?.id}"></option>
+                    </select>
+                </section>
+                <button th:if="${category.id} == null" type="button" id="create-cate-btn" class="btn btn-primary btn-sm">등록</button>
+                <button th:if="${category.id} != null" type="button" id="modify-cate-btn" class="btn btn-primary btn-sm">수정</button>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>

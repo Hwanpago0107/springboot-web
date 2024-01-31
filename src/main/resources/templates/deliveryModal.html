@@ -1,6 +1,6 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
-<th:block th:fragment="showModal()">
+<th:block th:fragment="showModal(paymentYn)">
     <div class="modal-body">
         <!-- SECTION -->
         <div class="section">
@@ -73,6 +73,49 @@
                             <textarea class="input" placeholder="Order Notes" id="orderNote"></textarea>
                         </div>
                         <!-- /Order notes -->
+                        <input type="hidden" id="paymentYn" th:value="${paymentYn}">
+                        <!-- Payment -->
+                        <div th:if="${paymentYn == 'Y'}" style="margin-top: 10px;">
+                            <div class="payment-method">
+                                <div class="input-radio">
+                                    <input type="radio" name="payment_sub" id="payment-1" value="1">
+                                    <label for="payment-1">
+                                        <span></span>
+                                        계좌이체
+                                    </label>
+                                    <div class="caption">
+                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                                    </div>
+                                </div>
+                                <div class="input-radio">
+                                    <input type="radio" name="payment_sub" id="payment-2" value="2">
+                                    <label for="payment-2">
+                                        <span></span>
+                                        카드결제
+                                    </label>
+                                    <div class="caption">
+                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                                    </div>
+                                </div>
+                                <div class="input-radio">
+                                    <input type="radio" name="payment_sub" id="payment-3" value="3">
+                                    <label for="payment-3">
+                                        <span></span>
+                                        Npay
+                                    </label>
+                                    <div class="caption">
+                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="input-checkbox">
+                                <input type="checkbox" id="terms_sub">
+                                <label for="terms_sub">
+                                    <span></span>
+                                    <a href="#">이용약관</a>을 읽었으며 이에 동의합니다.
+                                </label>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <!-- /row -->

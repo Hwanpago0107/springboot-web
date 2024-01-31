@@ -8,9 +8,6 @@ import lombok.Setter;
 import me.ceskim493.springbootdeveloper.Exception.NotEnoughStockException;
 import org.hibernate.annotations.ColumnDefault;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @Entity
 @Getter
 @Setter
@@ -39,11 +36,13 @@ public class Item {
 
     private long fileSize;
 
-    @ManyToMany(mappedBy = "items")
-    private List<Category> categories = new ArrayList<>();
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "category_id")
+    private Category category;
 
     @Builder // 빌더 패턴으로 객체 생성
-    public Item(Long id, String name, int price, int stockQuantity, float discount, String fileName, String filePath, Long fileSize){
+    public Item(Long id, String name, int price, int stockQuantity, float discount, String fileName, String filePath, Long fileSize
+                    , Category category){
         this.id = id;
         this.name = name;
         this.price = price;
@@ -52,6 +51,7 @@ public class Item {
         this.fileName = fileName;
         this.filePath = filePath;
         this.fileSize = fileSize;
+        this.category = category;
     }
 
     public void addStock(int stockQuantity) {
@@ -64,7 +64,7 @@ public class Item {
         this.stockQuantity = restStock;
     }
 
-    public void update(String name, int price, int stockQuantity, float discount, String fileName, String filePath, Long fileSize) {
+    public void update(String name, int price, int stockQuantity, float discount, String fileName, String filePath, Long fileSize, Category category) {
         this.name = name;
         this.price = price;
         this.stockQuantity = stockQuantity;
@@ -72,5 +72,6 @@ public class Item {
         this.fileName= fileName;
         this.filePath = filePath;
         this.fileSize = fileSize;
+        this.category = category;
     }
 }

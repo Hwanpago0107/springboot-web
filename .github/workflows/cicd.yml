@@ -28,6 +28,14 @@ jobs:
           jwt.issuer: ${{ secrets.JWT_ISSUER }}
           jwt.secret_key: ${{ secrets.JWT_SECRET_KEY }}
 
+      - name: Set Yaml2
+        uses: microsoft/variable-substitution@v1
+        with:
+          files: ./src/main/resources/application.yml
+        env:
+          spring.mail.username: ${{ secrets.MAIL_USERNAME }}
+          spring.mail.password: ${{ secrets.MAIL_PASSWORD }}
+
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
 

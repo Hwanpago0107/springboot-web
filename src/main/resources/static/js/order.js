@@ -25,6 +25,16 @@ if (preOrderBtn) {
     });
 }
 
+const preOrderBtn2 = document.getElementById("pre-order-btn2");
+
+if (preOrderBtn2) {
+    preOrderBtn2.addEventListener("click", (event) => {
+        // 모달창 열기
+        $("#deliveryModal2").modal("toggle");
+    });
+}
+
+
 function deleteOrder(id) {
     if (confirm("주문을 정말 취소하시겠습니까? 주문 취소 시 저장된 주문 내역은 삭제 됩니다.")) {
         function success() {
@@ -46,13 +56,70 @@ const createOrderBtn = document.getElementById("create-order-btn");
 
 if (createOrderBtn) {
     createOrderBtn.addEventListener("click", (event) => {
+        const paymentYn = document.getElementById("paymentYn").value;
+        console.log(paymentYn);
+
+        let payname = "";
+        // 결제수단 영역이 있으면
+        if (paymentYn == 'Y') {
+            payname = "payment_sub";
+            // 이용약관
+            if (!document.getElementById("terms_sub").checked) {
+                alert("이용약관을 읽고 동의를 체크하여 주세요.");
+                return;
+            }
+        } else {
+            payname = "payment";
+        }
+
         // 결제수단
         let elpayment = null;
-        document.getElementsByName("payment").forEach((pay) => {
+        document.getElementsByName(payname).forEach((pay) => {
             if (pay.checked) elpayment = pay;
         });
 
-        body = JSON.stringify({
+        if (elpayment == "" || elpayment == null || elpayment == undefined) {
+            alert("결제수단을 선택하여 주세요.");
+            return;
+        }
+
+        if (document.getElementById("name").value == null
+                || document.getElementById("name").value == "") {
+            alert("주문자 이름을 입력해주세요.");
+            return;
+        }
+
+        if (document.getElementById("receiver").value == null
+            || document.getElementById("receiver").value == "") {
+            alert("받으시는 분 이름을 입력해주세요.");
+            return;
+        }
+
+        if (document.getElementById("phone").value == null
+            || document.getElementById("phone").value == "") {
+            alert("받으시는 분 연락처를 입력해주세요.");
+            return;
+        }
+
+        if (document.getElementById("zipcode").value == null
+            || document.getElementById("zipcode").value == "") {
+            alert("우편번호를 입력해주세요.");
+            return;
+        }
+
+        if (document.getElementById("streetAddr").value == null
+            || document.getElementById("streetAddr").value == "") {
+            alert("도로명주소를 입력해주세요.");
+            return;
+        }
+
+        if (document.getElementById("detailAddr").value == null
+            || document.getElementById("detailAddr").value == "") {
+            alert("상세주소를 입력해주세요.");
+            return;
+        }
+
+        body = {
             name: document.getElementById("name").value,
             receiver: document.getElementById("receiver").value,
             phone: document.getElementById("phone").value,
@@ -65,8 +132,7 @@ if (createOrderBtn) {
             orderNote: document.getElementById("orderNote").value,
             cart_item_id: Array.from(document.getElementsByName("checkbox-item-id"))
                             .map(el => Number(el.value))
-        });
-
+        }
         function success() {
             alert("상품 주문이 완료되었습니다.");
             location.replace("/main/myOrder");
@@ -102,4 +168,3 @@ if (shipCheckBox) {
         }
     });
 }
-

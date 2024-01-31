@@ -2,6 +2,7 @@ package me.ceskim493.springbootdeveloper.dto;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import me.ceskim493.springbootdeveloper.domain.Category;
 import me.ceskim493.springbootdeveloper.domain.Item;
 
 @NoArgsConstructor
@@ -16,6 +17,7 @@ public class ItemListViewResponse {
     private String fileName;
     private String filePath;
     private Long fileSize;
+    private Category category;
 
     public ItemListViewResponse(Item item) {
         this.id = item.getId();
@@ -26,5 +28,6 @@ public class ItemListViewResponse {
         this.fileName = item.getFileName();
         this.filePath = item.getFilePath();
         this.fileSize = item.getFileSize();
+        this.category = item.getCategory();
     }
 }

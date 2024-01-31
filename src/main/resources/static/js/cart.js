@@ -1,24 +1,20 @@
 // 등록 기능
 function createCart(id) {
-    const addedQuantity = document.getElementById("addedQuantity" + id);
-    if (Number(addedQuantity.textContent) < 1) {
-        alert("장바구니에 넣을 수량을 선택하여 주십시오.");
-        return;
-    }
-    body = JSON.stringify({
+    body = {
         item_id: String(id),
-        quantity: Number(addedQuantity.textContent)
-    });
-    function success() {
+        // quantity: Number(addedQuantity.textContent)
+    }
+    function success(json) {
+        console.log(json);
         alert("장바구니에 물품을 추가하였습니다.");
-        location.replace("/main");
+        location.replace("/main/home");
     }
 
     function fail() {
         alert("장바구니에 물품을 추가하지 못하였습니다.");
     }
-
     httpRequest("POST", "/api/carts", body, success, fail);
+    //ajaxHttpRequest("POST", "/api/carts", body, success, fail);
 }
 
 // 삭제 기능
@@ -34,9 +30,9 @@ if (deleteCartChkBtn) {
             }
         }
 
-        body = JSON.stringify({
+        body = {
             checked: checked
-        });
+        }
 
         console.log(checked);
         function success() {

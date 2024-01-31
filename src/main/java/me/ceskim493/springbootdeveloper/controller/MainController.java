@@ -2,15 +2,11 @@ package me.ceskim493.springbootdeveloper.controller;
 
 import lombok.RequiredArgsConstructor;
 import me.ceskim493.springbootdeveloper.annotation.LoginUser;
-import me.ceskim493.springbootdeveloper.domain.*;
-import me.ceskim493.springbootdeveloper.dto.CartViewResponse;
-import me.ceskim493.springbootdeveloper.dto.ItemListViewResponse;
-import me.ceskim493.springbootdeveloper.dto.OrderListViewResponse;
-import me.ceskim493.springbootdeveloper.dto.UserViewResponse;
-import me.ceskim493.springbootdeveloper.service.CartService;
-import me.ceskim493.springbootdeveloper.service.ItemService;
-import me.ceskim493.springbootdeveloper.service.OrderService;
-import me.ceskim493.springbootdeveloper.service.UserService;
+import me.ceskim493.springbootdeveloper.domain.CartItem;
+import me.ceskim493.springbootdeveloper.domain.SessionUser;
+import me.ceskim493.springbootdeveloper.domain.User;
+import me.ceskim493.springbootdeveloper.dto.*;
+import me.ceskim493.springbootdeveloper.service.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,6 +22,7 @@ public class MainController {
     private final ItemService itemService;
     private final CartService cartService;
     private final OrderService orderService;
+    private final CategoryService categoryService;
 
     @GetMapping("/")
     public String root() {
@@ -39,9 +36,15 @@ public class MainController {
 
     @GetMapping("/main/{pageName}")
     public String main(Model model, @LoginUser SessionUser sUser, @PathVariable String pageName) {
-
+        // 로그인한 유저
         String username = userService.getSessionUserName(sUser);
         User user = userService.findByEmail(username);
+
+        // start.카테고리 목록 가져오기
+        List<CategoryViewResponse> categories = categoryService.findAll().stream()
+                .map(CategoryViewResponse::new)
+                .toList();
+        // end.카테고리 목록 가져오기
 
         // start.로그인한 사용자가 가지고 있는 장바구니와 장바구니 상품 리스트, 장바구니 총액
         List<CartItem> carts = cartService.findAll(user);
@@ -59,8 +62,20 @@ public class MainController {
                 .toList();
         // start.로그인한 사용자가 가지고 있는 장바구니와 장바구니 상품 리스트, 장바구니 총액
 
+        // start.내가 주문한 상품 내역
+        List<OrderListViewResponse> orders = orderService.findAll(user).stream()
+                .map(OrderListViewResponse::new)
+                .toList();
+
+        // start.사용자의 정보를 가지고 온다.
+        UserViewResponse userInfo = user.createUserView();
+        // end.사용자의 정보를 가지고 온다.
+
+        model.addAttribute("userInfo", userInfo);
+        model.addAttribute("orders", orders);
         model.addAttribute("totalPrice", totalPrice);
         model.addAttribute("cartItems", cartItems);
+        model.addAttribute("categories", categories);
         model.addAttribute("username", username); // session에 저장된 유저이름 setting
 
         if (pageName.equals("home")) {
@@ -82,20 +97,11 @@ public class MainController {
             model.addAttribute("hotdeals", hotdeals);
             model.addAttribute("top5", top5);
         } else if (pageName.equals("myInfo") || pageName.equals("myCart")) {
-            // 사용자의 정보를 가지고 온다.
-            UserViewResponse userInfo = user.createUserView();
-
-            model.addAttribute("userInfo", userInfo);
             return pageName;
         } else if (pageName.equals("myOrder")) {
-            // 내가 주문한 상품 내역
-            List<OrderListViewResponse> orders = orderService.findAll(user).stream()
-                    .map(OrderListViewResponse::new)
-                    .toList();
-
-            model.addAttribute("orders", orders);
-
             return "myOrder";
+        } else if (pageName.equals("product")) {
+            return "product";
         }
 
         return "main";

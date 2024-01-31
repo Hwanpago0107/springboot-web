@@ -3,7 +3,7 @@ const modifyMyinfoButton = document.getElementById("modify-myinfo-btn");
 
 if (modifyMyinfoButton) {
     modifyMyinfoButton.addEventListener("click", event => {
-        body = JSON.stringify({
+        body = {
             email: document.getElementById("email").value,
             name: document.getElementById("name").value,
             nickname: document.getElementById("nickname").value,
@@ -13,7 +13,7 @@ if (modifyMyinfoButton) {
                 streetAddr: document.getElementById("streetAddr").value,
                 detailAddr: document.getElementById("detailAddr").value
             }
-        });
+        }
 
         function success() {
             alert("수정이 완료되었습니다.");

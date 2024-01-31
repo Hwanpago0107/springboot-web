@@ -1,9 +1,11 @@
 package me.ceskim493.springbootdeveloper.service;
 
 import lombok.RequiredArgsConstructor;
+import me.ceskim493.springbootdeveloper.domain.Category;
 import me.ceskim493.springbootdeveloper.domain.Item;
 import me.ceskim493.springbootdeveloper.dto.AddItemRequest;
 import me.ceskim493.springbootdeveloper.dto.UpdateItemRequest;
+import me.ceskim493.springbootdeveloper.repository.CategoryRepository;
 import me.ceskim493.springbootdeveloper.repository.ItemRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,9 +20,12 @@ import java.util.UUID;
 public class ItemService {
 
     private final ItemRepository itemRepository;
+    private final CategoryRepository categoryRepository;
 
     public Item save(AddItemRequest request, MultipartFile imgFile) throws Exception {
         Item item = makeFile(imgFile);
+        Category category = categoryRepository.findById(request.getCategory_id()).get();
+        item.setCategory(category);
 
         return itemRepository.save(request.toEntity(item));
     }
@@ -55,8 +60,11 @@ public class ItemService {
             item.setFileSize(newItem.getFileSize());
         }
 
+        Category category = categoryRepository.findById(request.getCategory_id()).get();
+        item.setCategory(category);
+
         item.update(request.getName(), request.getPrice(), request.getStockQuantity(),
-                item.getDiscount(), item.getFileName(), item.getFilePath(), item.getFileSize());
+                item.getDiscount(), item.getFileName(), item.getFilePath(), item.getFileSize(), item.getCategory());
 
         return item;
     }

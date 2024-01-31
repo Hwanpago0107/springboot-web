@@ -113,7 +113,7 @@ class ItemApiControllerTest {
         final String newFilePath = "/upload/img/1.jpg";
         final Long newFileSize = 1L;
 
-        UpdateItemRequest request = new UpdateItemRequest(newName, newPrice, newStock,
+        UpdateItemRequest request = new UpdateItemRequest(newName, newPrice, newStock, 0.1F,
                 newFileName, newFilePath, newFileSize);
 
         // when : update api로 수정 요청을 보내고, 이때 요청 타입은 JSON이고 given절에서 만들어둔 객체를 요청 본문으로 함계 보낸다.

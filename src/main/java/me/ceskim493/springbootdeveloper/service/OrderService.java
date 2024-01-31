@@ -43,7 +43,12 @@ public class OrderService {
 
         Order order = Order.createOrder(user, delivery, orderItems, request.getOrderNote(), request.getPayment());
 
-        return orderRepository.save(order);
+        order = orderRepository.save(order);
+        
+        // 주문 성공하면 사용자 장바구니 삭제
+        cartRepository.deleteAll();
+
+        return order;
     }
 
     @Transactional

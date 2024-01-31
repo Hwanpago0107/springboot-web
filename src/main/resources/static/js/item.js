@@ -3,11 +3,19 @@ const createItemButton = document.getElementById("create-item-btn");
 
 if (createItemButton) {
     createItemButton.addEventListener("click", (event) => {
+        if ($('#category option:selected').val() == "" || $('#category option:selected').val() == null) {
+            alert("카테고리를 등록해주세요. 목록이 없을 시 카테고리 먼저 등록하여 주세요.");
+            return;
+        }
+
         body = JSON.stringify({
             name: document.getElementById("name").value,
             price: document.getElementById("price").value,
-            stockQuantity: document.getElementById("stockQuantity").value
+            stockQuantity: document.getElementById("stockQuantity").value,
+            discount: document.getElementById("discount").value,
+            category_id: Number($('#category option:selected').val())
         });
+
         const formData = new FormData();
         const blob = new Blob([body], {type: 'application/json'});
         formData.append("request", blob);
@@ -36,7 +44,9 @@ if (modifyItemButton) {
         body = JSON.stringify({
             name: document.getElementById("name").value,
             price: document.getElementById("price").value,
-            stockQuantity: document.getElementById("stockQuantity").value
+            stockQuantity: document.getElementById("stockQuantity").value,
+            discount: document.getElementById("discount").value,
+            category_id: Number($('#category option:selected').val())
         });
 
         const formData = new FormData();

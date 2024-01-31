@@ -31,9 +31,9 @@ public class CartService {
         Item item = itemRepository.findById(request.getItem_id())
                 .orElseThrow(() -> new IllegalArgumentException("no items"));
 
-        if (item.getStockQuantity() < request.getQuantity()) {
-            // 수량이 적습니다 에러 내기
-            throw new IllegalArgumentException("less than real stock");
+        if (item.getStockQuantity() < 1) {
+            // 재고가 없습니다.
+            throw new IllegalArgumentException("재고가 없습니다.");
         }
 
         // 사용자가 갖고 있는 카트가 없으면 만들어준다.
@@ -49,10 +49,10 @@ public class CartService {
         List<CartItem> cartItems = cartItemRepository.findCartItemByItem_Id(request.getItem_id());
         if (cartItems != null && cartItems.size() > 0) {
             cartItem = cartItems.get(0);
-            int newQuantity = cartItem.getQuantity() + request.getQuantity();
+            int newQuantity = cartItem.getQuantity() + 1;
             cartItem.setQuantity(newQuantity);
         } else {
-            cartItem = new CartItem(cart, item, request.getQuantity());
+            cartItem = new CartItem(cart, item, 1);
         }
 
         return cartItemRepository.save(cartItem);

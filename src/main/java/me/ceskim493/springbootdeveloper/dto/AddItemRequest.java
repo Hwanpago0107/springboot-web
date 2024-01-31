@@ -16,6 +16,8 @@ public class AddItemRequest {
     private String fileName;
     private String filePath;
     private Long fileSize;
+    private Long category_id;
+    private Float discount;
 
     public Item toEntity(Item item) { // 생성자를 사용해 객체 생성
         return Item.builder()
@@ -25,6 +27,8 @@ public class AddItemRequest {
                 .fileName(item.getFileName())
                 .filePath(item.getFilePath())
                 .fileSize(item.getFileSize())
+                .discount(item.getDiscount())
+                .category(item.getCategory())
                 .build();
     }
 }

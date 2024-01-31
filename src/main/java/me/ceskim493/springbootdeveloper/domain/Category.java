@@ -1,6 +1,5 @@
 package me.ceskim493.springbootdeveloper.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -14,17 +13,13 @@ import java.util.List;
 public class Category {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "category_id")
     private Long id;
 
     private String name;
 
-    @ManyToMany
-    @JoinTable(name = "category_item",
-        joinColumns = @JoinColumn(name = "category_id"),
-            inverseJoinColumns = @JoinColumn(name = "item_id")
-    )
+    @OneToMany(mappedBy = "category")
     private List<Item> items = new ArrayList<>();
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -33,4 +28,13 @@ public class Category {
 
     @OneToMany(mappedBy = "parent")
     private List<Category> child = new ArrayList<>();
+
+    public void update(String name, Category parent) {
+        this.name = name;
+        this.parent = parent;
+    }
+
+    public void update(String name) {
+        this.name = name;
+    }
 }
