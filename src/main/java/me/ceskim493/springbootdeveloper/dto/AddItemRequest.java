@@ -27,7 +27,7 @@ public class AddItemRequest {
                 .fileName(item.getFileName())
                 .filePath(item.getFilePath())
                 .fileSize(item.getFileSize())
-                .discount(item.getDiscount())
+                .discount(discount)
                 .category(item.getCategory())
                 .build();
     }
