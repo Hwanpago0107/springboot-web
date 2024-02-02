@@ -23,6 +23,7 @@ public class MainController {
     private final CartService cartService;
     private final OrderService orderService;
     private final CategoryService categoryService;
+    private final WishService wishService;
 
     @GetMapping("/")
     public String root() {
@@ -60,12 +61,19 @@ public class MainController {
         List<CartViewResponse> cartItems = carts.stream()
                 .map(CartViewResponse::new)
                 .toList();
-        // start.로그인한 사용자가 가지고 있는 장바구니와 장바구니 상품 리스트, 장바구니 총액
+        // end.로그인한 사용자가 가지고 있는 장바구니와 장바구니 상품 리스트, 장바구니 총액
 
         // start.내가 주문한 상품 내역
         List<OrderListViewResponse> orders = orderService.findAll(user).stream()
                 .map(OrderListViewResponse::new)
                 .toList();
+        // end.내가 주문한 상품 내역
+
+        // start.로그인한 사용자가 가지고 있는 위시리스트
+        List<WishViewResponse> wishes = wishService.findAll(user).stream()
+                .map(WishViewResponse::new)
+                .toList();
+        // end.로그인한 사용자가 가지고 있는 위시리스트
 
         // start.사용자의 정보를 가지고 온다.
         UserViewResponse userInfo = user.createUserView();
@@ -76,6 +84,7 @@ public class MainController {
         model.addAttribute("totalPrice", totalPrice);
         model.addAttribute("cartItems", cartItems);
         model.addAttribute("categories", categories);
+        model.addAttribute("wishes", wishes);
         model.addAttribute("username", username); // session에 저장된 유저이름 setting
 
         if (pageName.equals("home")) {
@@ -102,6 +111,8 @@ public class MainController {
             return "myOrder";
         } else if (pageName.equals("product")) {
             return "product";
+        } else if (pageName.equals("myWish")) {
+            return "myWish";
         }
 
         return "main";

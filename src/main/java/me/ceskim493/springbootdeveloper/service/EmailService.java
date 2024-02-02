@@ -26,7 +26,7 @@ public class EmailService {
 
         try {
             MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage, false, "UTF-8");
-            mimeMessageHelper.setTo(emailMessage.getTo());
+            mimeMessageHelper.setTo("blessu0107@gmail.com");
             mimeMessageHelper.setSubject(emailMessage.getSubject());
             mimeMessageHelper.setText(setContext(emailMessage.getTo(), "reqMail"), true);
             javaMailSender.send(mimeMessage);

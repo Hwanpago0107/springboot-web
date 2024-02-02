@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{mainLayout}">
+<body>
+<div layout:fragment="content">
+	<!-- BREADCRUMB -->
+	<div id="breadcrumb" class="section">
+		<!-- container -->
+		<div class="container">
+			<!-- row -->
+			<div class="row">
+				<div class="col-md-12">
+					<h3 class="breadcrumb-header">위시리스트</h3>
+					<ul class="breadcrumb-tree">
+						<li><a th:href="@{/main/home}">Home</a></li>
+						<li class="active">Wish</li>
+					</ul>
+				</div>
+			</div>
+			<!-- /row -->
+		</div>
+		<!-- /container -->
+	</div>
+	<!-- /BREADCRUMB -->
+
+	<!-- SECTION -->
+	<div class="section">
+		<!-- container -->
+		<div class="container">
+			<!-- row -->
+			<div class="row" th:if="${wishes.size() == 0}">
+				<div class="col-md-11 carts-details" style="padding: 0px;">
+					<div class="section-title" style="text-align: center">
+						<h3 class="title">위시리스트에 상품이 없습니다.</h3>
+					</div>
+				</div>
+			</div>
+			<div class="row" th:if="${wishes.size() > 0}">
+				<div class="col-md-7 carts-details">
+					<div class="section-title">
+						<h3 class="title">내 위시리스트</h3>
+					</div>
+					<div class="carts-summary">
+						<div class="carts-col">
+							<div><input type="checkbox" onclick="selectAll(this)"></input></div>
+							<div><strong>상품명</strong></div>
+							<div><strong>이미지</strong></div>
+							<div><strong>가격</strong></div>
+						</div>
+						<div class="carts-col carts-content" th:each="wish : ${wishes}">
+							<div>
+								<input type="checkbox" name="checkbox-wish-item-id" th:checked="false" th:value="${wish.id}"></input>
+							</div>
+							<div><strong th:text="${wish.getItem().name}"></strong></div>
+							<div>
+								<img style="width: 100%;" th:src="|/images/${wish.getItem().fileName}|"/>
+							</div>
+							<div th:text="${#numbers.formatDecimal(wish.getItem().price * (1 - wish.getItem().getDiscount()), 0, 'DEFAULT', 0, 'DEFAULT')}"></div>
+						</div>
+					</div>
+					<a id="delete-wish-chk-btn" class="primary-btn order-submit" style="cursor: pointer; float: right;">선택 상품 삭제</a>
+					<a id="create-wish-chk-btn" class="secondary-btn order-submit" style="cursor: pointer; float: right;">선택 상품 장바구니 추가</a>
+				</div>
+				<!-- /Order Details -->
+			</div>
+			<!-- /row -->
+		</div>
+	</div>
+	<!-- /SECTION -->
+</div>
+<!-- /container -->
+</div>
+</body>
+</html>
