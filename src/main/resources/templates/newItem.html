@@ -27,7 +27,7 @@
                 </section>
                 <section class="mb-4">
                     <div class="adm-small-head">카테고리</div>
-                    <select class="form-select w-75" id="category">
+                    <select class="form-select" id="category" style="display: inline-block; width: 85%;">
                         <option value="0">==카테고리 선택==</option>
                         <option th:each="category : ${categories}" th:value="${category?.id}"
                                 th:text="${category?.name}"></option>
@@ -36,6 +36,10 @@
                 <section class="mb-4">
                     <div class="adm-small-head">수량</div>
                     <input type="number" class="form-control adm-small-input" placeholder="수량" id="stockQuantity" th:value="${aItem.stockQuantity}">
+                </section>
+                <section class="mb-4">
+                    <div class="adm-small-head">상품설명</div>
+                    <textarea id="description" class="form-control adm-small-input" th:value="${aItem.getDescription()}" maxlength="100"></textarea>
                 </section>
                 <section class="mb-4">
                     <div class="adm-small-head">이미지 파일</div>

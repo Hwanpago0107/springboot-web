@@ -6,8 +6,8 @@ window.addEventListener('DOMContentLoaded', event => {
     if (datatablesSimple) {
         var table = new simpleDatatables.DataTable(datatablesSimple, {
             columns: [
-                {select: [0,1,2], cellClass: "cell-width-10"},
-                {select: 3, cellClass: "cell-width-25"}
+                {select: [0,1,2,3,6], cellClass: "cell-width-10"},
+                {select: [4,5], cellClass: "cell-width-25"}
             ]
         });
     }

@@ -16,4 +16,5 @@ public class UpdateItemRequest {
     private String filePath;
     private Long fileSize;
     private Long category_id;
+    private String description;
 }

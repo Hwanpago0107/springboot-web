@@ -1,6 +1,7 @@
 package me.ceskim493.springbootdeveloper.service;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import me.ceskim493.springbootdeveloper.domain.Category;
 import me.ceskim493.springbootdeveloper.domain.Item;
 import me.ceskim493.springbootdeveloper.dto.AddItemRequest;
@@ -17,15 +18,27 @@ import java.util.UUID;
 
 @RequiredArgsConstructor
 @Service
+@Slf4j
 public class ItemService {
 
     private final ItemRepository itemRepository;
     private final CategoryRepository categoryRepository;
 
+    @Transactional
     public Item save(AddItemRequest request, MultipartFile imgFile) throws Exception {
-        Item item = makeFile(imgFile);
-        Category category = categoryRepository.findById(request.getCategory_id()).get();
-        item.setCategory(category);
+        Item item = new Item();
+
+        if (imgFile != null) {
+            item = makeFile(imgFile);
+        }
+
+        Category category = new Category();
+        try {
+            categoryRepository.findById(request.getCategory_id()).get();
+            item.setCategory(category);
+        } catch (Exception e) {
+            log.info("no category {}", request.getCategory_id());
+        }
 
         return itemRepository.save(request.toEntity(item));
     }
@@ -60,11 +73,17 @@ public class ItemService {
             item.setFileSize(newItem.getFileSize());
         }
 
-        Category category = categoryRepository.findById(request.getCategory_id()).get();
-        item.setCategory(category);
+        Category category = new Category();
+        try {
+            categoryRepository.findById(request.getCategory_id()).get();
+            item.setCategory(category);
+        } catch (Exception e) {
+            log.info("no category {}", request.getCategory_id());
+        }
 
         item.update(request.getName(), request.getPrice(), request.getStockQuantity(),
-                item.getDiscount(), item.getFileName(), item.getFilePath(), item.getFileSize(), item.getCategory());
+                request.getDiscount(), item.getFileName(), item.getFilePath(), item.getFileSize(), item.getCategory(),
+                request.getDescription());
 
         return item;
     }

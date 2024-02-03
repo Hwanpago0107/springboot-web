@@ -13,7 +13,8 @@ if (createItemButton) {
             price: document.getElementById("price").value,
             stockQuantity: document.getElementById("stockQuantity").value,
             discount: document.getElementById("discount").value,
-            category_id: Number($('#category option:selected').val())
+            category_id: Number($('#category option:selected').val()),
+            description: document.getElementById("description").value
         });
 
         const formData = new FormData();
@@ -46,7 +47,8 @@ if (modifyItemButton) {
             price: document.getElementById("price").value,
             stockQuantity: document.getElementById("stockQuantity").value,
             discount: document.getElementById("discount").value,
-            category_id: Number($('#category option:selected').val())
+            category_id: Number($('#category option:selected').val()),
+            description: document.getElementById("description").value
         });
 
         const formData = new FormData();

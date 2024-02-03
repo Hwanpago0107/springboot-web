@@ -36,13 +36,15 @@ public class Item {
 
     private long fileSize;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     @JoinColumn(name = "category_id")
     private Category category;
 
+    private String description;
+
     @Builder // 빌더 패턴으로 객체 생성
     public Item(Long id, String name, int price, int stockQuantity, float discount, String fileName, String filePath, Long fileSize
-                    , Category category){
+                    , Category category, String description){
         this.id = id;
         this.name = name;
         this.price = price;
@@ -52,6 +54,7 @@ public class Item {
         this.filePath = filePath;
         this.fileSize = fileSize;
         this.category = category;
+        this.description = description;
     }
 
     public void addStock(int stockQuantity) {
@@ -64,7 +67,8 @@ public class Item {
         this.stockQuantity = restStock;
     }
 
-    public void update(String name, int price, int stockQuantity, float discount, String fileName, String filePath, Long fileSize, Category category) {
+    public void update(String name, int price, int stockQuantity, float discount, String fileName, String filePath, Long fileSize
+            , Category category, String description) {
         this.name = name;
         this.price = price;
         this.stockQuantity = stockQuantity;
@@ -73,5 +77,6 @@ public class Item {
         this.filePath = filePath;
         this.fileSize = fileSize;
         this.category = category;
+        this.description = description;
     }
 }

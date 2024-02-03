@@ -18,6 +18,7 @@ public class AddItemRequest {
     private Long fileSize;
     private Long category_id;
     private Float discount;
+    private String description;
 
     public Item toEntity(Item item) { // 생성자를 사용해 객체 생성
         return Item.builder()
@@ -29,6 +30,7 @@ public class AddItemRequest {
                 .fileSize(item.getFileSize())
                 .discount(discount)
                 .category(item.getCategory())
+                .description(description)
                 .build();
     }
 }

@@ -24,7 +24,7 @@
 			slidesToScroll: 1,
 			autoplay: true,
 			infinite: true,
-			speed: 100000,
+			speed: 300,
 			dots: false,
 			arrows: true,
 			appendArrows: $nav ? $nav : false,
@@ -54,7 +54,7 @@
 		$this.slick({
 			infinite: true,
 			autoplay: true,
-			speed: 1,
+			speed: 300,
 			dots: false,
 			arrows: true,
 			appendArrows: $nav ? $nav : false,
@@ -66,7 +66,7 @@
 	// Product Main img Slick
 	$('#product-main-img').slick({
     infinite: true,
-    speed: 100000,
+    speed: 300,
     dots: false,
     arrows: true,
     fade: true,
@@ -107,7 +107,8 @@
 		var $this = $(this),
 		$input = $this.find('input[type="number"]'),
 		up = $this.find('.qty-up'),
-		down = $this.find('.qty-down');
+		down = $this.find('.qty-down'),
+		curQty = $this.find('#product-stock');
 
 		down.on('click', function () {
 			var value = parseInt($input.val()) - 1;
@@ -119,6 +120,10 @@
 
 		up.on('click', function () {
 			var value = parseInt($input.val()) + 1;
+			if (parseInt(curQty.val()) < value) {
+				alert("선택하신 상품의 재고가 부족합니다.");
+				return;
+			}
 			$input.val(value);
 			$input.change();
 			updatePriceSlider($this , value)
@@ -128,13 +133,13 @@
 	var priceInputMax = document.getElementById('price-max'),
 			priceInputMin = document.getElementById('price-min');
 
-	// priceInputMax.addEventListener('change', function(){
-	// 	updatePriceSlider($(this).parent() , this.value)
-	// });
-	//
-	// priceInputMin.addEventListener('change', function(){
-	// 	updatePriceSlider($(this).parent() , this.value)
-	// });
+	priceInputMax.addEventListener('change', function(){
+		updatePriceSlider($(this).parent() , this.value)
+	});
+
+	priceInputMin.addEventListener('change', function(){
+		updatePriceSlider($(this).parent() , this.value)
+	});
 
 	function updatePriceSlider(elem , value) {
 		if ( elem.hasClass('price-min') ) {

@@ -71,16 +71,12 @@ public class ItemApiController {
     public UrlResource showImage(@PathVariable String filename) throws MalformedURLException {
 
         String projectPath = System.getProperty("user.dir") + "/src/main/resources/static/upload/img/";
-        log.info("projectPath: {}", projectPath);
-        log.info("filename: {}", filename);
         // 파일 유무 확인
         File file = new File(projectPath, filename);
         if (!file.exists()) {
-                                    log.info("file is empty");
-                                    return null;
+            log.info("file is empty");
+            return null;
         }
-
-        log.info("file.getAbsolutePath(): {}", file.getAbsolutePath());
 
         return new UrlResource("file:" + file.getAbsolutePath());
     }

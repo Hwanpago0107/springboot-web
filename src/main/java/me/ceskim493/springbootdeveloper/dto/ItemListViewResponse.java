@@ -18,6 +18,7 @@ public class ItemListViewResponse {
     private String filePath;
     private Long fileSize;
     private Category category;
+    private String description;
 
     public ItemListViewResponse(Item item) {
         this.id = item.getId();
@@ -29,5 +30,6 @@ public class ItemListViewResponse {
         this.filePath = item.getFilePath();
         this.fileSize = item.getFileSize();
         this.category = item.getCategory();
+        this.description = item.getDescription();
     }
 }

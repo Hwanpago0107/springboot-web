@@ -17,7 +17,7 @@
                     <th>재고(수량)</th>
                     <th>카테고리</th>
                     <th>이미지</th>
-                    <th>상세페이지</th>
+                    <th>설명</th>
                     <th>관리</th>
                 </tr>
                 </thead>
@@ -28,7 +28,7 @@
                     <th>재고(수량)</th>
                     <th>카테고리</th>
                     <th>이미지</th>
-                    <th>상세페이지</th>
+                    <th>설명</th>
                     <th>관리</th>
                 </tr>
                 </tfoot>
@@ -38,9 +38,9 @@
                     <td th:text="${item.getPrice()}"></td>
                     <td th:text="${item.getStockQuantity()}"></td>
                     <td th:text="${item.getCategory().name}"></td>
-                    <td><img th:src="|/images/${item.getFileName()}|" class="adm-content-img"></td>
-                    <td></td>
-                    <td><button type="button" id="modify-btn"
+                    <td style="width: 20%;"><img th:src="|/images/${item.getFileName()}|" class="adm-content-img"></td>
+                    <td th:text="${item.getDescription()}" style="word-break: break-all;"></td>
+                    <td style="width: 10%;"><button type="button" id="modify-btn"
                                 th:onclick="|location.href='@{/new-item?id={itemId}(itemId=${item.id})}'|"
                                 class="btn btn-primary btn-sm">수정</button>
                         <button type="button" id="delete-item-btn"

@@ -11262,26 +11262,32 @@ body {
 .adm-small-head {
   display: inline-block;
   width: 10%;
+  vertical-align: top;
 }
 
 .cell-width-10{
   width: 10%;
+  word-break: break-all;
 }
 
 .cell-width-15{
   width: 15%;
+  word-break: break-all;
 }
 
 .cell-width-20{
   width: 20%;
+  word-break: break-all;
 }
 
 .cell-width-25{
   width: 25%;
+  word-break: break-all;
 }
 
 .cell-width-30{
   width: 30%;
+  word-break: break-all;
 }
 
 .cell-width-35{
