@@ -18,6 +18,8 @@ out/
 src/main/resources/application-local.yml
 src/main/resources-local/application-local.yml
 application-local.yml
+src/main/resources/data.sql
+data.sql
 
 ### Eclipse ###
 .apt_generated

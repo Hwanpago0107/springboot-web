@@ -12,57 +12,12 @@
     <loaded-nodes />
   </component>
   <component name="DBNavigator.Project.DatabaseConsoleManager">
-    <connection id="ba6616c9-fd04-41ec-ac03-30d01d48b24b">
-      <console name="Connection" type="STANDARD" schema="ebdb" session="Main"><![CDATA[--depth 1
-INSERT INTO Category (category_id, name)
-values  (0, 'ALL CATEGORIES');
-INSERT INTO Category (category_id, name, parent_id)
-values  (1, '노트북', 0);
-INSERT INTO Category (category_id, name, parent_id)
-values  (2, '스마트폰', 0);
-INSERT INTO Category (category_id, name, parent_id)
-values  (3, '태블릿', 0);
-INSERT INTO Category (category_id, name, parent_id)
-values  (4, '카메라', 0);
-INSERT INTO Category (category_id, name, parent_id)
-values  (5, '악세서리', 0);
-INSERT INTO Category (category_id, name, parent_id)
-values  (6, '기타', 0);
---depth 2
-INSERT INTO Category (category_id, name, parent_id)
-values  (7, '일반 노트북', 1);
-INSERT INTO Category (category_id, name, parent_id)
-values  (8, '랩탑', 1);
-INSERT INTO Category (category_id, name, parent_id)
-values  (9, 'GELEXY', 2);
-INSERT INTO Category (category_id, name, parent_id)
-values  (10, 'GELEXY', 3);
-INSERT INTO Category (category_id, name, parent_id)
-values  (11, '일반 카메라', 4);
-INSERT INTO Category (category_id, name, parent_id)
-values  (12, '디지털 카메라', 4);
-INSERT INTO Category (category_id, name, parent_id)
-values  (13, '헤드폰', 5);
---depth3
-INSERT INTO Category (category_id, name, parent_id)
-values  (14, 'SAMSONG', 7);
-INSERT INTO Category (category_id, name, parent_id)
-values  (15, 'ELG', 7);
-INSERT INTO Category (category_id, name, parent_id)
-values  (16, 'BAIO', 8);
-INSERT INTO Category (category_id, name, parent_id)
-values  (17, 'ASOS', 8);
-INSERT INTO Category (category_id, name, parent_id)
-values  (18, 'REIKA', 12);
-INSERT INTO Category (category_id, name, parent_id)
-values  (19, 'SANY', 13);
-INSERT INTO Category (category_id, name, parent_id)
-values  (20, 'ATTLE', 13);
+    <connection id="fd66e594-5669-460a-a557-3f7ba7f27408">
+      <console name="Connection" type="STANDARD" schema="ebdb" session="Main"><![CDATA[select * from `Category`;
 
-select * from `Category`;
-delete from Category;
 
-select * from Cart;]]></console>
+commit;
+delete from `Category`;]]></console>
     </connection>
   </component>
   <component name="DBNavigator.Project.DatabaseEditorStateManager">
@@ -70,32 +25,14 @@ select * from Cart;]]></console>
   </component>
   <component name="DBNavigator.Project.DatabaseFileManager">
     <open-files>
-      <object connection-id="ba6616c9-fd04-41ec-ac03-30d01d48b24b" object-ref="consoles/Connection" />
-      <object connection-id="ba6616c9-fd04-41ec-ac03-30d01d48b24b" object-ref="schemas/ebdb/tables/orders" />
+      <object connection-id="fd66e594-5669-460a-a557-3f7ba7f27408" object-ref="consoles/Connection" />
     </open-files>
   </component>
   <component name="DBNavigator.Project.DatabaseSessionManager">
-    <connection id="ba6616c9-fd04-41ec-ac03-30d01d48b24b" />
-  </component>
-  <component name="DBNavigator.Project.DatasetFilterManager">
-    <filter-actions connection-id="ba6616c9-fd04-41ec-ac03-30d01d48b24b" dataset="ebdb.RefreshToken" active-filter-id="" />
-    <filter-actions connection-id="ba6616c9-fd04-41ec-ac03-30d01d48b24b" dataset="ebdb.Delivery" active-filter-id="" />
-    <filter-actions connection-id="ba6616c9-fd04-41ec-ac03-30d01d48b24b" dataset="ebdb.OrderItem" active-filter-id="" />
-    <filter-actions connection-id="ba6616c9-fd04-41ec-ac03-30d01d48b24b" dataset="ebdb.CartItem" active-filter-id="" />
-    <filter-actions connection-id="ba6616c9-fd04-41ec-ac03-30d01d48b24b" dataset="ebdb.WishItem" active-filter-id="" />
-    <filter-actions connection-id="ba6616c9-fd04-41ec-ac03-30d01d48b24b" dataset="ebdb.Item" active-filter-id="" />
-    <filter-actions connection-id="ba6616c9-fd04-41ec-ac03-30d01d48b24b" dataset="ebdb.Article" active-filter-id="" />
-    <filter-actions connection-id="ba6616c9-fd04-41ec-ac03-30d01d48b24b" dataset="ebdb.Wish" active-filter-id="" />
-    <filter-actions connection-id="ba6616c9-fd04-41ec-ac03-30d01d48b24b" dataset="ebdb.Cart" active-filter-id="" />
-    <filter-actions connection-id="ba6616c9-fd04-41ec-ac03-30d01d48b24b" dataset="ebdb.orders" active-filter-id="" />
-    <filter-actions connection-id="ba6616c9-fd04-41ec-ac03-30d01d48b24b" dataset="ebdb.users" active-filter-id="" />
-    <filter-actions connection-id="ba6616c9-fd04-41ec-ac03-30d01d48b24b" dataset="ebdb.Category" active-filter-id="" />
+    <connection id="fd66e594-5669-460a-a557-3f7ba7f27408" />
   </component>
   <component name="DBNavigator.Project.ExecutionManager">
     <retain-sticky-names value="false" />
-  </component>
-  <component name="DBNavigator.Project.FileConnectionMappingManager">
-    <mapping file-url="file://$PROJECT_DIR$/src/main/resources/data.sql" connection-id="ba6616c9-fd04-41ec-ac03-30d01d48b24b" session-id="MAIN" current-schema="ebdb" />
   </component>
   <component name="DBNavigator.Project.MethodExecutionManager">
     <method-browser />
@@ -114,7 +51,7 @@ select * from Cart;]]></console>
   </component>
   <component name="DBNavigator.Project.Settings">
     <connections>
-      <connection id="ba6616c9-fd04-41ec-ac03-30d01d48b24b" active="true" signed="true">
+      <connection id="fd66e594-5669-460a-a557-3f7ba7f27408" active="true" signed="true">
         <database>
           <name value="Connection" />
           <description value="" />
