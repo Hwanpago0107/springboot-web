@@ -72,7 +72,6 @@ select * from Cart;]]></console>
     <open-files>
       <object connection-id="ba6616c9-fd04-41ec-ac03-30d01d48b24b" object-ref="consoles/Connection" />
       <object connection-id="ba6616c9-fd04-41ec-ac03-30d01d48b24b" object-ref="schemas/ebdb/tables/orders" />
-      <object connection-id="ba6616c9-fd04-41ec-ac03-30d01d48b24b" object-ref="schemas/ebdb/tables/OrderItem" />
     </open-files>
   </component>
   <component name="DBNavigator.Project.DatabaseSessionManager">
