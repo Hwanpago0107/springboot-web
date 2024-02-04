@@ -57,7 +57,18 @@ public class OrderService {
             return new ArrayList<Order>();
         }
 
-        return orderRepository.findAllByUser(user);
+        // 주문 당 총 주문가격을 만들어준다.
+        List<Order> orders = orderRepository.findAllByUser(user);
+        for (int i = 0; i < orders.size(); i++) {
+            Order order = orders.get(i);
+            int total = order.getOrderItems().stream()
+                    .mapToInt(OrderItem::getOrderPrice)
+                    .sum();
+            order.setTotalPrice(total);
+            orders.set(i, order);
+        }
+
+        return orders;
     }
 
     public void delete(long id) {

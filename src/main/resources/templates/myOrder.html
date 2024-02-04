@@ -74,7 +74,7 @@
 									<strong>요청사항</strong><div class="cart-end-sub" th:text="${order.getOrderNote()}"></div>
 								</div>
 								<div class="carts-end-col">
-									<strong>주문금액</strong><div class="cart-end-sub" th:text="${order.getOrderNote()}"></div>
+									<strong>주문금액</strong><div class="cart-end-sub" th:text="${#numbers.formatDecimal(order.getTotalPrice() , 0, 'DEFAULT', 0, 'DEFAULT')}"></div>
 								</div>
 							</div>
 						</div>

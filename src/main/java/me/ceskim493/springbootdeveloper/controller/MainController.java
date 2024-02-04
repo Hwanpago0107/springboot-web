@@ -41,11 +41,11 @@ public class MainController {
         String username = userService.getSessionUserName(sUser);
         User user = userService.findByEmail(username);
 
-        // start.카테고리 목록 가져오기
-        List<CategoryViewResponse> categories = categoryService.findAll().stream()
+        // start.카테고리 목록 가져오기(최상위 목록만)
+        List<CategoryViewResponse> categories = categoryService.findChildCategoriesByParent(0L).stream()
                 .map(CategoryViewResponse::new)
                 .toList();
-        // end.카테고리 목록 가져오기
+        // end.카테고리 목록 가져오기(최상위 목록만)
 
         // start.로그인한 사용자가 가지고 있는 장바구니와 장바구니 상품 리스트, 장바구니 총액
         List<CartItem> carts = cartService.findAll(user);

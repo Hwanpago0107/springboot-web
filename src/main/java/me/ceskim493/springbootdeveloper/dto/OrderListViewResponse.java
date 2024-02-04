@@ -36,5 +36,6 @@ public class OrderListViewResponse {
         this.orderNote = order.getOrderNote();
         this.orderDate = order.getOrderDate();
         this.status = order.getStatus();
+        this.totalPrice = order.getTotalPrice();
     }
 }

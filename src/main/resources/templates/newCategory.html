@@ -21,7 +21,7 @@
                     <div class="adm-small-head">부모카테고리</div>
                     <select class="form-select" id="parents">
                         <option value="0">==부모카테고리 선택==</option>
-                        <option th:each="item : ${categories}" th:value="${item.id}"
+                        <option th:each="item : ${parents}" th:value="${item.id}"
                                 th:text="${item.name}" th:selected="${item.id} == ${category?.getParent()?.id}"></option>
                     </select>
                 </section>

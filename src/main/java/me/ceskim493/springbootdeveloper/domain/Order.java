@@ -41,6 +41,9 @@ public class Order {
     @Enumerated(EnumType.STRING)
     private OrderStatus status;
 
+    @Transient
+    private int totalPrice;
+
     private void setDelivery(Delivery delivery) {
         this.delivery = delivery;
         delivery.setOrder(this);

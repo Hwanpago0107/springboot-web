@@ -37,7 +37,7 @@
                     <td th:text="${item.getName()}"></td>
                     <td th:text="${item.getPrice()}"></td>
                     <td th:text="${item.getStockQuantity()}"></td>
-                    <td th:text="${item.getCategory().name}"></td>
+                    <td th:text="${item.getCategory()?.name}"></td>
                     <td style="width: 20%;"><img th:src="|/images/${item.getFileName()}|" class="adm-content-img"></td>
                     <td th:text="${item.getDescription()}" style="word-break: break-all;"></td>
                     <td style="width: 10%;"><button type="button" id="modify-btn"

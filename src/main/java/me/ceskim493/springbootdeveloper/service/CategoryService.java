@@ -3,11 +3,13 @@ package me.ceskim493.springbootdeveloper.service;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import me.ceskim493.springbootdeveloper.domain.Category;
+import me.ceskim493.springbootdeveloper.domain.Item;
 import me.ceskim493.springbootdeveloper.dto.CreateCategoryRequest;
 import me.ceskim493.springbootdeveloper.repository.CategoryRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -65,5 +67,48 @@ public class CategoryService {
                 .orElseThrow(() -> new IllegalArgumentException("not found " + id));
 
         categoryRepository.delete(category);
+    }
+
+    public List<Item> findItemsByCategory(Long id) {
+        Category category = findById(id);
+        List<Item> items = new ArrayList<>();
+        items.addAll(category.getItems());
+        List<Category> categories = new ArrayList<>();
+        categories = findChildsByCategories(category.getChild());
+
+        for (Category cate : categories) {
+            items.addAll(cate.getItems());
+        }
+        return items;
+    }
+
+    public List<Category> findParentsCategoryByCategory(Long id) {
+        List<Category> categories = new ArrayList<>();
+        Category category = findById(id);
+        categories.add(category);
+
+        // 부모카테고리를 차례로 순회하면서 가져온다.
+        while (category != null) {
+            category = categoryRepository.findCategoryByChild(category);
+            if (category == null) break;
+            categories.add(category);
+        }
+        return categories;
+    }
+
+    public List<Category> findChildsByCategories(List<Category> categories) {
+        List<Category> list = new ArrayList<>();
+
+        list.addAll(categories);
+
+        for (Category category : categories) {
+            list.addAll(findChildsByCategories(category.getChild()));
+        }
+        return list;
+    }
+
+    public  List<Category> findChildCategoriesByParent(Long id){
+        Category category = findById(id);
+        return categoryRepository.findCategoriesByParent(category);
     }
 }

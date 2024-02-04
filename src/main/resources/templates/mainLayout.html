@@ -77,7 +77,7 @@
                     <div class="header-search">
                         <form>
                             <select class="input-select">
-                                <option value="0">전체</option>
+                                <option value="">전체</option>
                                 <option th:each="category : ${categories}" th:value="${category.id}"
                                             th:text="${category.name}"></option>
                             </select>
@@ -178,11 +178,11 @@
         <div id="responsive-nav">
             <!-- NAV -->
             <ul class="main-nav nav navbar-nav">
-                <li class="active"><a href="#">Home</a></li>
-                <li><a href="#" style="color: red;">핫딜</a></li>
-                <li><a href="#">카테고리</a></li>
+                <li class="active"><a th:href="@{/main/home}">Home</a></li>
+                <li><a href="/hotdeals" style="color: red;">핫딜</a></li>
+                <li><a th:href="|/category/0|">카테고리</a></li>
                 <li th:each="category : ${categories}">
-                    <a href="#" th:text="${category.name}"></a>
+                    <a th:href="|/category/${category.id}|" th:text="${category.name}"></a>
                 </li>
             </ul>
             <!-- /NAV -->

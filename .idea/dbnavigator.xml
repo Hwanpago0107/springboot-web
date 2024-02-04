@@ -12,40 +12,29 @@
     <loaded-nodes />
   </component>
   <component name="DBNavigator.Project.DatabaseConsoleManager">
-    <connection id="2e96c5f8-9f5c-479f-b3fc-4f28e932a7da">
-      <console name="Connection" type="STANDARD" schema="ebdb" session="Main"><![CDATA[SET FOREIGN_KEY_CHECKS = 0;
+    <connection id="ba6616c9-fd04-41ec-ac03-30d01d48b24b">
+      <console name="Connection" type="STANDARD" schema="ebdb" session="Main"><![CDATA[select * from Item;
 
-SELECT
-    table_name
-FROM
-    information_schema.tables
-WHERE
-    table_schema = 'ebdb';
-    
-    SELECT * FROM `Article`;
-
-DROP TABLE IF EXISTS `Article`;
-DROP TABLE IF EXISTS Cart;
-DROP TABLE IF EXISTS CartItem;
-DROP TABLE IF EXISTS Category;
-DROP TABLE IF EXISTS Category_SEQ;
-DROP TABLE IF EXISTS Delivery;
-DROP TABLE IF EXISTS Item;
-DROP TABLE IF EXISTS OrderItem;
-DROP TABLE IF EXISTS RefreshToken;
-DROP TABLE IF EXISTS category_item;
-DROP TABLE IF EXISTS orders;
-DROP TABLE IF EXISTS users;
-
-SET FOREIGN_KEY_CHECKS = 1;
+update Item set price = 1000000, stockquantity = 10, discount = 0.3, description = '삼송 최강 노트북입니다.', category_id = 1
+where item_id = 1;
+update Item set price = 200000, stockquantity = 8, discount = 0.25, description = '짱짱 헤드폰입니다.', category_id = 2
+where item_id = 2;
+update Item set price = 1500000, stockquantity = 11, discount = 0.2, description = '새로나온 RTX 최신형 노트북입니다.', category_id = 1
+where item_id = 3;
+update Item set price = 600000, stockquantity = 900, discount = 0.4, description = '가볍고 좋은 최강 태블릿.', category_id = 3
+where item_id = 4;
+update Item set price = 99000, stockquantity = 10, discount = 0.5, description = '중국에서 직수입한 최신형 헤드폰!!', category_id = 2
+where item_id = 5;
+update Item set price = 600000, stockquantity = 12, discount = 0.1, description = '실 무게 500g 초경량 랩탑.', category_id = 1
+where item_id = 6;
+update Item set price = 850000, stockquantity = 11, discount = 0.1, description = 'AI 탑재 초강력 스마트폰', category_id = 3
+where item_id = 7;
+update Item set price = 800000, stockquantity = 900, discount = 0.15, description = '랩탑계의 혁명, 최강 노트북', category_id = 1
+where item_id = 8;
+update Item set price = 400000, stockquantity = 800, discount = 0, description = '101미터 거리까지 보이는 디카', category_id = 4
+where item_id = 9;
 
 commit;]]></console>
-    </connection>
-    <connection id="cd4efeec-bce0-407a-9b40-cf22412aad67">
-      <console name="Connection 1" type="STANDARD" schema="" session="Main" />
-    </connection>
-    <connection id="18a1378a-f4cd-4f5f-8ab5-11a7d63b4e9b">
-      <console name="Connection 2" type="STANDARD" schema="" session="Main" />
     </connection>
   </component>
   <component name="DBNavigator.Project.DatabaseEditorStateManager">
@@ -55,9 +44,7 @@ commit;]]></console>
     <open-files />
   </component>
   <component name="DBNavigator.Project.DatabaseSessionManager">
-    <connection id="2e96c5f8-9f5c-479f-b3fc-4f28e932a7da" />
-    <connection id="cd4efeec-bce0-407a-9b40-cf22412aad67" />
-    <connection id="18a1378a-f4cd-4f5f-8ab5-11a7d63b4e9b" />
+    <connection id="ba6616c9-fd04-41ec-ac03-30d01d48b24b" />
   </component>
   <component name="DBNavigator.Project.DatasetFilterManager">
     <filter-actions connection-id="2e96c5f8-9f5c-479f-b3fc-4f28e932a7da" dataset="ebdb.Delivery" active-filter-id="" />
@@ -79,197 +66,14 @@ commit;]]></console>
     <last-used-operator value="EQUAL" />
     <filters />
   </component>
+  <component name="DBNavigator.Project.ScriptExecutionManager" clear-outputs="true">
+    <recently-used-interfaces />
+  </component>
   <component name="DBNavigator.Project.Settings">
     <connections>
-      <connection id="2e96c5f8-9f5c-479f-b3fc-4f28e932a7da" active="true" signed="true">
+      <connection id="ba6616c9-fd04-41ec-ac03-30d01d48b24b" active="true" signed="true">
         <database>
           <name value="Connection" />
-          <description value="" />
-          <database-type value="MYSQL" />
-          <config-type value="BASIC" />
-          <database-version value="8.0" />
-          <driver-source value="BUNDLED" />
-          <driver-library value="" />
-          <driver value="" />
-          <url-type value="DATABASE" />
-          <host value="awseb-e-2pypwp39gf-stack-awsebrdsdatabase-lv0h4ufrlztm.cz7i2zlhu9op.ap-northeast-2.rds.amazonaws.com" />
-          <port value="3306" />
-          <database value="ebdb" />
-          <tns-folder value="" />
-          <tns-profile value="" />
-          <type value="USER_PASSWORD" />
-          <user value="ebroot" />
-          <deprecated-pwd value="a2ltOTMxMDc=" />
-        </database>
-        <properties>
-          <auto-commit value="false" />
-        </properties>
-        <ssh-settings>
-          <active value="false" />
-          <proxy-host value="" />
-          <proxy-port value="22" />
-          <proxy-user value="" />
-          <deprecated-proxy-pwd value="" />
-          <auth-type value="PASSWORD" />
-          <key-file value="" />
-          <key-passphrase value="" />
-        </ssh-settings>
-        <ssl-settings>
-          <active value="false" />
-          <certificate-authority-file value="" />
-          <client-certificate-file value="" />
-          <client-key-file value="" />
-        </ssl-settings>
-        <details>
-          <charset value="UTF-8" />
-          <session-management value="true" />
-          <ddl-file-binding value="true" />
-          <database-logging value="true" />
-          <connect-automatically value="true" />
-          <restore-workspace value="true" />
-          <restore-workspace-deep value="false" />
-          <environment-type value="default" />
-          <connectivity-timeout value="30" />
-          <idle-time-to-disconnect value="30" />
-          <idle-time-to-disconnect-pool value="5" />
-          <credential-expiry-time value="10" />
-          <max-connection-pool-size value="7" />
-          <alternative-statement-delimiter value="" />
-        </details>
-        <debugger>
-          <compile-dependencies value="true" />
-          <tcp-driver-tunneling value="false" />
-          <tcp-host-address value="" />
-          <tcp-port-from value="4000" />
-          <tcp-port-to value="4999" />
-        </debugger>
-        <object-filters hide-empty-schemas="false" hide-pseudo-columns="false" hide-audit-columns="false">
-          <object-type-filter>
-            <object-type name="SCHEMA" enabled="true" />
-            <object-type name="USER" enabled="true" />
-            <object-type name="ROLE" enabled="true" />
-            <object-type name="PRIVILEGE" enabled="true" />
-            <object-type name="CHARSET" enabled="true" />
-            <object-type name="TABLE" enabled="true" />
-            <object-type name="VIEW" enabled="true" />
-            <object-type name="MATERIALIZED_VIEW" enabled="true" />
-            <object-type name="NESTED_TABLE" enabled="true" />
-            <object-type name="COLUMN" enabled="true" />
-            <object-type name="INDEX" enabled="true" />
-            <object-type name="CONSTRAINT" enabled="true" />
-            <object-type name="DATASET_TRIGGER" enabled="true" />
-            <object-type name="DATABASE_TRIGGER" enabled="true" />
-            <object-type name="SYNONYM" enabled="true" />
-            <object-type name="SEQUENCE" enabled="true" />
-            <object-type name="PROCEDURE" enabled="true" />
-            <object-type name="FUNCTION" enabled="true" />
-            <object-type name="PACKAGE" enabled="true" />
-            <object-type name="TYPE" enabled="true" />
-            <object-type name="TYPE_ATTRIBUTE" enabled="true" />
-            <object-type name="ARGUMENT" enabled="true" />
-            <object-type name="DIMENSION" enabled="true" />
-            <object-type name="CLUSTER" enabled="true" />
-            <object-type name="DBLINK" enabled="true" />
-          </object-type-filter>
-          <object-name-filters />
-        </object-filters>
-      </connection>
-      <connection id="cd4efeec-bce0-407a-9b40-cf22412aad67" active="true" signed="true">
-        <database>
-          <name value="Connection 1" />
-          <description value="" />
-          <database-type value="MYSQL" />
-          <config-type value="BASIC" />
-          <database-version value="8.0" />
-          <driver-source value="BUNDLED" />
-          <driver-library value="" />
-          <driver value="" />
-          <url-type value="DATABASE" />
-          <host value="awseb-e-gauebnrik2-stack-awsebrdsdatabase-bmedo7svho02.cz7i2zlhu9op.ap-northeast-2.rds.amazonaws.com" />
-          <port value="3306" />
-          <database value="ebdb" />
-          <tns-folder value="" />
-          <tns-profile value="" />
-          <type value="USER_PASSWORD" />
-          <user value="ebroot" />
-          <deprecated-pwd value="a2ltOTMxMDc=" />
-        </database>
-        <properties>
-          <auto-commit value="false" />
-        </properties>
-        <ssh-settings>
-          <active value="false" />
-          <proxy-host value="" />
-          <proxy-port value="22" />
-          <proxy-user value="" />
-          <deprecated-proxy-pwd value="" />
-          <auth-type value="PASSWORD" />
-          <key-file value="" />
-          <key-passphrase value="" />
-        </ssh-settings>
-        <ssl-settings>
-          <active value="false" />
-          <certificate-authority-file value="" />
-          <client-certificate-file value="" />
-          <client-key-file value="" />
-        </ssl-settings>
-        <details>
-          <charset value="UTF-8" />
-          <session-management value="true" />
-          <ddl-file-binding value="true" />
-          <database-logging value="true" />
-          <connect-automatically value="true" />
-          <restore-workspace value="true" />
-          <restore-workspace-deep value="false" />
-          <environment-type value="default" />
-          <connectivity-timeout value="30" />
-          <idle-time-to-disconnect value="30" />
-          <idle-time-to-disconnect-pool value="5" />
-          <credential-expiry-time value="10" />
-          <max-connection-pool-size value="7" />
-          <alternative-statement-delimiter value="" />
-        </details>
-        <debugger>
-          <compile-dependencies value="true" />
-          <tcp-driver-tunneling value="false" />
-          <tcp-host-address value="" />
-          <tcp-port-from value="4000" />
-          <tcp-port-to value="4999" />
-        </debugger>
-        <object-filters hide-empty-schemas="false" hide-pseudo-columns="false" hide-audit-columns="false">
-          <object-type-filter>
-            <object-type name="SCHEMA" enabled="true" />
-            <object-type name="USER" enabled="true" />
-            <object-type name="ROLE" enabled="true" />
-            <object-type name="PRIVILEGE" enabled="true" />
-            <object-type name="CHARSET" enabled="true" />
-            <object-type name="TABLE" enabled="true" />
-            <object-type name="VIEW" enabled="true" />
-            <object-type name="MATERIALIZED_VIEW" enabled="true" />
-            <object-type name="NESTED_TABLE" enabled="true" />
-            <object-type name="COLUMN" enabled="true" />
-            <object-type name="INDEX" enabled="true" />
-            <object-type name="CONSTRAINT" enabled="true" />
-            <object-type name="DATASET_TRIGGER" enabled="true" />
-            <object-type name="DATABASE_TRIGGER" enabled="true" />
-            <object-type name="SYNONYM" enabled="true" />
-            <object-type name="SEQUENCE" enabled="true" />
-            <object-type name="PROCEDURE" enabled="true" />
-            <object-type name="FUNCTION" enabled="true" />
-            <object-type name="PACKAGE" enabled="true" />
-            <object-type name="TYPE" enabled="true" />
-            <object-type name="TYPE_ATTRIBUTE" enabled="true" />
-            <object-type name="ARGUMENT" enabled="true" />
-            <object-type name="DIMENSION" enabled="true" />
-            <object-type name="CLUSTER" enabled="true" />
-            <object-type name="DBLINK" enabled="true" />
-          </object-type-filter>
-          <object-name-filters />
-        </object-filters>
-      </connection>
-      <connection id="18a1378a-f4cd-4f5f-8ab5-11a7d63b4e9b" active="true" signed="true">
-        <database>
-          <name value="Connection 2" />
           <description value="" />
           <database-type value="MYSQL" />
           <config-type value="BASIC" />
