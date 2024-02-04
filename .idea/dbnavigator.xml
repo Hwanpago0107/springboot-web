@@ -13,35 +13,63 @@
   </component>
   <component name="DBNavigator.Project.DatabaseConsoleManager">
     <connection id="ba6616c9-fd04-41ec-ac03-30d01d48b24b">
-      <console name="Connection" type="STANDARD" schema="ebdb" session="Main"><![CDATA[select * from Item;
+      <console name="Connection" type="STANDARD" schema="ebdb" session="Main"><![CDATA[--depth 1
+INSERT INTO Category (category_id, name)
+values  (0, 'ALL CATEGORIES');
+INSERT INTO Category (category_id, name, parent_id)
+values  (1, '노트북', 0);
+INSERT INTO Category (category_id, name, parent_id)
+values  (2, '스마트폰', 0);
+INSERT INTO Category (category_id, name, parent_id)
+values  (3, '태블릿', 0);
+INSERT INTO Category (category_id, name, parent_id)
+values  (4, '카메라', 0);
+INSERT INTO Category (category_id, name, parent_id)
+values  (5, '악세서리', 0);
+INSERT INTO Category (category_id, name, parent_id)
+values  (6, '기타', 0);
+--depth 2
+INSERT INTO Category (category_id, name, parent_id)
+values  (7, '일반 노트북', 1);
+INSERT INTO Category (category_id, name, parent_id)
+values  (8, '랩탑', 1);
+INSERT INTO Category (category_id, name, parent_id)
+values  (9, 'GELEXY', 2);
+INSERT INTO Category (category_id, name, parent_id)
+values  (10, 'GELEXY', 3);
+INSERT INTO Category (category_id, name, parent_id)
+values  (11, '일반 카메라', 4);
+INSERT INTO Category (category_id, name, parent_id)
+values  (12, '디지털 카메라', 4);
+INSERT INTO Category (category_id, name, parent_id)
+values  (13, '헤드폰', 5);
+--depth3
+INSERT INTO Category (category_id, name, parent_id)
+values  (14, 'SAMSONG', 7);
+INSERT INTO Category (category_id, name, parent_id)
+values  (15, 'ELG', 7);
+INSERT INTO Category (category_id, name, parent_id)
+values  (16, 'BAIO', 8);
+INSERT INTO Category (category_id, name, parent_id)
+values  (17, 'ASOS', 8);
+INSERT INTO Category (category_id, name, parent_id)
+values  (18, 'REIKA', 12);
+INSERT INTO Category (category_id, name, parent_id)
+values  (19, 'SANY', 13);
+INSERT INTO Category (category_id, name, parent_id)
+values  (20, 'ATTLE', 13);
 
-update Item set price = 1000000, stockquantity = 10, discount = 0.3, description = '삼송 최강 노트북입니다.', category_id = 1
-where item_id = 1;
-update Item set price = 200000, stockquantity = 8, discount = 0.25, description = '짱짱 헤드폰입니다.', category_id = 2
-where item_id = 2;
-update Item set price = 1500000, stockquantity = 11, discount = 0.2, description = '새로나온 RTX 최신형 노트북입니다.', category_id = 1
-where item_id = 3;
-update Item set price = 600000, stockquantity = 900, discount = 0.4, description = '가볍고 좋은 최강 태블릿.', category_id = 3
-where item_id = 4;
-update Item set price = 99000, stockquantity = 10, discount = 0.5, description = '중국에서 직수입한 최신형 헤드폰!!', category_id = 2
-where item_id = 5;
-update Item set price = 600000, stockquantity = 12, discount = 0.1, description = '실 무게 500g 초경량 랩탑.', category_id = 1
-where item_id = 6;
-update Item set price = 850000, stockquantity = 11, discount = 0.1, description = 'AI 탑재 초강력 스마트폰', category_id = 3
-where item_id = 7;
-update Item set price = 800000, stockquantity = 900, discount = 0.15, description = '랩탑계의 혁명, 최강 노트북', category_id = 1
-where item_id = 8;
-update Item set price = 400000, stockquantity = 800, discount = 0, description = '101미터 거리까지 보이는 디카', category_id = 4
-where item_id = 9;
-
-commit;]]></console>
+select * from `Category`;
+delete from Category;]]></console>
     </connection>
   </component>
   <component name="DBNavigator.Project.DatabaseEditorStateManager">
     <last-used-providers />
   </component>
   <component name="DBNavigator.Project.DatabaseFileManager">
-    <open-files />
+    <open-files>
+      <object connection-id="ba6616c9-fd04-41ec-ac03-30d01d48b24b" object-ref="consoles/Connection" />
+    </open-files>
   </component>
   <component name="DBNavigator.Project.DatabaseSessionManager">
     <connection id="ba6616c9-fd04-41ec-ac03-30d01d48b24b" />
