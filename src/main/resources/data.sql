@@ -45,3 +45,8 @@ values  (19, 'SANY', 13);
 INSERT INTO Category (category_id, name, parent_id)
 values  (20, 'ATTLE', 13);
 
+commit;
+
+select * from `Category`;
+delete from `Category`;
+
