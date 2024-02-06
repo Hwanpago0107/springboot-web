@@ -32,8 +32,13 @@ public class CategoryViewController {
             model.addAttribute("category", new CategoryViewResponse(category));
         }
 
-        model.addAttribute("parents", categoryService.findChildCategoriesByParent(0L));
-        model.addAttribute("categories", categoryService.findAll());
+        List<Category> depth1 = categoryService.findCategoriesByDepth("1");
+        List<Category> depth2 = categoryService.findCategoriesByDepth("2");
+        List<Category> depth3 = categoryService.findCategoriesByDepth("3");
+
+        model.addAttribute("depth1", depth1);
+        model.addAttribute("depth2", depth2);
+        model.addAttribute("depth3", depth3);
 
         model.addAttribute("userName", userService.getSessionUserName(user)); // session에 저장된 유저이름 setting
 

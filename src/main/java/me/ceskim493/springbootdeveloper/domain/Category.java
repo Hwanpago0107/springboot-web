@@ -29,6 +29,8 @@ public class Category {
     @OneToMany(mappedBy = "parent")
     private List<Category> child = new ArrayList<>();
 
+    private String depth;
+
     public void update(String name, Category parent) {
         this.name = name;
         this.parent = parent;

@@ -55,4 +55,15 @@ public class CartegoryApiController {
         return ResponseEntity.ok()
                 .build();
     }
+
+    @GetMapping("/api/categories/{id}")
+    public ResponseEntity<List<CategoryResponse>> findChildCategoriesByParent(@PathVariable long id) {
+
+        List<CategoryResponse> categories = categoryService.findChildCategoriesByParent(id).stream()
+                .map(CategoryResponse::new)
+                .toList();
+
+        return ResponseEntity.ok()
+                .body(categories);
+    }
 }

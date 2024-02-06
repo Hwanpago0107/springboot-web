@@ -109,6 +109,12 @@ public class CategoryService {
 
     public  List<Category> findChildCategoriesByParent(Long id){
         Category category = findById(id);
-        return categoryRepository.findCategoriesByParent(category);
+        return categoryRepository.findCategoriesByParent(category) == null ?
+                new ArrayList<Category>() : categoryRepository.findCategoriesByParent(category);
+    }
+
+    public List<Category> findCategoriesByDepth(String depth) {
+        return categoryRepository.findCategoriesByDepth(depth) == null ?
+                new ArrayList<Category>() : categoryRepository.findCategoriesByDepth(depth);
     }
 }

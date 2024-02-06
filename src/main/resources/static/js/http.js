@@ -46,7 +46,7 @@ function httpRequest(method, url, body, success, fail) {
                 })
                 .then((result) => {
                     localStorage.setItem("access_token", result.accessToken);
-                    httpRequest(method, url, body, success, fail);
+                    httpRequestBody(method, url, body, success, fail);
                 })
                 .catch((error) => fail());
         } else {
@@ -177,7 +177,7 @@ function httpRequestMail(method, url, body, success, fail) {
                 })
                 .then((result) => {
                     localStorage.setItem("access_token", result.accessToken);
-                    httpRequest(method, url, body, success, fail);
+                    httpRequestMail(method, url, body, success, fail);
                 })
                 .catch((error) => fail());
         } else {
@@ -190,4 +190,50 @@ function httpRequestMail(method, url, body, success, fail) {
 function sleep(ms) {
     const wakeUpTime = Date.now() + ms;
     while (Date.now() < wakeUpTime) {}
+}
+
+function httpRequestBody(method, url, body, success, fail) {
+    fetch(url, {
+        method: method,
+        headers: {
+            Authorization: "Bearer " + localStorage.getItem("access_token"),
+            "Content-Type": "application/json",
+        },
+        body: body,
+    }).then(res =>
+        res.json().then(data => ({
+                data: data,
+                status: res.status
+            })
+        ).then(response => {
+            if (response.status === 200 || response.status === 201) {
+                return success(response.data);
+            }
+            const refresh_token = getCookie("refresh_token");
+            if (response.status === 401 && refresh_token) {
+                fetch("/api/token", {
+                    method: "POST",
+                    headers: {
+                        Authorization: "Bearer " + localStorage.getItem("access_token"),
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                        refreshToken: getCookie("refresh_token"),
+                    }),
+                })
+                    .then((res) => {
+                        if (res.ok) {
+                            return res.json();
+                        }
+                    })
+                    .then((result) => {
+                        localStorage.setItem("access_token", result.accessToken);
+                        httpRequestBody(method, url, body, success, fail);
+                    })
+                    .catch((error) => fail());
+            } else {
+                return fail();
+            }
+        })
+    );
 }

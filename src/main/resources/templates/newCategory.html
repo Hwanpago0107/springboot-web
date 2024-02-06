@@ -18,11 +18,13 @@
                     <input type="text" class="form-control adm-small-input" placeholder="이름" id="name" th:value="${category?.name}">
                 </header>
                 <section class="mb-4">
-                    <div class="adm-small-head">부모카테고리</div>
-                    <select class="form-select" id="parents">
-                        <option value="0">==부모카테고리 선택==</option>
-                        <option th:each="item : ${parents}" th:value="${item.id}"
+                    <div class="adm-small-head" style="width: 100%;">등록할 상위 카테고리 선택</div>
+                    <select class="form-select" id="depth1" style="width: 30%; display: inline-block;" onchange="categoryChange(this)">
+                        <option value="0">==ROOT==</option>
+                        <option th:each="item : ${depth1}" th:value="${item.id}"
                                 th:text="${item.name}" th:selected="${item.id} == ${category?.getParent()?.id}"></option>
+                    </select>
+                    <select class="form-select" id="depth2" style="width: 30%; display: none;">
                     </select>
                 </section>
                 <button th:if="${category.id} == null" type="button" id="create-cate-btn" class="btn btn-primary btn-sm">등록</button>

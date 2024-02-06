@@ -13,7 +13,7 @@
 					<ul class="breadcrumb-tree">
 						<li><a th:href="@{/main/home}">Home</a></li>
 						<li th:if="${hotdealYn == 'Y'}">HOT DEAL</li>
-						<li th:if="${hotdealYn != 'Y'}" th:each="i : ${#numbers.sequence(parents.size()-1, 0, -1)}" th:with="category=${parents[i]}">
+						<li th:if="${hotdealYn != 'Y' && parents != null}" th:each="i : ${#numbers.sequence(parents.size()-1, 0, -1)}" th:with="category=${parents[i]}">
 							<a th:href="|/category/${category.getId()}|" th:text="${category.getName()}"></a>
 						</li>
 						<li class="active" th:if="${productYn == 'Y'}" th:text="${product?.getName()}"></li>
