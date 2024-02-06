@@ -48,9 +48,8 @@ public class CartService {
         CartItem cartItem = null;
 
         // 저장할 상품이 동일한 경우 해당 상품의 수량만 업데이트 해준다.
-        List<CartItem> cartItems = cartItemRepository.findCartItemByItem_Id(request.getItem_id());
-        if (cartItems != null && cartItems.size() > 0) {
-            cartItem = cartItems.get(0);
+        cartItem = cartItemRepository.findCartItemByItem_Id(request.getItem_id());
+        if (cartItem != null) {
             int newQuantity = cartItem.getQuantity() + 1;
             cartItem.setQuantity(newQuantity);
         } else {
@@ -89,9 +88,8 @@ public class CartService {
 
         // 저장할 상품이 동일한 경우 해당 상품의 수량만 업데이트 해준다.
         for (Item i : newItems) {
-            List<CartItem> cartItems = cartItemRepository.findCartItemByItem_Id(i.getId());
-            if (cartItems != null && cartItems.size() > 0) {
-                cartItem = cartItems.get(0);
+            cartItem = cartItemRepository.findCartItemByItem_Id(i.getId());
+            if (cartItem != null) {
                 int newQuantity = cartItem.getQuantity() + 1;
                 cartItem.setQuantity(newQuantity);
             } else {

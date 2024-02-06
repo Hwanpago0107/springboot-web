@@ -49,7 +49,7 @@
 						</div>
 						<div class="carts-col carts-content" th:each="wish : ${wishes}">
 							<div>
-								<input type="checkbox" name="checkbox-wish-item-id" th:checked="false" th:value="${wish.id}"></input>
+								<input type="checkbox" name="checkbox-wish-item-id" th:checked="false" th:value="${wish?.getItem()?.getId()}"></input>
 							</div>
 							<div><strong th:text="${wish.getItem().name}"></strong></div>
 							<div>
