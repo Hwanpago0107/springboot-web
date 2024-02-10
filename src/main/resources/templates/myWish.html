@@ -58,8 +58,10 @@
 							<div th:text="${#numbers.formatDecimal(wish.getItem().price * (1 - wish.getItem().getDiscount()), 0, 'DEFAULT', 0, 'DEFAULT')}"></div>
 						</div>
 					</div>
-					<a id="delete-wish-chk-btn" class="primary-btn order-submit" style="cursor: pointer; float: right;">선택 상품 삭제</a>
-					<a id="create-wish-chk-btn" class="secondary-btn order-submit" style="cursor: pointer; float: right;">선택 상품 장바구니 추가</a>
+					<div style="text-align: right;">
+						<a id="create-wish-chk-btn" class="secondary-btn order-submit" style="cursor: pointer;">선택 추가</a>
+						<a id="delete-wish-chk-btn" class="primary-btn order-submit" style="cursor: pointer;">선택 삭제</a>
+					</div>
 				</div>
 				<!-- /Order Details -->
 			</div>

@@ -6,6 +6,7 @@ import me.ceskim493.springbootdeveloper.domain.Category;
 import me.ceskim493.springbootdeveloper.domain.Item;
 import me.ceskim493.springbootdeveloper.dto.CreateCategoryRequest;
 import me.ceskim493.springbootdeveloper.repository.CategoryRepository;
+import me.ceskim493.springbootdeveloper.repository.ItemRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,6 +19,7 @@ import java.util.List;
 public class CategoryService {
 
     private final CategoryRepository categoryRepository;
+    private final ItemRepository itemRepository;
 
     public Category save(CreateCategoryRequest request) {
         Category category = new Category();
@@ -73,8 +75,7 @@ public class CategoryService {
         Category category = findById(id);
         List<Item> items = new ArrayList<>();
         items.addAll(category.getItems());
-        List<Category> categories = new ArrayList<>();
-        categories = findChildsByCategories(category.getChild());
+        List<Category> categories = findChildsByCategories(category.getChild());
 
         for (Category cate : categories) {
             items.addAll(cate.getItems());
@@ -116,5 +117,54 @@ public class CategoryService {
     public List<Category> findCategoriesByDepth(String depth) {
         return categoryRepository.findCategoriesByDepth(depth) == null ?
                 new ArrayList<Category>() : categoryRepository.findCategoriesByDepth(depth);
+    }
+
+    public List<Item> searchItemsWithCategoryAndText(Long category_id, String searchText) {
+        Category category = findById(category_id);
+        List<Item> items = new ArrayList<>();
+        items.addAll(itemRepository.findAllByCategoryAndAndNameContainsIgnoreCase(category, searchText));
+        List<Category> categories = findChildsByCategories(category.getChild());
+
+        for (Category cate : categories) {
+            items.addAll(itemRepository.findAllByCategoryAndAndNameContainsIgnoreCase(cate, searchText));
+        }
+        return items;
+    }
+
+    public List<Category> findBrandsByCategory(Long category_id) {
+        List<Category> list = new ArrayList<>();
+        Category category = findById(category_id);
+
+        if ("3".equals(category.getDepth())) {
+            list.add(category);
+        }
+        List<Category> categories = findChildsByCategories(category.getChild());
+
+        for (Category cate : categories) {
+            if ("3".equals(cate.getDepth())) {
+                list.add(cate);
+            }
+        }
+        return setItemCountsToCategories(list);
+    }
+
+    public List<Category> findCategoriesAndCountByDepth(String depth) {
+        if (categoryRepository.findCategoriesByDepth(depth) == null) {
+            return new ArrayList<Category>();
+        }
+
+        return setItemCountsToCategories(categoryRepository.findCategoriesByDepth(depth));
+    }
+
+    // 카테고리 별 하위 카테고리까지 포함한 개수 세기
+    private List<Category> setItemCountsToCategories(List<Category> categories) {
+        for (int i=0; i < categories.size(); i++) {
+            Category category = categories.get(i);
+            int count = findItemsByCategory(category.getId()) == null ? 0 : findItemsByCategory(category.getId()).size();
+            category.setCount(count);
+            categories.set(i, category);
+        }
+
+        return categories;
     }
 }

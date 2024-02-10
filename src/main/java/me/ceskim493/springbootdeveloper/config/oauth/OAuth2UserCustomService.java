@@ -32,12 +32,14 @@ public class OAuth2UserCustomService extends DefaultOAuth2UserService {
         String email = (String) attributes.get("email");
         String name = (String) attributes.get("name");
         String nickname = (String) attributes.get("name");
+        String picture = (String) attributes.get("picture");
         User user = userRepository.findByEmail(email)
-                .map(entity ->entity.update(nickname, name))
+                .map(entity ->entity.update(nickname, name, picture))
                 .orElse(User.builder()
                         .email(email)
                         .name(name)
                         .nickname(name)
+                        .picture(picture)
                         .build());
 
         return userRepository.save(user);

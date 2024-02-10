@@ -35,7 +35,11 @@
 						<div class="section-title">
 							<h3 class="title">내 정보 수정</h3>
 						</div>
-
+						<div class="form-group">
+							<div class="profile-box">
+								<img class="profile-image" th:src="${userInfo.getPicture()}">
+							</div>
+						</div>
 						<div class="form-group">
 							<h4 class="title">이름</h4>
 							<input class="input" type="text" th:value="${userInfo.getName()}"
@@ -54,11 +58,9 @@
 						<div class="form-group">
 							<h4 class="title">주소</h4>
 							<input class="input" type="text" th:value="${userInfo.getAddress()?.getZipcode()}"
-								   name="zipcode" placeholder="ZIP Code" id="zipcode" style="width: 81%;">
-							<div style="width: 14%; display: inline-block;">
-								<button th:onclick="|findAddr()|" type="button" class="btn btn-info"
-										style="margin-left: 5px; margin-bottom: 5px;">주소 찾기</button>
-							</div>
+								   name="zipcode" placeholder="ZIP Code" id="zipcode" style="width: calc(100% - 95px);">
+							<button th:onclick="|findAddr()|" type="button" class="btn btn-info"
+									style="margin-left: 5px; margin-bottom: 5px; display: inline-block; width: 85px;">주소 찾기</button>
 						</div>
 						<div class="form-group">
 							<input class="input" type="text" th:value="${userInfo.getAddress()?.getStreetAddr()}"

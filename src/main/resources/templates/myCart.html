@@ -62,8 +62,10 @@
 							<div><strong th:text="${#numbers.formatDecimal(cart.getItem().price * (1 - cart.getItem().getDiscount()) * cart.getQuantity(), 0, 'DEFAULT', 0, 'DEFAULT')}"></strong></div>
 						</div>
 					</div>
-					<a id="delete-cart-chk-btn" class="primary-btn order-submit"
-					   style="cursor: pointer; float: right;">선택 상품 삭제</a>
+					<div style="text-align: right;">
+						<a id="delete-cart-chk-btn" class="primary-btn order-submit"
+					   		style="cursor: pointer;">선택 상품 삭제</a>
+					</div>
 				</div>
 
 				<div class="col-md-1"></div>
@@ -132,7 +134,7 @@
 						<input type="checkbox" id="terms">
 						<label for="terms">
 							<span></span>
-							<a href="#">이용약관</a>을 읽었으며 이에 동의합니다.
+							<a data-target="#termModal" data-toggle="modal">이용약관</a>을 읽었으며 이에 동의합니다.
 						</label>
 					</div>
 					<a id="pre-order-btn" class="primary-btn order-submit"
@@ -154,6 +156,18 @@
 				<div class="modal-footer">
 					<a class="secondary-btn order-submit" data-dismiss="modal" style="cursor: pointer;">닫기</a>
 					<a id="create-order-btn" class="primary-btn order-submit" style="cursor: pointer;">주문하기</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="modal fade" id="termModal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-lg modal-dialog-scrollable">
+			<div class="modal-content">
+				<div class="modal-body">
+					<th:block th:replace="~{termModal :: showModal()}"></th:block>
+				</div>
+				<div class="modal-footer">
+					<a class="secondary-btn order-submit" data-dismiss="modal" style="cursor: pointer;">닫기</a>
 				</div>
 			</div>
 		</div>

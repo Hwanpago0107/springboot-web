@@ -38,6 +38,9 @@ public class User implements UserDetails {
     @Column(name = "phone")
     private String phone;
 
+    @Column(name="picture")
+    private String picture;
+
     @Embedded
     private Address address;
 
@@ -45,11 +48,12 @@ public class User implements UserDetails {
     private List<Order> orders = new ArrayList<>();
 
     @Builder
-    public User(String email, String password, String name, String nickname) {
+    public User(String email, String password, String name, String nickname, String picture) {
         this.email = email;
         this.password = password;
         this.name = name;
         this.nickname = nickname;
+        this.picture = picture;
     }
 
     @Override
@@ -94,9 +98,10 @@ public class User implements UserDetails {
     }
 
     // 사용자 이름 변경
-    public User update(String nickname, String name) {
+    public User update(String nickname, String name, String picture) {
         this.nickname = nickname;
         this.name = name;
+        this.picture = picture;
         return this;
     }
     public void update(String nickname, String name, String phone, Address address) {

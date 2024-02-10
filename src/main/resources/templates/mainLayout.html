@@ -63,7 +63,7 @@
             <!-- row -->
             <div class="row">
                 <!-- LOGO -->
-                <div class="col-md-3" style="padding-left: 7px; padding-right: 7px;">
+                <div class="col-md-3">
                     <div class="header-logo">
                         <a th:href="@{/main/home}" class="logo">
                             <img src="/img/hwanpago-logo-white.png" alt="" style="width: 150px;">
@@ -75,21 +75,21 @@
                 <!-- SEARCH BAR -->
                 <div class="col-md-6">
                     <div class="header-search">
-                        <form>
-                            <select class="input-select">
-                                <option value="">전체</option>
-                                <option th:each="category : ${categories}" th:value="${category.id}"
+                        <form method="get" action="/search">
+                            <select class="input-select" name="category_id">
+                                <option value="0">전체</option>
+                                <option th:each="category : ${depth1}" th:value="${category.id}"
                                             th:text="${category.name}"></option>
                             </select>
-                            <input class="input" placeholder="Search here">
-                            <button class="search-btn">Search</button>
+                            <input class="input" placeholder="Search here" name="search_text">
+                            <button class="search-btn" id="search-btn" type="submit">Search</button>
                         </form>
                     </div>
                 </div>
                 <!-- /SEARCH BAR -->
 
                 <!-- ACCOUNT -->
-                <div class="col-md-3 clearfix" style="padding-left: 7px; padding-right: 7px;">
+                <div class="col-md-3 clearfix">
                     <div class="header-ctn">
                         <!-- Wishlist -->
                         <div>
@@ -102,7 +102,7 @@
                         <!-- /Wishlist -->
 
                         <!-- Cart -->
-                        <div class="dropdown" style="margin-left: 0px; cursor: pointer;">
+                        <div class="dropdown" style="cursor: pointer;">
                             <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
                                 <i class="fa fa-shopping-cart"></i>
                                 <span>Your Cart</span>
@@ -140,15 +140,15 @@
                         </div>
                         <!-- /Cart -->
 
-                        <!-- Order -->
-                        <div style="margin-left: 0px;">
-                            <a th:href="@{/main/myOrder}">
-                                <i class="fa fa-inbox"></i>
-                                <span>Your Orderd</span>
-                                <div class="qty" th:text="${orders.size()}"></div>
-                            </a>
-                        </div>
-                        <!-- Order -->
+<!--                        &lt;!&ndash; Order &ndash;&gt;-->
+<!--                        <div style="margin-left: 0px;">-->
+<!--                            <a th:href="@{/main/myOrder}">-->
+<!--                                <i class="fa fa-inbox"></i>-->
+<!--                                <span>Your Orderd</span>-->
+<!--                                <div class="qty" th:text="${orders.size()}"></div>-->
+<!--                            </a>-->
+<!--                        </div>-->
+<!--                        &lt;!&ndash; Order &ndash;&gt;-->
 
                         <!-- Menu Toogle -->
                         <div class="menu-toggle">
@@ -181,7 +181,7 @@
                 <li class="active"><a th:href="@{/main/home}">Home</a></li>
                 <li><a href="/hotdeals" style="color: red;">핫딜</a></li>
                 <li><a th:href="|/category/0|">카테고리</a></li>
-                <li th:each="category : ${categories}">
+                <li th:each="category : ${depth1}">
                     <a th:href="|/category/${category.id}|" th:text="${category.name}"></a>
                 </li>
             </ul>
@@ -263,11 +263,10 @@
                         <div class="footer">
                             <h3 class="footer-title">Categories</h3>
                             <ul class="footer-links">
-                                <li><a href="#">Hot deals</a></li>
-                                <li><a href="#">Laptops</a></li>
-                                <li><a href="#">Smartphones</a></li>
-                                <li><a href="#">Cameras</a></li>
-                                <li><a href="#">Accessories</a></li>
+                                <li><a href="/hotdeals">Hot deals</a></li>
+                                <li th:each="category : ${depth1}">
+                                    <a th:href="|/category/${category.id}|" th:text="${category.getName()}"></a>
+                                </li>
                             </ul>
                         </div>
                     </div>
@@ -291,10 +290,10 @@
                         <div class="footer">
                             <h3 class="footer-title">Service</h3>
                             <ul class="footer-links">
-                                <li><a href="#">My Account</a></li>
-                                <li><a href="#">View Cart</a></li>
-                                <li><a href="#">Wishlist</a></li>
-                                <li><a href="#">Track My Order</a></li>
+                                <li><a th:href="@{/main/myInfo}">My Account</a></li>
+                                <li><a th:href="@{/main/myCart}">View Cart</a></li>
+                                <li><a th:href="@{/main/myWish}">Wishlist</a></li>
+                                <li><a th:href="@{/main/myOrder}">Track My Order</a></li>
                                 <li><a href="#">Help</a></li>
                             </ul>
                         </div>
@@ -337,7 +336,7 @@
 
     <!-- Modal -->
     <div class="modal fade" id="deliveryModal2" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg modal-dialog-scrollable" style="width:50%;">
+        <div class="modal-dialog modal-lg modal-dialog-scrollable">
             <div class="modal-content">
                 <div class="modal-body">
                     <th:block th:replace="~{deliveryModal :: showModal(paymentYn='Y')}"></th:block>
@@ -355,6 +354,7 @@
     <script src="/js/jquery.min.js"></script>
     <script src="/js/bootstrap.min.js"></script>
     <script src="/js/slick.min.js"></script>
+    <script src="/js/wNumb.min.js"></script>
     <script src="/js/nouislider.min.js"></script>
     <script src="/js/jquery.zoom.min.js"></script>
     <script src="/js/main.js"></script>

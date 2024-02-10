@@ -1,5 +1,6 @@
 package me.ceskim493.springbootdeveloper.repository;
 
+import me.ceskim493.springbootdeveloper.domain.Category;
 import me.ceskim493.springbootdeveloper.domain.Item;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -11,4 +12,8 @@ public interface ItemRepository extends JpaRepository<Item, Long> {
 
     @Query("select i from Item i, OrderItem o where i.id = o.item.id order by o.count limit 5")
     List<Item> findBySaleCountsLimit5();
+
+    List<Item> findAllByCategoryAndAndNameContainsIgnoreCase(Category category, String name);
+
+    List<Item> findAllByNameContainsIgnoreCase(String name);
 }

@@ -13,7 +13,62 @@
   </component>
   <component name="DBNavigator.Project.DatabaseConsoleManager">
     <connection id="d0d3338a-8875-4185-a874-c993f4d3f7e1">
-      <console name="Connection" type="STANDARD" schema="ebdb" session="Main"><![CDATA[--Item
+      <console name="Connection" type="STANDARD" schema="ebdb" session="Main"><![CDATA[-- 처음시작시 커밋 목록
+---Cartegory
+--depth 1
+INSERT INTO Category (category_id, name)
+values  (0, 'ALL CATEGORIES');
+UPDATE Category SET category_id = 0 WHERE category_id = 1;
+INSERT INTO Category (category_id, name, parent_id, depth)
+values  (1, '노트북', 0, '1');
+INSERT INTO Category (category_id, name, parent_id, depth)
+values  (2, '모바일', 0, '1');
+INSERT INTO Category (category_id, name, parent_id ,depth)
+values  (3, '카메라', 0, '1');
+INSERT INTO Category (category_id, name, parent_id, depth)
+values  (4, '악세서리', 0, '1');
+INSERT INTO Category (category_id, name, parent_id, depth)
+values  (5, '기타', 0, '1');
+--depth 2
+INSERT INTO Category (category_id, name, parent_id, depth)
+values  (6, '일반 노트북', 1, '2');
+INSERT INTO Category (category_id, name, parent_id, depth)
+values  (7, '랩탑', 1, '2');
+INSERT INTO Category (category_id, name, parent_id, depth)
+values  (8, '스마트폰', 2, '2');
+INSERT INTO Category (category_id, name, parent_id, depth)
+values  (9, '태블릿', 2, '2');
+INSERT INTO Category (category_id, name, parent_id, depth)
+values  (10, '일반 카메라', 3, '2');
+INSERT INTO Category (category_id, name, parent_id, depth)
+values  (11, '디지털 카메라', 3, '2');
+INSERT INTO Category (category_id, name, parent_id, depth)
+values  (12, '헤드폰', 4, '2');
+--depth3
+INSERT INTO Category (category_id, name, parent_id, depth)
+values  (13, 'SAMSONG', 6, '3');
+INSERT INTO Category (category_id, name, parent_id, depth)
+values  (14, 'ELG', 6, '3');
+INSERT INTO Category (category_id, name, parent_id, depth)
+values  (15, 'BAIO', 7, '3');
+INSERT INTO Category (category_id, name, parent_id, depth)
+values  (16, 'ASOS', 7, '3');
+INSERT INTO Category (category_id, name, parent_id, depth)
+values  (17, 'REIKA', 11, '3');
+INSERT INTO Category (category_id, name, parent_id, depth)
+values  (18, 'SANY', 12, '3');
+INSERT INTO Category (category_id, name, parent_id, depth)
+values  (19, 'ATTLE', 12, '3');
+INSERT INTO Category (category_id, name, parent_id, depth)
+values  (20, 'GELEXY', 8, '3');
+INSERT INTO Category (category_id, name, parent_id, depth)
+values  (21, 'GELEXY', 9, '3');
+-- 처음시작시 커밋 목록
+
+
+
+
+--Item
 INSERT INTO Item (dtype, item_id, name, price, stockquantity, discount, filename, filepath, filesize, category_id, description)
 values  ('item', 1, 'SAMSONG 노트북', 1000000, 10, 0.3, 'product01.png', '/upload/img/product01.png', 100, 13, '삼성 최강 노트북입니다.');
 INSERT INTO Item (dtype, item_id, name, price, stockquantity, discount, filename, filepath, filesize, category_id, description)
@@ -73,6 +128,17 @@ values  (4, 3, 2100000, 1, 2);
 INSERT INTO OrderItem (order_item_id, count, orderprice, item_id, order_id)
 values  (5, 3, 450000, 2, 2);
 
+-- Wish
+INSERT INTO Wish (id, user_id)
+values  (1, 1);
+
+-- WishItem
+INSERT INTO WishItem (id, item_id, wish_id)
+values  (1, 2, 1);
+INSERT INTO WishItem (id, item_id, wish_id)
+values  (2, 4, 1);
+INSERT INTO WishItem (id, item_id, wish_id)
+values  (3, 6, 1);
 
 update Item set price = 1000000, stockquantity = 10, discount = 0.3, description = '삼송 최강 노트북입니다.', category_id = 13
 where item_id = 1;
@@ -93,18 +159,6 @@ where item_id = 8;
 update Item set price = 400000, stockquantity = 800, discount = 0, description = '101미터 거리까지 보이는 디카', category_id = 17
 where item_id = 9;
 
--- Wish
-INSERT INTO Wish (id, user_id)
-values  (1, 1);
-
--- WishItem
-INSERT INTO WishItem (id, item_id, wish_id)
-values  (1, 2, 1);
-INSERT INTO WishItem (id, item_id, wish_id)
-values  (2, 4, 1);
-INSERT INTO WishItem (id, item_id, wish_id)
-values  (3, 6, 1);
-
 commit;]]></console>
     </connection>
   </component>
@@ -112,9 +166,7 @@ commit;]]></console>
     <last-used-providers />
   </component>
   <component name="DBNavigator.Project.DatabaseFileManager">
-    <open-files>
-      <object connection-id="d0d3338a-8875-4185-a874-c993f4d3f7e1" object-ref="consoles/Connection" />
-    </open-files>
+    <open-files />
   </component>
   <component name="DBNavigator.Project.DatabaseSessionManager">
     <connection id="d0d3338a-8875-4185-a874-c993f4d3f7e1" />

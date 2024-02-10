@@ -42,7 +42,7 @@ public class MainController {
         User user = userService.findByEmail(username);
 
         // start.카테고리 목록 가져오기(최상위 목록만)
-        List<CategoryViewResponse> categories = categoryService.findChildCategoriesByParent(0L).stream()
+        List<CategoryViewResponse> depth1 = categoryService.findCategoriesAndCountByDepth("1").stream()
                 .map(CategoryViewResponse::new)
                 .toList();
         // end.카테고리 목록 가져오기(최상위 목록만)
@@ -83,7 +83,7 @@ public class MainController {
         model.addAttribute("orders", orders);
         model.addAttribute("totalPrice", totalPrice);
         model.addAttribute("cartItems", cartItems);
-        model.addAttribute("categories", categories);
+        model.addAttribute("depth1", depth1);
         model.addAttribute("wishes", wishes);
         model.addAttribute("username", username); // session에 저장된 유저이름 setting
 
@@ -105,8 +105,10 @@ public class MainController {
             model.addAttribute("items", items);
             model.addAttribute("hotdeals", hotdeals);
             model.addAttribute("top5", top5);
-        } else if (pageName.equals("myInfo") || pageName.equals("myCart")) {
-            return pageName;
+        } else if (pageName.equals("myInfo")) {
+            return "myInfo";
+        } else if (pageName.equals("myCart")) {
+            return "myCart";
         } else if (pageName.equals("myOrder")) {
             return "myOrder";
         } else if (pageName.equals("product")) {

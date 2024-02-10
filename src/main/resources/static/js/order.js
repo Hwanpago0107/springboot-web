@@ -152,14 +152,12 @@ const shipCheckBox = document.getElementById("shiping-address");
 if (shipCheckBox) {
     shipCheckBox.addEventListener("click", (event) => {
         if (shipCheckBox.checked) {
-            document.getElementById("name").value = document.getElementById("hiddenName").value;
             document.getElementById("receiver").value = document.getElementById("hiddenReceiver").value;
             document.getElementById("phone").value = document.getElementById("hiddenPhone").value;
             document.getElementById("zipcode").value = document.getElementById("hiddenZipcode").value;
             document.getElementById("streetAddr").value = document.getElementById("hiddenStreetAddr").value;
             document.getElementById("detailAddr").value = document.getElementById("hiddenDetailAddr").value;
         } else {
-            document.getElementById("name").value = "";
             document.getElementById("receiver").value = "";
             document.getElementById("phone").value = "";
             document.getElementById("zipcode").value = "";

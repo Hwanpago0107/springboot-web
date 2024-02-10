@@ -21,6 +21,8 @@ public class UserViewResponse {
 
     private Address address;
 
+    private String picture;
+
     public UserViewResponse(User user) {
         this.id = user.getId();
         this.email = user.getEmail();
@@ -28,5 +30,6 @@ public class UserViewResponse {
         this.nickname = user.getNickname();
         this.phone = user.getPhone();
         this.address = user.getAddress();
+        this.picture = user.getPicture();
     }
 }

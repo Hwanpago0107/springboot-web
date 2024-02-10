@@ -31,6 +31,9 @@ public class Category {
 
     private String depth;
 
+    @Transient
+    private int count;
+
     public void update(String name, Category parent) {
         this.name = name;
         this.parent = parent;

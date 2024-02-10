@@ -11,10 +11,12 @@ public class CategoryViewResponse {
     private Long id;
     private String name;
     private Category parent;
+    private int count;
 
     public CategoryViewResponse(Category category) {
         this.id = category.getId();
         this.name = category.getName();
         this.parent = category.getParent();
+        this.count = category.getCount();
     }
 }

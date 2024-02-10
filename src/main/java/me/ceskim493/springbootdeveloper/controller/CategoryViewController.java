@@ -22,6 +22,7 @@ public class CategoryViewController {
     private final CartService cartService;
     private final OrderService orderService;
     private final WishService wishService;
+    private final ItemService itemService;
 
     @GetMapping("/newCategory")
     public String newItem(@RequestParam(required = false) Long id, Model model, @LoginUser SessionUser user) {
@@ -64,7 +65,10 @@ public class CategoryViewController {
         User user = userService.findByEmail(username);
 
         // start.카테고리 목록 가져오기(최상위 목록만)
-        List<CategoryViewResponse> categories = categoryService.findChildCategoriesByParent(0L).stream()
+        List<CategoryViewResponse> depth1 = categoryService.findCategoriesAndCountByDepth("1").stream()
+                .map(CategoryViewResponse::new)
+                .toList();
+        List<CategoryViewResponse> brands = categoryService.findBrandsByCategory(id).stream()
                 .map(CategoryViewResponse::new)
                 .toList();
         // end.카테고리 목록 가져오기(최상위 목록만)
@@ -117,20 +121,109 @@ public class CategoryViewController {
                 .map(CategoryViewResponse::new)
                 .toList();
 
+        // Top Selling 목록
+        List<ItemListViewResponse> top5 = itemService.findBySaleCountsLimit5().stream()
+                .map(ItemListViewResponse::new)
+                .toList();
+
         model.addAttribute("userInfo", userInfo);
         model.addAttribute("orders", orders);
         model.addAttribute("totalPrice", totalPrice);
         model.addAttribute("cartItems", cartItems);
-        model.addAttribute("categories", categories);
+        model.addAttribute("depth1", depth1);
+        model.addAttribute("brands", brands);
         model.addAttribute("wishes", wishes);
         model.addAttribute("username", username); // session에 저장된 유저이름 setting
-        model.addAttribute("product", product);
         model.addAttribute("parents", parents);
         model.addAttribute("items", items);
         model.addAttribute("currentCate", currentCate);
+        model.addAttribute("top5", top5);
         model.addAttribute("categoryYn", "Y");
 
+        return "store";
+    }
 
-        return "product";
+    @GetMapping("/search")
+    public String getItemsBySearch(@RequestParam(required = false, name = "category_id") Long id,
+                                   @RequestParam(required = false, name = "search_text") String search,
+                                   Model model, @LoginUser SessionUser sUser) {
+        // start.mainLayout
+        // 로그인한 유저
+        String username = userService.getSessionUserName(sUser);
+        User user = userService.findByEmail(username);
+
+        // start.카테고리 목록 가져오기(최상위 목록만)
+        List<CategoryViewResponse> depth1 = categoryService.findCategoriesAndCountByDepth("1").stream()
+                .map(CategoryViewResponse::new)
+                .toList();
+        List<CategoryViewResponse> brands = categoryService.findBrandsByCategory(id).stream()
+                .map(CategoryViewResponse::new)
+                .toList();
+        // end.카테고리 목록 가져오기(최상위 목록만)
+
+        // start.로그인한 사용자가 가지고 있는 장바구니와 장바구니 상품 리스트, 장바구니 총액
+        List<CartItem> carts = cartService.findAll(user);
+        int totalPrice = carts.stream()
+                .mapToInt(cartItem -> {
+                    return (int) (cartItem.getItem().getPrice()
+                            * cartItem.getQuantity()
+                            * (1 - cartItem.getItem().getDiscount())
+                    );
+                })
+                .sum();
+
+        List<CartViewResponse> cartItems = carts.stream()
+                .map(CartViewResponse::new)
+                .toList();
+        // end.로그인한 사용자가 가지고 있는 장바구니와 장바구니 상품 리스트, 장바구니 총액
+
+        // start.내가 주문한 상품 내역
+        List<OrderListViewResponse> orders = orderService.findAll(user).stream()
+                .map(OrderListViewResponse::new)
+                .toList();
+        // end.내가 주문한 상품 내역
+
+        // start.로그인한 사용자가 가지고 있는 위시리스트
+        List<WishViewResponse> wishes = wishService.findAll(user).stream()
+                .map(WishViewResponse::new)
+                .toList();
+        // end.로그인한 사용자가 가지고 있는 위시리스트
+
+        // start.사용자의 정보를 가지고 온다.
+        UserViewResponse userInfo = user.createUserView();
+        // end.사용자의 정보를 가지고 온다.
+        // end.mainLayout
+
+        // 카테고리에 해당하는 상품리스트를 갖고 온다.
+        Item product = null;
+        List<Item> items = categoryService.searchItemsWithCategoryAndText(id, search);
+
+        Category currentCate = categoryService.findById(id);
+
+        // 카테고리가 속해 있는 카테고리들을 전부 갖고온다.
+        List<CategoryViewResponse> parents = categoryService.findParentsCategoryByCategory(id).stream()
+                .map(CategoryViewResponse::new)
+                .toList();
+
+        // Top Selling 목록
+        List<ItemListViewResponse> top5 = itemService.findBySaleCountsLimit5().stream()
+                .map(ItemListViewResponse::new)
+                .toList();
+
+        model.addAttribute("userInfo", userInfo);
+        model.addAttribute("orders", orders);
+        model.addAttribute("totalPrice", totalPrice);
+        model.addAttribute("cartItems", cartItems);
+        model.addAttribute("depth1", depth1);
+        model.addAttribute("brands", brands);
+        model.addAttribute("wishes", wishes);
+        model.addAttribute("username", username); // session에 저장된 유저이름 setting
+        model.addAttribute("parents", parents);
+        model.addAttribute("items", items);
+        model.addAttribute("currentCate", currentCate);
+        model.addAttribute("top5", top5);
+        model.addAttribute("categoryYn", "Y");
+
+        return "store";
     }
 }
