@@ -19,6 +19,7 @@
 INSERT INTO Category (category_id, name)
 values  (0, 'ALL CATEGORIES');
 UPDATE Category SET category_id = 0 WHERE category_id = 1;
+
 INSERT INTO Category (category_id, name, parent_id, depth)
 values  (1, '노트북', 0, '1');
 INSERT INTO Category (category_id, name, parent_id, depth)
@@ -159,7 +160,34 @@ where item_id = 8;
 update Item set price = 400000, stockquantity = 800, discount = 0, description = '101미터 거리까지 보이는 디카', category_id = 17
 where item_id = 9;
 
-commit;]]></console>
+commit;
+
+select * from `Category`;
+
+
+update Item set price = 1000000, stockquantity = 10, discount = 0.3, description = '삼송 최강 노트북입니다.', category_id = 13
+where item_id = 1;
+update Item set price = 200000, stockquantity = 8, discount = 0.25, description = '짱짱 헤드폰입니다.', category_id = 18
+where item_id = 2;
+update Item set price = 1500000, stockquantity = 11, discount = 0.2, description = '새로나온 RTX 최신형 노트북입니다.', category_id = 14
+where item_id = 3;
+update Item set price = 600000, stockquantity = 900, discount = 0.4, description = '가볍고 좋은 최강 태블릿.', category_id = 21
+where item_id = 4;
+update Item set price = 99000, stockquantity = 10, discount = 0.5, description = '중국에서 직수입한 최신형 헤드폰!!', category_id = 19
+where item_id = 5;
+update Item set price = 600000, stockquantity = 12, discount = 0.1, description = '실 무게 500g 초경량 랩탑.', category_id = 15
+where item_id = 6;
+update Item set price = 850000, stockquantity = 11, discount = 0.1, description = 'AI 탑재 초강력 스마트폰', category_id = 20
+where item_id = 7;
+update Item set price = 800000, stockquantity = 900, discount = 0.15, description = '랩탑계의 혁명, 최강 노트북', category_id = 16
+where item_id = 8;
+update Item set price = 400000, stockquantity = 800, discount = 0, description = '101미터 거리까지 보이는 디카', category_id = 17
+where item_id = 9;
+
+
+select * from Item i, OrderItem o 
+where i.item_id = o.item_id
+AND i.category_id IN (1,2,3)]]></console>
     </connection>
   </component>
   <component name="DBNavigator.Project.DatabaseEditorStateManager">

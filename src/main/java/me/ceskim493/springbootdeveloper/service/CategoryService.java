@@ -167,4 +167,12 @@ public class CategoryService {
 
         return categories;
     }
+
+    public List<Item> search(Long category_id, String searchText, String sortBy) {
+        List<Category> categories = new ArrayList<>();
+        categories.add(findById(category_id));
+        categories = findChildsByCategories(categories);
+
+        return itemRepository.search(categories, searchText, sortBy);
+    }
 }

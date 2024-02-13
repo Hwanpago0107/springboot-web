@@ -105,13 +105,13 @@
 	// Input number
 	$('.input-number').each(function() {
 		var $this = $(this),
-			$input = $this.find('input[type="number"]'),
+			$input = $this.find('input[type="text"]'),
 			up = $this.find('.qty-up'),
 			down = $this.find('.qty-down'),
 			curQty = $this.find('#product-stock'),
+			$price = $this.find('.price-yn'),
 			bPrice = false;
-		if ($input.val() == null || $input.val() == undefined) {
-			$input = $this.find('input[type="text"]');
+		if ($price.val() != null && $price.val() != undefined) {
 			bPrice = true;
 		}
 
@@ -203,3 +203,51 @@
 $(document).on('show.bs.dropdown', function(event) {
 	$('.dropdown-backdrop').off().remove();
 });
+
+function getStore(id, pageNumber) {
+	if (pageNumber == null || pageNumber == undefined) {
+		pageNumber = 1;
+	}
+
+	let pageLimit = $('#page_limit option:selected').val();
+	if (pageLimit == null || pageLimit == undefined) {
+		pageLimit = 3;
+	}
+
+	let sortBy = $('#sort_by option:selected').val();
+	if (sortBy == null || sortBy == undefined) {
+		sortBy = "popular";
+	}
+
+	const form = document.createElement("form");
+	form.setAttribute("charset", "UTF-8");
+	form.setAttribute("method", "GET");
+	form.setAttribute("action", "/stores");
+
+	var input1 = document.createElement("input");
+	input1.setAttribute("type", "hidden");
+	input1.setAttribute("name", "category_id");
+	input1.setAttribute("value", id);
+	form.appendChild(input1);
+
+	var input2 = document.createElement("input");
+	input2.setAttribute("type", "hidden");
+	input2.setAttribute("name", "page_number");
+	input2.setAttribute("value", pageNumber);
+	form.appendChild(input2);
+
+	var input3 = document.createElement("input");
+	input3.setAttribute("type", "hidden");
+	input3.setAttribute("name", "page_limit");
+	input3.setAttribute("value", Number(pageLimit));
+	form.appendChild(input3);
+
+	var input4 = document.createElement("input");
+	input4.setAttribute("type", "hidden");
+	input4.setAttribute("name", "sort_by");
+	input4.setAttribute("value", sortBy);
+	form.appendChild(input4);
+
+	document.body.appendChild(form);
+	form.submit();
+}

@@ -30,7 +30,7 @@
                     <select class="form-select" id="category" style="display: inline-block; width: 85%;">
                         <option value="0">==카테고리 선택==</option>
                         <option th:each="category : ${categories}" th:value="${category?.id}"
-                                th:text="${category?.name}"></option>
+                                th:text="${category?.name}" th:selected="${category?.id} == ${aItem.getCategory()?.getId()}"></option>
                     </select>
                 </section>
                 <section class="mb-4">
@@ -39,7 +39,7 @@
                 </section>
                 <section class="mb-4">
                     <div class="adm-small-head">상품설명</div>
-                    <textarea id="description" class="form-control adm-small-input" th:value="${aItem.getDescription()}" maxlength="100"></textarea>
+                    <textarea id="description" class="form-control adm-small-input" th:text="${aItem.getDescription()}" maxlength="100"></textarea>
                 </section>
                 <section class="mb-4">
                     <div class="adm-small-head">이미지 파일</div>

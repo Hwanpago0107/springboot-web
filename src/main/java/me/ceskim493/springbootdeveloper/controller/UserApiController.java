@@ -4,7 +4,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import me.ceskim493.springbootdeveloper.domain.User;
 import me.ceskim493.springbootdeveloper.dto.AddUserRequest;
 import me.ceskim493.springbootdeveloper.dto.UserResponse;
 import me.ceskim493.springbootdeveloper.service.UserService;
@@ -43,17 +42,5 @@ public class UserApiController {
 
         return ResponseEntity.ok()
                 .body(updatedUser);
-    }
-
-    @PostMapping("/api/info")
-    public String checkUserInfo() {
-        // 로그인한 유저
-        String userName = SecurityContextHolder.getContext().getAuthentication().getName();
-        User user = userService.findByEmail(userName);
-
-        // 사용자 정보가 누락되지 않았는지 체크한다.
-        // 1. 사용자 이름
-
-        return userName;
     }
 }

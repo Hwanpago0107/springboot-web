@@ -10,11 +10,14 @@
 			<!-- row -->
 			<div class="row">
 				<div class="col-md-12">
-					<ul class="breadcrumb-tree">
+					<ul class="breadcrumb-tree" th:if="${parents != null && parents.size() > 0}">
 						<li><a th:href="@{/main/home}">Home</a></li>
 						<li th:each="i : ${#numbers.sequence(parents.size()-1, 0, -1)}" th:with="category=${parents[i]}">
-							<a th:href="|/category/${category.getId()}|" th:text="${category.getName()}"></a>
+							<a th:onclick="|getStore(${category.id}, 1)|" th:text="${category.getName()}"></a>
 						</li>
+					</ul>
+					<ul class="breadcrumb-tree" th:unless="${parents != null && parents.size() > 0}">
+						<li><a>등록된 카테고리가 없습니다. 카테고리 등록을 먼저 진행하여 주세요.</a></li>
 					</ul>
 				</div>
 			</div>
@@ -59,12 +62,14 @@
 								<input id="price-min" type="text">
 								<span class="qty-up">+</span>
 								<span class="qty-down">-</span>
+								<input class="price-yn" type="hidden" value="Y">
 							</div>
 							<span>-</span>
 							<div class="input-number price-max">
 								<input id="price-max" type="text">
 								<span class="qty-up">+</span>
 								<span class="qty-down">-</span>
+								<input class="price-yn" type="hidden" value="Y">
 							</div>
 						</div>
 					</div>
@@ -116,17 +121,18 @@
 						<div class="store-sort">
 							<label>
 								Sort By:
-								<select class="input-select">
-									<option value="0">Popular</option>
-									<option value="1">Position</option>
+								<select class="input-select" id="sort_by" th:onchange="|getStore(${currentCate.id}, 1)|">
+									<option value="popular" th:selected="${sortBy} == 'popular'">Popular</option>
+									<option value="price" th:selected="${sortBy} == 'price'">Price</option>
 								</select>
 							</label>
 
 							<label>
 								Show:
-								<select class="input-select">
-									<option value="0">20</option>
-									<option value="1">50</option>
+								<select class="input-select" id="page_limit" th:onchange="|getStore(${currentCate.id}, 1)|">
+									<option value="3" th:selected="${currentLimit} == 3">3</option>
+									<option value="6" th:selected="${currentLimit} == 6">6</option>
+									<option value="9" th:selected="${currentLimit} == 9">9</option>
 								</select>
 							</label>
 						</div>
@@ -183,12 +189,14 @@
 
 					<!-- store bottom filter -->
 					<div class="store-filter clearfix">
-						<span class="store-qty">Showing 20-100 products</span>
+						<span class="store-qty">Showing 3-9 products</span>
 						<ul class="store-pagination">
-							<li class="active">1</li>
-							<li><a href="#">2</a></li>
-							<li><a href="#">3</a></li>
-							<li><a href="#">4</a></li>
+							<li><a href="#"><i class="fa fa-angle-left"></i></a></li>
+							<li th:each="page : ${#numbers.sequence(startPage, endPage)}"
+							th:text="${page}"
+								th:onclick="|getStore(${currentCate.id}, ${page})|"
+								th:classappend="${page == currentPage} ? 'active' : ''"
+								style="cursor: pointer;"></li>
 							<li><a href="#"><i class="fa fa-angle-right"></i></a></li>
 						</ul>
 					</div>

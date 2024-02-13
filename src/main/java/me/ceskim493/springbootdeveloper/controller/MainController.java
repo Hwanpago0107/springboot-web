@@ -2,10 +2,8 @@ package me.ceskim493.springbootdeveloper.controller;
 
 import lombok.RequiredArgsConstructor;
 import me.ceskim493.springbootdeveloper.annotation.LoginUser;
-import me.ceskim493.springbootdeveloper.domain.CartItem;
 import me.ceskim493.springbootdeveloper.domain.SessionUser;
-import me.ceskim493.springbootdeveloper.domain.User;
-import me.ceskim493.springbootdeveloper.dto.*;
+import me.ceskim493.springbootdeveloper.dto.ItemListViewResponse;
 import me.ceskim493.springbootdeveloper.service.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,6 +22,7 @@ public class MainController {
     private final OrderService orderService;
     private final CategoryService categoryService;
     private final WishService wishService;
+    private final MainService mainService;
 
     @GetMapping("/")
     public String root() {
@@ -37,55 +36,8 @@ public class MainController {
 
     @GetMapping("/main/{pageName}")
     public String main(Model model, @LoginUser SessionUser sUser, @PathVariable String pageName) {
-        // 로그인한 유저
-        String username = userService.getSessionUserName(sUser);
-        User user = userService.findByEmail(username);
-
-        // start.카테고리 목록 가져오기(최상위 목록만)
-        List<CategoryViewResponse> depth1 = categoryService.findCategoriesAndCountByDepth("1").stream()
-                .map(CategoryViewResponse::new)
-                .toList();
-        // end.카테고리 목록 가져오기(최상위 목록만)
-
-        // start.로그인한 사용자가 가지고 있는 장바구니와 장바구니 상품 리스트, 장바구니 총액
-        List<CartItem> carts = cartService.findAll(user);
-        int totalPrice = carts.stream()
-                .mapToInt(cartItem -> {
-                    return (int) (cartItem.getItem().getPrice()
-                            * cartItem.getQuantity()
-                            * (1 - cartItem.getItem().getDiscount())
-                    );
-                })
-                .sum();
-
-        List<CartViewResponse> cartItems = carts.stream()
-                .map(CartViewResponse::new)
-                .toList();
-        // end.로그인한 사용자가 가지고 있는 장바구니와 장바구니 상품 리스트, 장바구니 총액
-
-        // start.내가 주문한 상품 내역
-        List<OrderListViewResponse> orders = orderService.findAll(user).stream()
-                .map(OrderListViewResponse::new)
-                .toList();
-        // end.내가 주문한 상품 내역
-
-        // start.로그인한 사용자가 가지고 있는 위시리스트
-        List<WishViewResponse> wishes = wishService.findAll(user).stream()
-                .map(WishViewResponse::new)
-                .toList();
-        // end.로그인한 사용자가 가지고 있는 위시리스트
-
-        // start.사용자의 정보를 가지고 온다.
-        UserViewResponse userInfo = user.createUserView();
-        // end.사용자의 정보를 가지고 온다.
-
-        model.addAttribute("userInfo", userInfo);
-        model.addAttribute("orders", orders);
-        model.addAttribute("totalPrice", totalPrice);
-        model.addAttribute("cartItems", cartItems);
-        model.addAttribute("depth1", depth1);
-        model.addAttribute("wishes", wishes);
-        model.addAttribute("username", username); // session에 저장된 유저이름 setting
+        // MainLayout.html
+        model = mainService.getMainLayout(model, sUser);
 
         if (pageName.equals("home")) {
             // 등록된 상품리스트
@@ -98,6 +50,7 @@ public class MainController {
                     .map(ItemListViewResponse::new)
                     .toList();
 
+            // Top Selling (상위 5품목)
             List<ItemListViewResponse> top5 = itemService.findBySaleCountsLimit5().stream()
                     .map(ItemListViewResponse::new)
                     .toList();

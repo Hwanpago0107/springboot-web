@@ -44,9 +44,10 @@
     <div id="top-header">
         <div class="container">
             <ul class="header-links pull-left">
-                <li><a href="#"><i class="fa fa-phone"></i> 010-9963-9301</a></li>
-                <li><a href="#"><i class="fa fa-envelope-o"></i> blessu0107@gmail.com</a></li>
-                <li><a href="#"><i class="fa fa-map-marker"></i> seoul</a></li>
+                <li><a href="tel:010-9963-9301"><i class="fa fa-phone"></i>010-9963-9301</a></li>
+                <li><a href="mailto:blessu0107@gmail.com"><i class="fa fa-envelope-o"></i>blessu0107@gmail.com</a></li>
+                <li><a href="https://github.com/Hwanpago0107/springboot-web"
+                        target="_blank"><i class="fa fa-map-marker"></i>Seoul Hwanpago</a></li>
             </ul>
             <ul class="header-links pull-right">
 <!--                <li><a href="#"><i class="fa fa-dollar"></i> WON</a></li>-->
@@ -75,13 +76,16 @@
                 <!-- SEARCH BAR -->
                 <div class="col-md-6">
                     <div class="header-search">
-                        <form method="get" action="/search">
+                        <form method="get" action="/stores">
                             <select class="input-select" name="category_id">
-                                <option value="0">전체</option>
+                                <option value="0" th:selected="${depth1Cate?.id} == 0">전체</option>
                                 <option th:each="category : ${depth1}" th:value="${category.id}"
-                                            th:text="${category.name}"></option>
+                                            th:text="${category.name}"
+                                            th:selected="${depth1Cate?.id} == ${category.id}"></option>
                             </select>
                             <input class="input" placeholder="Search here" name="search_text">
+                            <input class="input" type="Number" name="page_number" value="1" hidden="hidden">
+                            <input class="input" type="Number" name="page_limit" value="3" hidden="hidden">
                             <button class="search-btn" id="search-btn" type="submit">Search</button>
                         </form>
                     </div>
@@ -180,9 +184,9 @@
             <ul class="main-nav nav navbar-nav">
                 <li class="active"><a th:href="@{/main/home}">Home</a></li>
                 <li><a href="/hotdeals" style="color: red;">핫딜</a></li>
-                <li><a th:href="|/category/0|">카테고리</a></li>
+                <li><a th:onclick="|getStore(0, 1)|">전체</a></li>
                 <li th:each="category : ${depth1}">
-                    <a th:href="|/category/${category.id}|" th:text="${category.name}"></a>
+                    <a th:onclick="|getStore(${category.id}, 1)|" th:text="${category.name}"></a>
                 </li>
             </ul>
             <!-- /NAV -->
@@ -251,9 +255,10 @@
                             <h3 class="footer-title">About Us</h3>
                             <p>본 사이트는 실제 쇼핑몰이 아닌<br>쇼핑몰 기능을 구현한<br>개인 프로젝트용 사이트 입니다.</p>
                             <ul class="footer-links">
-                                <li><a href="#"><i class="fa fa-map-marker"></i>Seoul Hwanpago</a></li>
-                                <li><a href="#"><i class="fa fa-phone"></i>010-9963-9301</a></li>
-                                <li><a href="#"><i class="fa fa-envelope-o"></i>blessu0107@gmail.com</a></li>
+                                <li><a href="https://github.com/Hwanpago0107/springboot-web"
+                                       target="_blank"><i class="fa fa-map-marker"></i>Seoul Hwanpago</a></li>
+                                <li><a href="tel:010-9963-9301"><i class="fa fa-phone"></i>010-9963-9301</a></li>
+                                <li><a href="mailto:blessu0107@gmail.com"><i class="fa fa-envelope-o"></i>blessu0107@gmail.com</a></li>
                                 <li><a th:href="@{/admin}"><i class="fa fa-user-o"></i>admin</a></li>
                             </ul>
                         </div>
@@ -265,7 +270,7 @@
                             <ul class="footer-links">
                                 <li><a href="/hotdeals">Hot deals</a></li>
                                 <li th:each="category : ${depth1}">
-                                    <a th:href="|/category/${category.id}|" th:text="${category.getName()}"></a>
+                                    <a th:onclick="|getStore(${category.id}, 1)|" th:text="${category.getName()}"></a>
                                 </li>
                             </ul>
                         </div>

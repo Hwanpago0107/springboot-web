@@ -2,8 +2,12 @@ package me.ceskim493.springbootdeveloper.controller;
 
 import lombok.RequiredArgsConstructor;
 import me.ceskim493.springbootdeveloper.annotation.LoginUser;
-import me.ceskim493.springbootdeveloper.domain.*;
-import me.ceskim493.springbootdeveloper.dto.*;
+import me.ceskim493.springbootdeveloper.domain.Category;
+import me.ceskim493.springbootdeveloper.domain.Item;
+import me.ceskim493.springbootdeveloper.domain.SessionUser;
+import me.ceskim493.springbootdeveloper.dto.CategoryViewResponse;
+import me.ceskim493.springbootdeveloper.dto.ItemListViewResponse;
+import me.ceskim493.springbootdeveloper.dto.ItemViewResponse;
 import me.ceskim493.springbootdeveloper.service.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 @RequiredArgsConstructor
 @Controller
@@ -24,6 +30,7 @@ public class ItemViewController {
     private final CartService cartService;
     private final OrderService orderService;
     private final WishService wishService;
+    private final MainService mainService;
 
     @GetMapping("/new-item")
     public String newItem(@RequestParam(required = false) Long id, Model model, @LoginUser SessionUser user) {
@@ -54,49 +61,8 @@ public class ItemViewController {
 
     @GetMapping("/items/{id}")
     public String getItem(Model model, @PathVariable Long id, @LoginUser SessionUser sUser) {
-        // start.mainLayout
-        // 로그인한 유저
-        String username = userService.getSessionUserName(sUser);
-        User user = userService.findByEmail(username);
-
-        // start.카테고리 목록 가져오기(최상위 목록만)
-        List<CategoryViewResponse> categories = categoryService.findChildCategoriesByParent(0L).stream()
-                .map(CategoryViewResponse::new)
-                .toList();
-        // end.카테고리 목록 가져오기(최상위 목록만)
-
-        // start.로그인한 사용자가 가지고 있는 장바구니와 장바구니 상품 리스트, 장바구니 총액
-        List<CartItem> carts = cartService.findAll(user);
-        int totalPrice = carts.stream()
-                .mapToInt(cartItem -> {
-                    return (int) (cartItem.getItem().getPrice()
-                            * cartItem.getQuantity()
-                            * (1 - cartItem.getItem().getDiscount())
-                    );
-                })
-                .sum();
-
-        List<CartViewResponse> cartItems = carts.stream()
-                .map(CartViewResponse::new)
-                .toList();
-        // end.로그인한 사용자가 가지고 있는 장바구니와 장바구니 상품 리스트, 장바구니 총액
-
-        // start.내가 주문한 상품 내역
-        List<OrderListViewResponse> orders = orderService.findAll(user).stream()
-                .map(OrderListViewResponse::new)
-                .toList();
-        // end.내가 주문한 상품 내역
-
-        // start.로그인한 사용자가 가지고 있는 위시리스트
-        List<WishViewResponse> wishes = wishService.findAll(user).stream()
-                .map(WishViewResponse::new)
-                .toList();
-        // end.로그인한 사용자가 가지고 있는 위시리스트
-
-        // start.사용자의 정보를 가지고 온다.
-        UserViewResponse userInfo = user.createUserView();
-        // end.사용자의 정보를 가지고 온다.
-        // end.mainLayout
+        // MainLayout.html
+        model = mainService.getMainLayout(model, sUser);
 
         // 해당하는 상품 하나를 가져온다.
         Item product = itemService.findById(id);
@@ -109,13 +75,6 @@ public class ItemViewController {
                 .map(CategoryViewResponse::new)
                 .toList();
 
-        model.addAttribute("userInfo", userInfo);
-        model.addAttribute("orders", orders);
-        model.addAttribute("totalPrice", totalPrice);
-        model.addAttribute("cartItems", cartItems);
-        model.addAttribute("categories", categories);
-        model.addAttribute("wishes", wishes);
-        model.addAttribute("username", username); // session에 저장된 유저이름 setting
         model.addAttribute("product", product);
         model.addAttribute("parents", parents);
         model.addAttribute("items", items);
@@ -126,66 +85,80 @@ public class ItemViewController {
 
     @GetMapping("/hotdeals")
     public String getHotdeals(Model model, @LoginUser SessionUser sUser) {
-        // start.mainLayout
-        // 로그인한 유저
-        String username = userService.getSessionUserName(sUser);
-        User user = userService.findByEmail(username);
+        // MainLayout.html
+        model = mainService.getMainLayout(model, sUser);
 
-        // start.카테고리 목록 가져오기(최상위 목록만)
-        List<CategoryViewResponse> categories = categoryService.findChildCategoriesByParent(0L).stream()
-                .map(CategoryViewResponse::new)
-                .toList();
-        // end.카테고리 목록 가져오기(최상위 목록만)
-
-        // start.로그인한 사용자가 가지고 있는 장바구니와 장바구니 상품 리스트, 장바구니 총액
-        List<CartItem> carts = cartService.findAll(user);
-        int totalPrice = carts.stream()
-                .mapToInt(cartItem -> {
-                    return (int) (cartItem.getItem().getPrice()
-                            * cartItem.getQuantity()
-                            * (1 - cartItem.getItem().getDiscount())
-                    );
-                })
-                .sum();
-
-        List<CartViewResponse> cartItems = carts.stream()
-                .map(CartViewResponse::new)
-                .toList();
-        // end.로그인한 사용자가 가지고 있는 장바구니와 장바구니 상품 리스트, 장바구니 총액
-
-        // start.내가 주문한 상품 내역
-        List<OrderListViewResponse> orders = orderService.findAll(user).stream()
-                .map(OrderListViewResponse::new)
-                .toList();
-        // end.내가 주문한 상품 내역
-
-        // start.로그인한 사용자가 가지고 있는 위시리스트
-        List<WishViewResponse> wishes = wishService.findAll(user).stream()
-                .map(WishViewResponse::new)
-                .toList();
-        // end.로그인한 사용자가 가지고 있는 위시리스트
-
-        // start.사용자의 정보를 가지고 온다.
-        UserViewResponse userInfo = user.createUserView();
-        // end.사용자의 정보를 가지고 온다.
-        // end.mainLayout
-
-        // 세일상품을 갖고온다.
+        // 세일상품을 갖고온다. (30% 이상 세일 상품)
         List<Item> items = itemService.findByDiscountGreaterThanEqual(0.3F);
 
         List<Category> parents = new ArrayList<>();
 
-        model.addAttribute("userInfo", userInfo);
-        model.addAttribute("orders", orders);
-        model.addAttribute("totalPrice", totalPrice);
-        model.addAttribute("cartItems", cartItems);
-        model.addAttribute("categories", categories);
-        model.addAttribute("wishes", wishes);
-        model.addAttribute("username", username); // session에 저장된 유저이름 setting
         model.addAttribute("items", items);
         model.addAttribute("parents", parents);
         model.addAttribute("hotdealYn", "Y");
 
         return  "product";
+    }
+
+    @GetMapping("/stores")
+    public String getItems(Model model, @LoginUser SessionUser sUser,
+                           @RequestParam(required = false, name = "category_id") Long id,
+                           @RequestParam(required = false, name = "page_number") int pageNumber,
+                           @RequestParam(required = false, name = "page_limit") int pageLimit,
+                           @RequestParam(required = false, defaultValue = "", name = "search_text") String search,
+                           @RequestParam(required = false, name = "sort_by") String sortBy) {
+
+        // MainLayout.html
+        model = mainService.getMainLayout(model, sUser);
+
+        // 선택한 카테고리의 브랜드(depth3)를 전부가져온다.
+        List<CategoryViewResponse> brands = categoryService.findBrandsByCategory(id).stream()
+                .map(CategoryViewResponse::new)
+                .toList();
+
+        int pageNum = pageNumber - 1;
+        int startNumber = pageNum * pageLimit;
+        int endNumber = (pageNum+1) * pageLimit;
+
+        // 현재 속해있는 카테고리
+        Category currentCate = categoryService.findById(id);
+        Category depth1Cate = new Category();
+        if ("1".equals(currentCate.getDepth())) {
+            depth1Cate = currentCate;
+        }
+        // 카테고리에 해당하는 상품리스트를 갖고온다. (paging)
+        List<Item> origin = categoryService.search(id, search, sortBy);
+
+        List<Item> items = IntStream.range(0, origin.size())
+                .filter(index -> index >= startNumber && index < endNumber)
+                .mapToObj(origin::get)
+                .collect(Collectors.toList());
+
+        int startPage = (((int) Math.ceil(((double) pageNumber / pageLimit))) - 1) * pageLimit + 1;
+        int endPage = Math.min((startPage + pageLimit - 1), (origin.size() - 1) / pageLimit + 1);
+
+        // 카테고리가 속해 있는 부모카테고리들 까지 전부 갖고온다.
+        List<CategoryViewResponse> parents = categoryService.findParentsCategoryByCategory(id).stream()
+                .map(CategoryViewResponse::new)
+                .toList();
+
+        // Top Selling 목록 상위 5품목
+        List<ItemListViewResponse> top5 = itemService.findBySaleCountsLimit5().stream()
+                .map(ItemListViewResponse::new)
+                .toList();
+
+        model.addAttribute("brands", brands);
+        model.addAttribute("parents", parents);
+        model.addAttribute("items", items);
+        model.addAttribute("currentCate", currentCate);
+        model.addAttribute("depth1Cate", depth1Cate);
+        model.addAttribute("top5", top5);
+        model.addAttribute("startPage", startPage);
+        model.addAttribute("endPage", endPage);
+        model.addAttribute("currentPage", pageNumber);
+        model.addAttribute("sortBy", sortBy);
+        model.addAttribute("currentLimit", pageLimit);
+
+        return "store";
     }
 }

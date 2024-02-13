@@ -35,6 +35,7 @@ public class CartService {
 
         if (item.getStockQuantity() < 1) {
             // 재고가 없습니다.
+            log.info("재고가 없음. {}", item.getId());
             throw new IllegalArgumentException("재고가 없습니다.");
         }
 
@@ -55,6 +56,8 @@ public class CartService {
         } else {
             cartItem = new CartItem(cart, item, 1);
         }
+
+        log.info("Cart : {}, CartItem: {}", cart, cartItem);
 
         return cartItemRepository.save(cartItem);
     }

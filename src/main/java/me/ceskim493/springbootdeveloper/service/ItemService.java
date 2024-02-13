@@ -34,7 +34,7 @@ public class ItemService {
 
         Category category = new Category();
         try {
-            categoryRepository.findById(request.getCategory_id()).get();
+            category = categoryRepository.findById(request.getCategory_id()).get();
             item.setCategory(category);
         } catch (Exception e) {
             log.info("no category {}", request.getCategory_id());
@@ -75,7 +75,7 @@ public class ItemService {
 
         Category category = new Category();
         try {
-            categoryRepository.findById(request.getCategory_id()).get();
+            category = categoryRepository.findById(request.getCategory_id()).get();
             item.setCategory(category);
         } catch (Exception e) {
             log.info("no category {}", request.getCategory_id());
