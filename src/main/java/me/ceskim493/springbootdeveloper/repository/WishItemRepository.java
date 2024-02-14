@@ -10,4 +10,6 @@ public interface WishItemRepository extends JpaRepository<WishItem, Long> {
     List<WishItem> findAllByWish(Wish wish);
 
     List<WishItem> findWishItemByItem_Id(Long item_id);
+
+    void deleteAllByItem_IdAndWish(Long item_id, Wish wish);
 }

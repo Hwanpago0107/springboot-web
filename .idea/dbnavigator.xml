@@ -90,8 +90,8 @@ INSERT INTO Item (dtype, item_id, name, price, stockquantity, discount, filename
 values  ('item', 9, 'REIKA 카메라', 400000, 800, 0, 'product09.png', '/upload/img/product09.png', 100, 17, '101미터 거리까지 보이는 디카');
 
 -- users
-INSERT INTO users (id, email, nickname)
-values (1, 'blessu0107@gmail.com', 'SH K');
+--INSERT INTO users (id, email, nickname)
+--values (1, 'blessu0107@gmail.com', 'SH K');
 
 --Cart
 INSERT INTO Cart (id, user_id)
@@ -185,9 +185,8 @@ update Item set price = 400000, stockquantity = 800, discount = 0, description =
 where item_id = 9;
 
 
-select * from Item i, OrderItem o 
-where i.item_id = o.item_id
-AND i.category_id IN (1,2,3)]]></console>
+select * from `Wish` w, `WishItem` wi where w.id = wi.wish_id;
+select * from `Item`;]]></console>
     </connection>
   </component>
   <component name="DBNavigator.Project.DatabaseEditorStateManager">

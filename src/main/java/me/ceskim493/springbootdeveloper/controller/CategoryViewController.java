@@ -5,7 +5,9 @@ import me.ceskim493.springbootdeveloper.annotation.LoginUser;
 import me.ceskim493.springbootdeveloper.domain.Category;
 import me.ceskim493.springbootdeveloper.domain.SessionUser;
 import me.ceskim493.springbootdeveloper.dto.CategoryViewResponse;
-import me.ceskim493.springbootdeveloper.service.*;
+import me.ceskim493.springbootdeveloper.service.AdminService;
+import me.ceskim493.springbootdeveloper.service.CategoryService;
+import me.ceskim493.springbootdeveloper.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,14 +21,13 @@ public class CategoryViewController {
 
     private final CategoryService categoryService;
     private final UserService userService;
-    private final CartService cartService;
-    private final OrderService orderService;
-    private final WishService wishService;
-    private final ItemService itemService;
-    private final MainService mainService;
+    private final AdminService adminService;
 
     @GetMapping("/newCategory")
     public String newItem(@RequestParam(required = false) Long id, Model model, @LoginUser SessionUser user) {
+        // AdminLayout.html
+        model = adminService.getAdminLayout(model, user);
+
         if (id == null) {
             model.addAttribute("category", new CategoryViewResponse());
         } else {
@@ -48,7 +49,10 @@ public class CategoryViewController {
     }
 
     @GetMapping("/categories")
-    public String getCategories(Model model) {
+    public String getCategories(Model model, @LoginUser SessionUser user) {
+        // AdminLayout.html
+        model = adminService.getAdminLayout(model, user);
+
         List<CategoryViewResponse> categories = categoryService.findAll().stream()
                 .map(CategoryViewResponse::new)
                 .toList();

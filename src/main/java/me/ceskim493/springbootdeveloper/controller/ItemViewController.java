@@ -27,13 +27,14 @@ public class ItemViewController {
     private final ItemService itemService;
     private final UserService userService;
     private final CategoryService categoryService;
-    private final CartService cartService;
-    private final OrderService orderService;
-    private final WishService wishService;
     private final MainService mainService;
+    private final AdminService adminService;
 
     @GetMapping("/new-item")
     public String newItem(@RequestParam(required = false) Long id, Model model, @LoginUser SessionUser user) {
+        // AdminLayout.html
+        model = adminService.getAdminLayout(model, user);
+
         if (id == null) {
             model.addAttribute("aItem", new ItemViewResponse());
         } else {
@@ -43,13 +44,14 @@ public class ItemViewController {
 
         model.addAttribute("categories", categoryService.findAll());
 
-        model.addAttribute("userName", userService.getSessionUserName(user)); // session에 저장된 유저이름 setting
-
         return "newItem";
     }
 
     @GetMapping("/items")
-    public String getItems(Model model) {
+    public String getItems(Model model, @LoginUser SessionUser user) {
+        // AdminLayout.html
+        model = adminService.getAdminLayout(model, user);
+
         List<ItemListViewResponse> items = itemService.findAll().stream()
                 .map(ItemListViewResponse::new)
                 .toList();

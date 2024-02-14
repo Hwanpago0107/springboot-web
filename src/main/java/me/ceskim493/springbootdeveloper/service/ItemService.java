@@ -3,16 +3,20 @@ package me.ceskim493.springbootdeveloper.service;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import me.ceskim493.springbootdeveloper.domain.Category;
+import me.ceskim493.springbootdeveloper.domain.ImgFile;
 import me.ceskim493.springbootdeveloper.domain.Item;
 import me.ceskim493.springbootdeveloper.dto.AddItemRequest;
 import me.ceskim493.springbootdeveloper.dto.UpdateItemRequest;
 import me.ceskim493.springbootdeveloper.repository.CategoryRepository;
+import me.ceskim493.springbootdeveloper.repository.ImgFileRepository;
 import me.ceskim493.springbootdeveloper.repository.ItemRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -23,6 +27,7 @@ public class ItemService {
 
     private final ItemRepository itemRepository;
     private final CategoryRepository categoryRepository;
+    private final ImgFileRepository imgFileRepository;
 
     @Transactional
     public Item save(AddItemRequest request, MultipartFile imgFile) throws Exception {
@@ -126,4 +131,42 @@ public class ItemService {
 
         return item;
     }
+
+    public List<ImgFile> uploadImgFiles(List<MultipartFile> files) throws IOException {
+        List<ImgFile> imgFiles = new ArrayList<>();
+        // 이미지를 일괄 등록한다.
+        for (int i = 0; i < files.size(); i++) {
+            MultipartFile file = files.get(i);
+            String oriImgName = file.getOriginalFilename();
+
+            //파일 업로드
+            String projectPath = System.getProperty("user.dir") + "/src/main/resources/static/upload/img/";
+
+            // 디렉토리 경로 없으면 생성
+            File folder = new File(projectPath);
+            if (!folder.exists()) {
+                folder.mkdirs();
+            }
+
+            File saveFile = new File(projectPath, oriImgName);
+
+            file.transferTo(saveFile);
+
+            ImgFile imgFile = new ImgFile();
+            imgFile.setFileName(oriImgName);
+            imgFile.setFilePath("/static/upload/img/" + oriImgName);
+
+            // 저장할 경로에 이미지 있으면 저장하지 않는다.
+            if (imgFileRepository.findImgFileByFilePath(imgFile.getFilePath()) != null) {
+                log.info("중복이미지: {}", imgFile.getFilePath());
+                continue;
+            }
+
+            imgFiles.add(imgFileRepository.save(imgFile));
+        }
+
+        return imgFiles;
+    }
+
+    public List<ImgFile> findAllImgFiles() {return imgFileRepository.findAll();}
 }

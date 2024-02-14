@@ -46,12 +46,6 @@ public class MainService {
                 .toList();
         // end.로그인한 사용자가 가지고 있는 장바구니와 장바구니 상품 리스트, 장바구니 총액
 
-        // start.내가 주문한 상품 내역
-        List<OrderListViewResponse> orders = orderService.findAll(user).stream()
-                .map(OrderListViewResponse::new)
-                .toList();
-        // end.내가 주문한 상품 내역
-
         // start.로그인한 사용자가 가지고 있는 위시리스트
         List<WishViewResponse> wishes = wishService.findAll(user).stream()
                 .map(WishViewResponse::new)
@@ -64,7 +58,6 @@ public class MainService {
         // end.mainLayout
 
         model.addAttribute("userInfo", userInfo);
-        model.addAttribute("orders", orders);
         model.addAttribute("totalPrice", totalPrice);
         model.addAttribute("cartItems", cartItems);
         model.addAttribute("depth1", depth1);

@@ -57,8 +57,11 @@ public class WishService {
     }
 
     @Transactional
-    public void delete(List<Long> checked) {
-        wishItemRepository.deleteAllById(checked);
+    public void delete(List<Long> checked, User user) {
+        Wish wish = wishRepository.findWishByUser(user).get();
+        for (Long check : checked) {
+            wishItemRepository.deleteAllByItem_IdAndWish(check, wish);
+        }
     }
 
     public void deleteAll() {

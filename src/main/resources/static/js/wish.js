@@ -1,12 +1,11 @@
 // 등록 기능
 function createWish(id) {
     body = {
-        item_id: String(id),
+        item_id: Number(id),
     }
-    function success(json) {
-        console.log(json);
+    function success() {
         alert("위시리스트에 상품을 추가하였습니다.");
-        location.replace("/main/home");
+        location.reload();
     }
 
     function fail() {
@@ -24,7 +23,7 @@ if (deleteWishChkBtn) {
         let elements = document.getElementsByName("checkbox-wish-item-id");
         for (let i = 0; i < elements.length; i++) {
             if (elements[i].checked) {
-                checked.push(elements[i].value)
+                checked.push(Number(elements[i].value));
             }
         }
 
@@ -54,7 +53,7 @@ if (createWishChkBtn) {
         let elements = document.getElementsByName("checkbox-wish-item-id");
         for (let i = 0; i < elements.length; i++) {
             if (elements[i].checked) {
-                checked.push(elements[i].value)
+                checked.push(Number(elements[i].value));
             }
         }
 

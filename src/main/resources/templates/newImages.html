@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{adminLayout}">
+<body>
+<div layout:fragment="content">
+    <div class="card mb-4">
+        <div class="card-header">
+            <i class="fas fa-table me-1"></i>
+            <div class="adm-small-title">이미지등록</div>
+        </div>
+        <div class="card-body">
+            <form name="form" enctype="multipart/form-data">
+                <section class="mb-4">
+                    <div class="adm-small-head">이미지 일괄 등록</div>
+                    <div class="file_list" style="display: inline-block;">
+                        <div>
+                            <div class="file_input" style="display: inline-block;">
+                                <input type="text" readonly>
+                                <button type="button" class="btn btn-dark btn-sm" onclick="uploadFile(this)">첨부파일</button>
+                                <input type="file" name="imgFiles" onchange="selectFile(this);" multiple style="display:none;"/>
+                            </div>
+                            <button type="button" onclick="removeFile(this);" class="btn btn-danger btn-sm del_btn">삭제</button>
+                            <button type="button" onclick="addFile();" class="btn btn-success btn-sm fn_add_btn"><span>파일 추가</span></button>
+                        </div>
+                    </div>
+                </section>
+                <button type="button" id="create-img-files-btn" class="btn btn-primary btn-sm">일괄 등록</button>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>

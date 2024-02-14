@@ -2,6 +2,7 @@ package me.ceskim493.springbootdeveloper.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import me.ceskim493.springbootdeveloper.domain.ImgFile;
 import me.ceskim493.springbootdeveloper.domain.Item;
 import me.ceskim493.springbootdeveloper.dto.AddItemRequest;
 import me.ceskim493.springbootdeveloper.dto.ItemResponse;
@@ -79,5 +80,16 @@ public class ItemApiController {
         }
 
         return new UrlResource("file:" + file.getAbsolutePath());
+    }
+
+    @PostMapping("/api/images")
+    // @RequestBody로 요청 본문 값 매핑
+    public ResponseEntity<ImgFile> addImages(@RequestParam("imgFiles") List<MultipartFile> imgFiles) throws Exception {
+
+        List<ImgFile> savedItem = itemService.uploadImgFiles(imgFiles);
+
+        // 요청한 자원이 성공적으로 생성되었으며 저장된 아이템 정보를 응답 객체에 담아 전송
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .build();
     }
 }

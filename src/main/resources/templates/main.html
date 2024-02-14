@@ -19,7 +19,8 @@
 						</div>
 						<div class="shop-body">
 							<h3 th:text="|${category.name} Collection|"><br>Collection</h3>
-							<a th:href="|/category/${category?.getId()}|" class="cta-btn">Shop now <i class="fa fa-arrow-circle-right"></i></a>
+							<a th:onclick="|getStore(${category.id}, 1)|" class="cta-btn"
+								style="cursor: pointer;">Shop now <i class="fa fa-arrow-circle-right"></i></a>
 						</div>
 					</div>
 				</div>
@@ -84,7 +85,7 @@
 											</div>
 											<div class="product-btns">
 												<button class="add-to-wishlist"
-														th:onclick="|createWish([${item.id}])|"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
+														th:onclick="|createWish(${item.id})|"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
 												<button class="add-to-compare"
 														th:onclick="|alert('비교기능은 지원예정입니다.')|"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>
 												<button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
@@ -209,7 +210,7 @@
 											</div>
 											<div class="product-btns">
 												<button class="add-to-wishlist"
-														th:onclick="|createWish([${top.id}])|"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
+														th:onclick="|createWish(${top.id})|"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
 												<button class="add-to-compare"
 														th:onclick="|alert('비교기능은 지원예정입니다.')|"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>
 												<button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>

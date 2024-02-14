@@ -1,20 +1,17 @@
 // 등록 기능
 function createCart(id) {
     body = {
-        item_id: String(id),
-        // quantity: Number(addedQuantity.textContent)
+        item_id: Number(id),
     }
-    function success(json) {
-        console.log(json);
+    function success() {
         alert("장바구니에 물품을 추가하였습니다.");
-        location.replace("/main/home");
+        location.reload();
     }
 
     function fail() {
         alert("장바구니에 물품을 추가하지 못하였습니다.");
     }
     httpRequest("POST", "/api/carts", body, success, fail);
-    //ajaxHttpRequest("POST", "/api/carts", body, success, fail);
 }
 
 // 삭제 기능
@@ -26,7 +23,7 @@ if (deleteCartChkBtn) {
         let elements = document.getElementsByName("checkbox-item-id");
         for (let i = 0; i < elements.length; i++) {
             if (elements[i].checked) {
-                checked.push(elements[i].value)
+                checked.push(Number(elements[i].value));
             }
         }
 
@@ -66,7 +63,7 @@ function minusOne(id) {
     addedQuantity.textContent =  Number(addedQuantity.textContent) - 1;
 }
 
-function selectAll(el) {
+function selectCartAll(el) {
     const checkboxes = document.getElementsByName("checkbox-item-id");
     checkboxes.forEach((checkbox) => {   checkbox.checked = el.checked; });
 }
