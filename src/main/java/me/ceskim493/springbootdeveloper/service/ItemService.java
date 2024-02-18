@@ -88,7 +88,7 @@ public class ItemService {
 
         item.update(request.getName(), request.getPrice(), request.getStockQuantity(),
                 request.getDiscount(), item.getFileName(), item.getFilePath(), item.getFileSize(), item.getCategory(),
-                request.getDescription());
+                request.getDescription(), request.getDetailImgName(), request.getDetailImgPath());
 
         return item;
     }
@@ -169,4 +169,8 @@ public class ItemService {
     }
 
     public List<ImgFile> findAllImgFiles() {return imgFileRepository.findAll();}
+
+    List<Item> findAllWithAvgRating(){
+        return itemRepository.findAll();
+    }
 }

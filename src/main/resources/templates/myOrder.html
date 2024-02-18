@@ -28,7 +28,7 @@
 		<!-- container -->
 		<div class="container">
 			<!-- row -->
-			<div class="row" th:if="${orders.size() == 0}">
+			<div class="row" th:unless="${orders?.size() > 0}">
 				<div class="col-md-11 carts-details" style="padding: 0px;">
 					<div class="section-title" style="text-align: center">
 						<h3 class="title">주문 내역이 없습니다.</h3>
@@ -75,6 +75,9 @@
 								</div>
 								<div class="carts-end-col">
 									<strong>주문금액</strong><div class="cart-end-sub" th:text="${#numbers.formatDecimal(order.getTotalPrice() , 0, 'DEFAULT', 0, 'DEFAULT')}"></div>
+								</div>
+								<div class="carts-end-col">
+									<strong>주문일시</strong><div class="cart-end-sub" th:text="${#temporals.format(order.getOrderDate(), 'yyyy년 M월 dd일 HH:mm:ss')}"></div>
 								</div>
 							</div>
 						</div>

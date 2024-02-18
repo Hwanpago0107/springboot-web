@@ -70,13 +70,13 @@
 						<h2 class="product-name" th:text="${product.name}"></h2>
 						<div>
 							<div class="product-rating">
-								<i class="fa fa-star"></i>
-								<i class="fa fa-star"></i>
-								<i class="fa fa-star"></i>
-								<i class="fa fa-star"></i>
-								<i class="fa fa-star-o"></i>
+								<i class="fa fa-star" th:if="${#numbers.formatInteger(ratings?.getAvg(), 1) != '0'}"
+								   th:each="num : ${#numbers.sequence(1, ratings.getAvg())}"></i>
+								<i class="fa fa-star-o" th:if="${#numbers.formatInteger(ratings?.getAvg(), 1) != '5'}"
+								   th:each="num : ${#numbers.sequence(ratings?.getAvg(), 4)}"></i>
 							</div>
-							<a class="review-link" href="#">10 Review(s) | Add your review</a>
+							<a class="review-link" onclick="tabClick(3);"
+							th:text="|${reviewOrigin?.size()} Review(s) : Add your review|"></a>
 						</div>
 						<div>
 							<h3 class="product-price" style="display: inline;" th:text="|￦${#numbers.formatDecimal(product.price * (1-product.getDiscount()), 0, 'DEFAULT', 0, 'DEFAULT')}|"></h3>
@@ -142,15 +142,16 @@
 				<div class="col-md-12">
 					<div id="product-tab">
 						<!-- product tab nav -->
-						<ul class="tab-nav">
-							<li class="active"><a data-toggle="tab" href="#tab1">Description</a></li>
-							<li><a data-toggle="tab" href="#tab2">Details</a></li>
-							<li><a data-toggle="tab" href="#tab3">Reviews (3)</a></li>
+						<ul class="tab-nav" id=product-tab-nav>
+							<li active th:value="1"><a data-toggle="tab" href="#tab1">Description</a></li>
+							<li th:value="2"><a data-toggle="tab" href="#tab2">Details</a></li>
+							<li th:value="3"><a data-toggle="tab" href="#tab3" th:text="|Reviews (${reviewOrigin?.size()})|"></a></li>
 						</ul>
+						<input type="hidden" th:value="${tabNumber}" id="tab_num">
 						<!-- /product tab nav -->
 
 						<!-- product tab content -->
-						<div class="tab-content">
+						<div class="tab-content" id="tab-content">
 							<!-- tab1  -->
 							<div id="tab1" class="tab-pane fade in active">
 								<div class="row">
@@ -178,13 +179,12 @@
 									<div class="col-md-3">
 										<div id="rating">
 											<div class="rating-avg">
-												<span>4.5</span>
+												<span th:text="${#numbers.formatDecimal(ratings?.getAvg(), 1, 1)}"></span>
 												<div class="rating-stars">
-													<i class="fa fa-star"></i>
-													<i class="fa fa-star"></i>
-													<i class="fa fa-star"></i>
-													<i class="fa fa-star"></i>
-													<i class="fa fa-star-o"></i>
+													<i class="fa fa-star" th:if="${#numbers.formatInteger(ratings?.getAvg(), 1) != '0'}"
+													   th:each="num : ${#numbers.sequence(1, ratings.getAvg())}"></i>
+													<i class="fa fa-star-o" th:if="${#numbers.formatInteger(ratings?.getAvg(), 1) != '5'}"
+													   th:each="num : ${#numbers.sequence(ratings?.getAvg(), 4)}"></i>
 												</div>
 											</div>
 											<ul class="rating">
@@ -199,7 +199,7 @@
 													<div class="rating-progress">
 														<div style="width: 80%;"></div>
 													</div>
-													<span class="sum">3</span>
+													<span class="sum" th:text="${ratings?.getCnt5()}"></span>
 												</li>
 												<li>
 													<div class="rating-stars">
@@ -212,7 +212,7 @@
 													<div class="rating-progress">
 														<div style="width: 60%;"></div>
 													</div>
-													<span class="sum">2</span>
+													<span class="sum" th:text="${ratings?.getCnt4()}"></span>
 												</li>
 												<li>
 													<div class="rating-stars">
@@ -225,7 +225,7 @@
 													<div class="rating-progress">
 														<div></div>
 													</div>
-													<span class="sum">0</span>
+													<span class="sum" th:text="${ratings?.getCnt3()}"></span>
 												</li>
 												<li>
 													<div class="rating-stars">
@@ -238,7 +238,7 @@
 													<div class="rating-progress">
 														<div></div>
 													</div>
-													<span class="sum">0</span>
+													<span class="sum" th:text="${ratings?.getCnt2()}"></span>
 												</li>
 												<li>
 													<div class="rating-stars">
@@ -251,7 +251,7 @@
 													<div class="rating-progress">
 														<div></div>
 													</div>
-													<span class="sum">0</span>
+													<span class="sum" th:text="${ratings?.getCnt1()}"></span>
 												</li>
 											</ul>
 										</div>
@@ -262,60 +262,28 @@
 									<div class="col-md-6">
 										<div id="reviews">
 											<ul class="reviews">
-												<li>
+												<li th:each="review : ${reviews}">
 													<div class="review-heading">
-														<h5 class="name">John</h5>
-														<p class="date">27 DEC 2018, 8:0 PM</p>
+														<h5 class="name" th:text="${review.getName()}"></h5>
+														<p class="date" th:text="${#temporals.format(review.getCreatedAt(), 'yyyy-MM-dd HH:mm:ss')}"></p>
 														<div class="review-rating">
-															<i class="fa fa-star"></i>
-															<i class="fa fa-star"></i>
-															<i class="fa fa-star"></i>
-															<i class="fa fa-star"></i>
-															<i class="fa fa-star-o empty"></i>
+															<i class="fa fa-star" th:each="num : ${#numbers.sequence(1, review.getRating())}"></i>
+															<i class="fa fa-star-o empty"
+															   th:if="${review.getRating() != 5}" th:each="num : ${#numbers.sequence(review.getRating(), 4)}"></i>
 														</div>
 													</div>
 													<div class="review-body">
-														<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua</p>
-													</div>
-												</li>
-												<li>
-													<div class="review-heading">
-														<h5 class="name">John</h5>
-														<p class="date">27 DEC 2018, 8:0 PM</p>
-														<div class="review-rating">
-															<i class="fa fa-star"></i>
-															<i class="fa fa-star"></i>
-															<i class="fa fa-star"></i>
-															<i class="fa fa-star"></i>
-															<i class="fa fa-star-o empty"></i>
-														</div>
-													</div>
-													<div class="review-body">
-														<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua</p>
-													</div>
-												</li>
-												<li>
-													<div class="review-heading">
-														<h5 class="name">John</h5>
-														<p class="date">27 DEC 2018, 8:0 PM</p>
-														<div class="review-rating">
-															<i class="fa fa-star"></i>
-															<i class="fa fa-star"></i>
-															<i class="fa fa-star"></i>
-															<i class="fa fa-star"></i>
-															<i class="fa fa-star-o empty"></i>
-														</div>
-													</div>
-													<div class="review-body">
-														<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua</p>
+														<p th:text="${review.getContent()}"></p>
 													</div>
 												</li>
 											</ul>
 											<ul class="reviews-pagination">
-												<li class="active">1</li>
-												<li><a href="#">2</a></li>
-												<li><a href="#">3</a></li>
-												<li><a href="#">4</a></li>
+												<li><a href="#"><i class="fa fa-angle-left"></i></a></li>
+												<li th:each="page : ${#numbers.sequence(startPage, endPage)}"
+													th:text="${page}"
+													th:onclick="|getProduct(${product.id}, ${page})|"
+													th:classappend="${page == currentPage} ? 'active' : ''"
+													style="cursor: pointer;"></li>
 												<li><a href="#"><i class="fa fa-angle-right"></i></a></li>
 											</ul>
 										</div>
@@ -326,9 +294,10 @@
 									<div class="col-md-3">
 										<div id="review-form">
 											<form class="review-form">
-												<input class="input" type="text" placeholder="Your Name">
-												<input class="input" type="email" placeholder="Your Email">
-												<textarea class="input" placeholder="Your Review"></textarea>
+												<input class="input" type="text" placeholder="Your Name" id="review_name" th:value="${userInfo.getName()}">
+												<input class="input" type="email" placeholder="Your Email" id="review_email" th:value="${userInfo.getEmail()}" readonly>
+												<input class="input" type="hidden" id="review_item_id" th:value="${product.getId()}">
+												<textarea class="input" placeholder="Your Review" id="review_content"></textarea>
 												<div class="input-rating">
 													<span>Your Rating: </span>
 													<div class="stars">
@@ -336,10 +305,10 @@
 														<input id="star4" name="rating" value="4" type="radio"><label for="star4"></label>
 														<input id="star3" name="rating" value="3" type="radio"><label for="star3"></label>
 														<input id="star2" name="rating" value="2" type="radio"><label for="star2"></label>
-														<input id="star1" name="rating" value="1" type="radio"><label for="star1"></label>
+														<input id="star1" name="rating" value="1" type="radio" checked="checked"><label for="star1"></label>
 													</div>
 												</div>
-												<button class="primary-btn">Submit</button>
+												<button class="primary-btn" id="create-review-btn">Submit</button>
 											</form>
 										</div>
 									</div>
@@ -422,6 +391,7 @@
 		<!-- /container -->
 	</div>
 	<!-- /Section -->
+	<script src="/js/review.js"></script>
 </div>
 </body>
 </html>

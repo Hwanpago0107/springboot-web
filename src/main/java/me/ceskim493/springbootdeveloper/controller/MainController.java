@@ -2,9 +2,15 @@ package me.ceskim493.springbootdeveloper.controller;
 
 import lombok.RequiredArgsConstructor;
 import me.ceskim493.springbootdeveloper.annotation.LoginUser;
+import me.ceskim493.springbootdeveloper.domain.Review;
 import me.ceskim493.springbootdeveloper.domain.SessionUser;
+import me.ceskim493.springbootdeveloper.domain.User;
 import me.ceskim493.springbootdeveloper.dto.ItemListViewResponse;
-import me.ceskim493.springbootdeveloper.service.*;
+import me.ceskim493.springbootdeveloper.dto.OrderListViewResponse;
+import me.ceskim493.springbootdeveloper.service.ItemService;
+import me.ceskim493.springbootdeveloper.service.MainService;
+import me.ceskim493.springbootdeveloper.service.OrderService;
+import me.ceskim493.springbootdeveloper.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,12 +22,9 @@ import java.util.List;
 @Controller
 public class MainController {
 
-    private final UserService userService;
     private final ItemService itemService;
-    private final CartService cartService;
     private final OrderService orderService;
-    private final CategoryService categoryService;
-    private final WishService wishService;
+    private final UserService userService;
     private final MainService mainService;
 
     @GetMapping("/")
@@ -42,6 +45,14 @@ public class MainController {
         if (pageName.equals("home")) {
             // 등록된 상품리스트
             List<ItemListViewResponse> items = itemService.findAll().stream()
+                    .map(item -> {
+                        item.setAvgRating(item.getReviews().stream()
+                                .mapToInt(Review::getRating)
+                                .average()
+                                .getAsDouble()
+                        );
+                        return item;
+                    })
                     .map(ItemListViewResponse::new)
                     .toList();
 
@@ -63,6 +74,13 @@ public class MainController {
         } else if (pageName.equals("myCart")) {
             return "myCart";
         } else if (pageName.equals("myOrder")) {
+            // 내가 주문한 상품 내역
+            String username = userService.getSessionUserName(sUser);
+            User user = userService.findByEmail(username);
+            List<OrderListViewResponse> orders = orderService.findAll(user).stream()
+                    .map(OrderListViewResponse::new)
+                    .toList();
+            model.addAttribute("orders", orders);
             return "myOrder";
         } else if (pageName.equals("product")) {
             return "product";

@@ -19,7 +19,7 @@ public interface ItemRepository extends JpaRepository<Item, Long> {
 
     List<Item> findAllByNameContainsIgnoreCase(String name);
 
-    @Query("select i from Item i left join OrderItem o " +
+    @Query(value = "select i from Item i left join OrderItem o " +
             "on i.id = o.item.id " +
             "where i.category in (:categories) " +
             "and i.name like %:searchText% " +

@@ -114,5 +114,4 @@ public class User implements UserDetails {
     public UserViewResponse createUserView() {
         return new UserViewResponse(this);
     }
-
 }

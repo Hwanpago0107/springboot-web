@@ -4,10 +4,9 @@ import lombok.RequiredArgsConstructor;
 import me.ceskim493.springbootdeveloper.annotation.LoginUser;
 import me.ceskim493.springbootdeveloper.domain.Category;
 import me.ceskim493.springbootdeveloper.domain.Item;
+import me.ceskim493.springbootdeveloper.domain.Review;
 import me.ceskim493.springbootdeveloper.domain.SessionUser;
-import me.ceskim493.springbootdeveloper.dto.CategoryViewResponse;
-import me.ceskim493.springbootdeveloper.dto.ItemListViewResponse;
-import me.ceskim493.springbootdeveloper.dto.ItemViewResponse;
+import me.ceskim493.springbootdeveloper.dto.*;
 import me.ceskim493.springbootdeveloper.service.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,10 +24,10 @@ import java.util.stream.IntStream;
 public class ItemViewController {
 
     private final ItemService itemService;
-    private final UserService userService;
     private final CategoryService categoryService;
     private final MainService mainService;
     private final AdminService adminService;
+    private final ReviewService reviewService;
 
     @GetMapping("/new-item")
     public String newItem(@RequestParam(required = false) Long id, Model model, @LoginUser SessionUser user) {
@@ -77,9 +76,44 @@ public class ItemViewController {
                 .map(CategoryViewResponse::new)
                 .toList();
 
+        int pageNum = 1 - 1;
+        int startNumber = pageNum * 3;
+        int endNumber = (pageNum+1) * 3;
+
+        // 상품에 등록되어 있는 리뷰들을 갖고온다. (paging)
+        List<Review> origin = reviewService.findAllByItemId(id);
+
+        List<ReviewViewResponse> reviews = IntStream.range(0, origin.size())
+                .filter(index -> index >= startNumber && index < endNumber)
+                .mapToObj(origin::get)
+                .collect(Collectors.toList())
+                .stream().map(ReviewViewResponse::new).toList();
+
+        int startPage = (((int) Math.ceil(((double) 1 / 3))) - 1) * 3 + 1;
+        int endPage = Math.min((startPage + 3 - 1), (origin.size() - 1) / 3 + 1);
+
+        // 해당 아이템의 리뷰 평균 별점 및 별점 카운트
+        ReviewViewResponse ratings = new ReviewViewResponse();
+        List<Rating> ratingList = reviewService.findAvgRatingByItemId(id);
+        if (ratingList != null && ratingList.size() > 0) {
+            Review review = new Review(ratingList.get(0).getAvg(), ratingList.get(0).getCnt5(),
+                    ratingList.get(0).getCnt4(), ratingList.get(0).getCnt3(), ratingList.get(0).getCnt2(),
+                    ratingList.get(0).getCnt1());
+            ratings = new ReviewViewResponse(review);
+        }
+
+
+        model.addAttribute("startPage", startPage);
+        model.addAttribute("endPage", endPage);
+        model.addAttribute("currentPage", 1);
+
         model.addAttribute("product", product);
         model.addAttribute("parents", parents);
         model.addAttribute("items", items);
+        model.addAttribute("reviews", reviews);
+        model.addAttribute("reviewOrigin", origin);
+        model.addAttribute("tabNumber", 1);
+        model.addAttribute("ratings", ratings);
         model.addAttribute("productYn", "Y");
 
         return  "product";
@@ -162,5 +196,66 @@ public class ItemViewController {
         model.addAttribute("currentLimit", pageLimit);
 
         return "store";
+    }
+
+    @GetMapping("/products")
+    public String getProduct(Model model, @LoginUser SessionUser sUser,
+                           @RequestParam(required = false, name = "item_id") Long id,
+                           @RequestParam(required = false, defaultValue = "1", name = "page_number") int pageNumber,
+                           @RequestParam(required = false, defaultValue = "1", name = "tab_number") int tabNumber) {
+
+        // MainLayout.html
+        model = mainService.getMainLayout(model, sUser);
+
+        // 해당하는 상품 하나를 가져온다.
+        Item product = itemService.findById(id);
+        Long category_id = product.getCategory().getId();
+
+        List<Item> items = categoryService.findItemsByCategory(category_id);
+
+        // 카테고리가 속해 있는 카테고리들을 전부 갖고온다.
+        List<CategoryViewResponse> parents = categoryService.findParentsCategoryByCategory(category_id).stream()
+                .map(CategoryViewResponse::new)
+                .toList();
+
+        int pageNum = pageNumber - 1;
+        int startNumber = pageNum * 3;
+        int endNumber = (pageNum+1) * 3;
+
+        // 상품에 등록되어 있는 리뷰들을 갖고온다. (paging)
+        List<Review> origin = reviewService.findAllByItemId(id);
+
+        List<ReviewViewResponse> reviews = IntStream.range(0, origin.size())
+                .filter(index -> index >= startNumber && index < endNumber)
+                .mapToObj(origin::get)
+                .collect(Collectors.toList())
+                .stream().map(ReviewViewResponse::new).toList();
+
+        int startPage = (((int) Math.ceil(((double) pageNumber / 3))) - 1) * 3 + 1;
+        int endPage = Math.min((startPage + 3 - 1), (origin.size() - 1) / 3 + 1);
+
+        // 해당 아이템의 리뷰 평균 별점 및 별점 카운트
+        ReviewViewResponse ratings = new ReviewViewResponse();
+        List<Rating> ratingList = reviewService.findAvgRatingByItemId(id);
+        if (ratingList != null && ratingList.size() > 0) {
+            Review review = new Review(ratingList.get(0).getAvg(), ratingList.get(0).getCnt5(),
+                    ratingList.get(0).getCnt4(), ratingList.get(0).getCnt3(), ratingList.get(0).getCnt2(),
+                    ratingList.get(0).getCnt1());
+            ratings = new ReviewViewResponse(review);
+        }
+
+        model.addAttribute("startPage", startPage);
+        model.addAttribute("endPage", endPage);
+        model.addAttribute("currentPage", pageNumber);
+        model.addAttribute("product", product);
+        model.addAttribute("parents", parents);
+        model.addAttribute("items", items);
+        model.addAttribute("reviews", reviews);
+        model.addAttribute("reviewOrigin", origin);
+        model.addAttribute("tabNumber", tabNumber);
+        model.addAttribute("ratings", ratings);
+        model.addAttribute("productYn", "Y");
+
+        return "product";
     }
 }

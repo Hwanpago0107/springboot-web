@@ -77,11 +77,10 @@
 											<h4 style="display: inline-block;"><del class="product-old-price" th:text="|￦${#numbers.formatDecimal(item.price, 0, 'DEFAULT', 0, 'DEFAULT')}|"></del></h4>
 											<p class="product-category" th:text="|(${item.stockQuantity})|"></p>
 											<div class="product-rating">
-												<i class="fa fa-star"></i>
-												<i class="fa fa-star"></i>
-												<i class="fa fa-star"></i>
-												<i class="fa fa-star"></i>
-												<i class="fa fa-star"></i>
+												<i class="fa fa-star" th:if="${#numbers.formatInteger(item?.getAvgRating(), 1) != '0'}"
+												   th:each="num : ${#numbers.sequence(1, item?.getAvgRating())}"></i>
+												<i class="fa fa-star-o" th:if="${#numbers.formatInteger(item?.getAvgRating(), 1) != '5'}"
+												   th:each="num : ${#numbers.sequence(item?.getAvgRating(), 4)}"></i>
 											</div>
 											<div class="product-btns">
 												<button class="add-to-wishlist"
@@ -202,11 +201,10 @@
 											<h4 style="display: inline-block;"><del class="product-old-price" th:text="|￦${#numbers.formatDecimal(top.price, 0, 'DEFAULT', 0, 'DEFAULT')}|"></del></h4>
 											<p class="product-category" th:text="|(${top.stockQuantity})|"></p>
 											<div class="product-rating">
-												<i class="fa fa-star"></i>
-												<i class="fa fa-star"></i>
-												<i class="fa fa-star"></i>
-												<i class="fa fa-star"></i>
-												<i class="fa fa-star"></i>
+												<i class="fa fa-star" th:if="${#numbers.formatInteger(top?.getAvgRating(), 1) != '0'}"
+												   th:each="num : ${#numbers.sequence(1, top?.getAvgRating())}"></i>
+												<i class="fa fa-star-o" th:if="${#numbers.formatInteger(top?.getAvgRating(), 1) != '5'}"
+												   th:each="num : ${#numbers.sequence(top?.getAvgRating(), 4)}"></i>
 											</div>
 											<div class="product-btns">
 												<button class="add-to-wishlist"

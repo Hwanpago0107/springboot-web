@@ -8,9 +8,9 @@ import me.ceskim493.springbootdeveloper.service.CartService;
 import me.ceskim493.springbootdeveloper.service.ItemService;
 import me.ceskim493.springbootdeveloper.service.OrderService;
 import me.ceskim493.springbootdeveloper.service.UserService;
+import me.ceskim493.springbootdeveloper.util.SecurityUtil;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
@@ -27,8 +27,7 @@ public class OrderApiController {
     // @RequestBody로 요청 본문 값 매핑
     public ResponseEntity<Order> createOrder(@RequestBody CreateOrderRequest request) throws Exception {
         // 로그인한 유저
-        String userName = SecurityContextHolder.getContext().getAuthentication().getName();
-        User user = userService.findByEmail(userName);
+        User user = userService.findByEmail(SecurityUtil.getCurrentUserEmail());
 
         Order orderedItem = orderService.save(request, user);
 

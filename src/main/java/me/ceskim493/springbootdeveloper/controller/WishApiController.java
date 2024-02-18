@@ -9,9 +9,9 @@ import me.ceskim493.springbootdeveloper.dto.WishResponse;
 import me.ceskim493.springbootdeveloper.service.CartService;
 import me.ceskim493.springbootdeveloper.service.UserService;
 import me.ceskim493.springbootdeveloper.service.WishService;
+import me.ceskim493.springbootdeveloper.util.SecurityUtil;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -29,8 +29,7 @@ public class WishApiController {
     // @RequestBody로 요청 본문 값 매핑
     public ResponseEntity<Void> addWishList(@RequestBody CreateWishRequest request) throws Exception {
 
-        String userName = SecurityContextHolder.getContext().getAuthentication().getName();
-        User user = userService.findByEmail(userName);
+        User user = userService.findByEmail(SecurityUtil.getCurrentUserEmail());
 
         WishItem savedItem = wishService.save(request, user);
 
@@ -43,8 +42,7 @@ public class WishApiController {
     // @RequestBody로 요청 본문 값 매핑
     public ResponseEntity<Void> addWishListToCart(@RequestBody CreateWishRequest request) throws Exception {
 
-        String userName = SecurityContextHolder.getContext().getAuthentication().getName();
-        User user = userService.findByEmail(userName);
+        User user = userService.findByEmail(SecurityUtil.getCurrentUserEmail());
 
         cartService.saveAll(request.getChecked(), user);
 
@@ -55,8 +53,7 @@ public class WishApiController {
 
     @GetMapping("/api/wishes")
     public ResponseEntity<List<WishResponse>> findAllWishItem() {
-        String userName = SecurityContextHolder.getContext().getAuthentication().getName();
-        User user = userService.findByEmail(userName);
+        User user = userService.findByEmail(SecurityUtil.getCurrentUserEmail());
 
         List<WishResponse> wishItems = wishService.findAll(user)
                 .stream()
@@ -69,8 +66,7 @@ public class WishApiController {
 
     @DeleteMapping("/api/wishes/checked")
     public ResponseEntity<Void> deleteWishItem(@RequestBody DeleteWishRequest request) {
-        String userName = SecurityContextHolder.getContext().getAuthentication().getName();
-        User user = userService.findByEmail(userName);
+        User user = userService.findByEmail(SecurityUtil.getCurrentUserEmail());
 
         wishService.delete(request.getChecked(), user);
 

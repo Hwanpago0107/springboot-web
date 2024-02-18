@@ -184,9 +184,55 @@ where item_id = 8;
 update Item set price = 400000, stockquantity = 800, discount = 0, description = '101미터 거리까지 보이는 디카', category_id = 17
 where item_id = 9;
 
-
-select * from `Wish` w, `WishItem` wi where w.id = wi.wish_id;
-select * from `Item`;]]></console>
+--Review
+INSERT INTO Review (id, content, created_at, email, name, rating, updated_at, item_id)
+values  (1, '정말 좋은 제품입니다.', sysdate(), 'blessu0107@gmail.com', 'SH K', 4, sysdate(), 1);
+INSERT INTO Review (id, content, created_at, email, name, rating, updated_at, item_id)
+values  (2, '정말 짱입니다.', sysdate(), 'blessu0107@gmail.com', 'SH K', 5, sysdate(), 2);
+INSERT INTO Review (id, content, created_at, email, name, rating, updated_at, item_id)
+values  (3, '평생 쓸만한 제품입니다.', sysdate(), 'blessu0107@gmail.com', 'SH K', 5, sysdate(), 3);
+INSERT INTO Review (id, content, created_at, email, name, rating, updated_at, item_id)
+values  (4, '굿굿 제품입니다.', sysdate(), 'blessu0107@gmail.com', 'SH K', 4, sysdate(), 4);
+INSERT INTO Review (id, content, created_at, email, name, rating, updated_at, item_id)
+values  (5, '완전 좋아요.', sysdate(), 'blessu0107@gmail.com', 'SH K', 3, sysdate(), 5);
+INSERT INTO Review (id, content, created_at, email, name, rating, updated_at, item_id)
+values  (6, '강추!!!.', sysdate(), 'blessu0107@gmail.com', 'SH K', 5, sysdate(), 6);
+INSERT INTO Review (id, content, created_at, email, name, rating, updated_at, item_id)
+values  (7, '정말 추천합니다.', sysdate(), 'blessu0107@gmail.com', 'SH K', 3, sysdate(), 7);
+INSERT INTO Review (id, content, created_at, email, name, rating, updated_at, item_id)
+values  (8, '완젼 조아용.', sysdate(), 'blessu0107@gmail.com', 'SH K', 4, sysdate(), 8);
+INSERT INTO Review (id, content, created_at, email, name, rating, updated_at, item_id)
+values  (9, '엄청나게 좋은 제품!!', sysdate(), 'blessu0107@gmail.com', 'SH K', 4, sysdate(), 9);
+INSERT INTO Review (id, content, created_at, email, name, rating, updated_at, item_id)
+values  (10, '이거만한 제품이 또 있을까?...', sysdate(), 'test1@gmail.com', '김씨', 5, sysdate(), 1);
+INSERT INTO Review (id, content, created_at, email, name, rating, updated_at, item_id)
+values  (11, '비추합니다.', sysdate(), 'abc@gmail.com', '쇼핑중독', 1, sysdate(), 1);
+INSERT INTO Review (id, content, created_at, email, name, rating, updated_at, item_id)
+values  (12, '쓸만해요.', sysdate(), 'aac@gmail.com', '프로쇼핑러', 2, sysdate(), 1);
+INSERT INTO Review (id, content, created_at, email, name, rating, updated_at, item_id)
+values  (13, '다신 안사', sysdate(), 'test1@gmail.com', '이난감', 2, sysdate(), 2);
+INSERT INTO Review (id, content, created_at, email, name, rating, updated_at, item_id)
+values  (14, '비추합니다!!.', sysdate(), 'abc@gmail.com', '지나가는행인', 1, sysdate(), 2);
+INSERT INTO Review (id, content, created_at, email, name, rating, updated_at, item_id)
+values  (15, '조아요.', sysdate(), 'aac@gmail.com', '안냐쇼', 5, sysdate(), 2);
+INSERT INTO Review (id, content, created_at, email, name, rating, updated_at, item_id)
+values  (16, '안 추천해', sysdate(), 'test1@gmail.com', '누구쇼', 3, sysdate(), 3);
+INSERT INTO Review (id, content, created_at, email, name, rating, updated_at, item_id)
+values  (17, '좋습니다 추천해요!!.', sysdate(), 'abc@gmail.com', '일반인', 4, sysdate(), 4);
+INSERT INTO Review (id, content, created_at, email, name, rating, updated_at, item_id)
+values  (18, '또 구매합니다.', sysdate(), 'aac@gmail.com', '쇼핑러', 4, sysdate(), 5);
+INSERT INTO Review (id, content, created_at, email, name, rating, updated_at, item_id)
+values  (19, '막사막사', sysdate(), 'test1@gmail.com', '막사는사람', 5, sysdate(), 6);
+INSERT INTO Review (id, content, created_at, email, name, rating, updated_at, item_id)
+values  (20, '좋네요!!.', sysdate(), 'abc@gmail.com', '추천인', 2, sysdate(), 7);
+INSERT INTO Review (id, content, created_at, email, name, rating, updated_at, item_id)
+values  (21, '으으.', sysdate(), 'aac`@gmail.com', '박찬호', 1, sysdate(), 8);
+INSERT INTO Review (id, content, created_at, email, name, rating, updated_at, item_id)
+values  (22, '시러요', sysdate(), 'test1@gmail.com', '테스트', 1, sysdate(), 9);
+INSERT INTO Review (id, content, created_at, email, name, rating, updated_at, item_id)
+values  (23, '완전 짱!!.', sysdate(), 'ttt@gmail.com', '짱조아', 3, sysdate(), 4);
+INSERT INTO Review (id, content, created_at, email, name, rating, updated_at, item_id)
+values  (24, '짱조아.', sysdate(), 'ff234@gmail.com', '보부상', 4, sysdate(), 5);]]></console>
     </connection>
   </component>
   <component name="DBNavigator.Project.DatabaseEditorStateManager">

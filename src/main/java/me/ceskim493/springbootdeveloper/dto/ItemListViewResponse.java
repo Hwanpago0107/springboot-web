@@ -19,6 +19,7 @@ public class ItemListViewResponse {
     private Long fileSize;
     private Category category;
     private String description;
+    private Double avgRating;
 
     public ItemListViewResponse(Item item) {
         this.id = item.getId();
@@ -31,5 +32,6 @@ public class ItemListViewResponse {
         this.fileSize = item.getFileSize();
         this.category = item.getCategory();
         this.description = item.getDescription();
+        this.avgRating = item.getAvgRating();
     }
 }

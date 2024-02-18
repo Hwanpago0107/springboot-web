@@ -10,7 +10,6 @@ import me.ceskim493.springbootdeveloper.dto.CreateCartRequest;
 import me.ceskim493.springbootdeveloper.repository.CartItemRepository;
 import me.ceskim493.springbootdeveloper.repository.CartRepository;
 import me.ceskim493.springbootdeveloper.repository.ItemRepository;
-import me.ceskim493.springbootdeveloper.repository.UserRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,7 +24,6 @@ public class CartService {
     private final CartRepository cartRepository;
     private final CartItemRepository cartItemRepository;
     private final ItemRepository itemRepository;
-    private final UserRepository userRepository;
 
     @Transactional
     public CartItem save(CreateCartRequest request, User user) {

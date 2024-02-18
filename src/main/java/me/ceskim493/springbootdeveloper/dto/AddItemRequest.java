@@ -19,6 +19,8 @@ public class AddItemRequest {
     private Long category_id;
     private Float discount;
     private String description;
+    private String detailImgName;
+    private String detailImgPath;
 
     public Item toEntity(Item item) { // 생성자를 사용해 객체 생성
         return Item.builder()
@@ -31,6 +33,8 @@ public class AddItemRequest {
                 .discount(discount)
                 .category(item.getCategory())
                 .description(description)
+                .detailImgName(detailImgName)
+                .detailImgPath(detailImgPath)
                 .build();
     }
 }
