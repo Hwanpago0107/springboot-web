@@ -62,7 +62,7 @@ public class ItemViewController {
 
     @GetMapping("/items/{id}")
     public String getItem(Model model, @PathVariable Long id, @LoginUser SessionUser sUser) {
-        // MainLayout.html
+        // yout.html
         model = mainService.getMainLayout(model, sUser);
 
         // 해당하는 상품 하나를 가져온다.

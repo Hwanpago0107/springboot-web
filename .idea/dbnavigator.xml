@@ -13,10 +13,8 @@
   </component>
   <component name="DBNavigator.Project.DatabaseConsoleManager">
     <connection id="d0d3338a-8875-4185-a874-c993f4d3f7e1">
-      <console name="Connection" type="STANDARD" schema="ebdb" session="Main"><![CDATA[select * from `Category`
-
--- 처음시작시 커밋 목록
----Cartegory
+      <console name="Connection" type="STANDARD" schema="ebdb" session="Main"><![CDATA[---Cartegory
+SELECT * FROM `Category`;
 --depth 1
 INSERT INTO Category (category_id, name)
 values  (0, 'ALL CATEGORIES');
@@ -66,10 +64,6 @@ INSERT INTO Category (category_id, name, parent_id, depth)
 values  (20, 'GELEXY', 8, '3');
 INSERT INTO Category (category_id, name, parent_id, depth)
 values  (21, 'GELEXY', 9, '3');
--- 처음시작시 커밋 목록
-
-
-
 
 --Item
 INSERT INTO Item (dtype, item_id, name, price, stockquantity, discount, filename, filepath, filesize, category_id, description)
@@ -92,8 +86,12 @@ INSERT INTO Item (dtype, item_id, name, price, stockquantity, discount, filename
 values  ('item', 9, 'REIKA 카메라', 400000, 800, 0, 'product09.png', '/upload/img/product09.png', 100, 17, '101미터 거리까지 보이는 디카');
 
 -- users
---INSERT INTO users (id, email, nickname)
---values (1, 'blessu0107@gmail.com', 'SH K');
+INSERT INTO users (id, email, nickname)
+values (1, 'blessu0107@gmail.com', 'SH K');
+INSERT INTO users (id, email, nickname)
+values (2, 'test123@gmail.com', '임꺽정');
+INSERT INTO users (id, email, nickname)
+values (3, 'test222@gmail.com', '홍길동');
 
 --Cart
 INSERT INTO Cart (id, user_id)
@@ -109,15 +107,23 @@ values  (3, 3, 1, 3);
 
 --Delivery
 INSERT INTO Delivery (delivery_id, zipcode, streetaddr, detailaddr, receiver, status)
-values  (1, '00001', '서울시 관악구 봉천동 관악로 1길', '슈퍼빌라 101호', '홍길동', 'READY');
+values  (1, '00001', '서울시 관악구 봉천동 관악로 1길', '슈퍼빌라 101호', '김씨', 'READY');
 INSERT INTO Delivery (delivery_id, zipcode, streetaddr, detailaddr, receiver, status)
-values  (2, '00002', '서울시 강남구 강남대로 1길', '타워팰리스 4001호', '임꺽정', 'COMP');
+values  (2, '00002', '서울시 강남구 강남대로 1길', '타워팰리스 4001호', '박혁거세', 'COMP');
+INSERT INTO Delivery (delivery_id, zipcode, streetaddr, detailaddr, receiver, status)
+values  (3, '00001', '서울시 동작구 사당동 1001-1', 'NEW BRAND 1001호', '임꺽정', 'READY');
+INSERT INTO Delivery (delivery_id, zipcode, streetaddr, detailaddr, receiver, status)
+values  (4, '00002', '부산시 해운대구 해운대로 2길', '엘시티 5001호', '홍길동', 'COMP');
 
 ----orders
 INSERT INTO orders (order_id, orderdate, status, delivery_id, user_id, payment, order_note)
-values  (1, sysdate(), 'ORDER', 1, 1, '1', '배송빠르게 부탁드려요');
+values  (1, sysdate() , 'ORDER', 1, 1, '1', '배송빠르게 부탁드려요');
 INSERT INTO orders (order_id, orderdate, status, delivery_id, user_id, payment, order_note)
 values  (2, sysdate(), 'ORDER', 2, 1, '3', '문앞에 놔주세요');
+INSERT INTO orders (order_id, orderdate, status, delivery_id, user_id, payment, order_note)
+values  (3, sysdate() , 'ORDER', 3, 2, '1', '배송 느리게 부탁드립니다.');
+INSERT INTO orders (order_id, orderdate, status, delivery_id, user_id, payment, order_note)
+values  (4, sysdate(), 'ORDER', 4, 3, '2', '경비실에 맡겨주세요.');
 
 ----OrderItem
 INSERT INTO OrderItem (order_item_id, count, orderprice, item_id, order_id)
@@ -130,6 +136,16 @@ INSERT INTO OrderItem (order_item_id, count, orderprice, item_id, order_id)
 values  (4, 3, 2100000, 1, 2);
 INSERT INTO OrderItem (order_item_id, count, orderprice, item_id, order_id)
 values  (5, 3, 450000, 2, 2);
+INSERT INTO OrderItem (order_item_id, count, orderprice, item_id, order_id)
+values  (6, 1, (SELECT CEIL(price * (1-discount) * 1) FROM Item where item_id = 1), 1, 3);
+INSERT INTO OrderItem (order_item_id, count, orderprice, item_id, order_id)
+values  (7, 4, (SELECT CEIL(price * (1-discount) * 4) FROM Item where item_id = 4), 4, 3);
+INSERT INTO OrderItem (order_item_id, count, orderprice, item_id, order_id)
+values  (8, 5, (SELECT CEIL(price * (1-discount) * 5) FROM Item where item_id = 6), 6, 3);
+INSERT INTO OrderItem (order_item_id, count, orderprice, item_id, order_id)
+values  (9, 3, (SELECT CEIL(price * (1-discount) * 3) FROM Item where item_id = 9), 9, 4);
+INSERT INTO OrderItem (order_item_id, count, orderprice, item_id, order_id)
+values  (10, 3, (SELECT CEIL(price * (1-discount) * 3) FROM Item where item_id = 5), 5, 4);
 
 -- Wish
 INSERT INTO Wish (id, user_id)
@@ -142,49 +158,6 @@ INSERT INTO WishItem (id, item_id, wish_id)
 values  (2, 4, 1);
 INSERT INTO WishItem (id, item_id, wish_id)
 values  (3, 6, 1);
-
-update Item set price = 1000000, stockquantity = 10, discount = 0.3, description = '삼송 최강 노트북입니다.', category_id = 13
-where item_id = 1;
-update Item set price = 200000, stockquantity = 8, discount = 0.25, description = '짱짱 헤드폰입니다.', category_id = 18
-where item_id = 2;
-update Item set price = 1500000, stockquantity = 11, discount = 0.2, description = '새로나온 RTX 최신형 노트북입니다.', category_id = 14
-where item_id = 3;
-update Item set price = 600000, stockquantity = 900, discount = 0.4, description = '가볍고 좋은 최강 태블릿.', category_id = 21
-where item_id = 4;
-update Item set price = 99000, stockquantity = 10, discount = 0.5, description = '중국에서 직수입한 최신형 헤드폰!!', category_id = 19
-where item_id = 5;
-update Item set price = 600000, stockquantity = 12, discount = 0.1, description = '실 무게 500g 초경량 랩탑.', category_id = 15
-where item_id = 6;
-update Item set price = 850000, stockquantity = 11, discount = 0.1, description = 'AI 탑재 초강력 스마트폰', category_id = 20
-where item_id = 7;
-update Item set price = 800000, stockquantity = 900, discount = 0.15, description = '랩탑계의 혁명, 최강 노트북', category_id = 16
-where item_id = 8;
-update Item set price = 400000, stockquantity = 800, discount = 0, description = '101미터 거리까지 보이는 디카', category_id = 17
-where item_id = 9;
-
-commit;
-
-select * from `Category`;
-
-
-update Item set price = 1000000, stockquantity = 10, discount = 0.3, description = '삼송 최강 노트북입니다.', category_id = 13
-where item_id = 1;
-update Item set price = 200000, stockquantity = 8, discount = 0.25, description = '짱짱 헤드폰입니다.', category_id = 18
-where item_id = 2;
-update Item set price = 1500000, stockquantity = 11, discount = 0.2, description = '새로나온 RTX 최신형 노트북입니다.', category_id = 14
-where item_id = 3;
-update Item set price = 600000, stockquantity = 900, discount = 0.4, description = '가볍고 좋은 최강 태블릿.', category_id = 21
-where item_id = 4;
-update Item set price = 99000, stockquantity = 10, discount = 0.5, description = '중국에서 직수입한 최신형 헤드폰!!', category_id = 19
-where item_id = 5;
-update Item set price = 600000, stockquantity = 12, discount = 0.1, description = '실 무게 500g 초경량 랩탑.', category_id = 15
-where item_id = 6;
-update Item set price = 850000, stockquantity = 11, discount = 0.1, description = 'AI 탑재 초강력 스마트폰', category_id = 20
-where item_id = 7;
-update Item set price = 800000, stockquantity = 900, discount = 0.15, description = '랩탑계의 혁명, 최강 노트북', category_id = 16
-where item_id = 8;
-update Item set price = 400000, stockquantity = 800, discount = 0, description = '101미터 거리까지 보이는 디카', category_id = 17
-where item_id = 9;
 
 --Review
 INSERT INTO Review (id, content, created_at, email, name, rating, updated_at, item_id)
@@ -235,6 +208,34 @@ INSERT INTO Review (id, content, created_at, email, name, rating, updated_at, it
 values  (23, '완전 짱!!.', sysdate(), 'ttt@gmail.com', '짱조아', 3, sysdate(), 4);
 INSERT INTO Review (id, content, created_at, email, name, rating, updated_at, item_id)
 values  (24, '짱조아.', sysdate(), 'ff234@gmail.com', '보부상', 4, sysdate(), 5);
+INSERT INTO Review (id, content, created_at, email, name, rating, updated_at, item_id)
+VALUES
+(25, '제품이 매우 만족스럽습니다.', sysdate(), CONCAT(CONCAT('user', FLOOR(RAND() * 10000)),'@gmail.com'), CONCAT('사용자', FLOOR(RAND() * 100)), 4, sysdate(), FLOOR(RAND() * 9) + 1);
+INSERT INTO Review (id, content, created_at, email, name, rating, updated_at, item_id)
+VALUES
+(26, '좋은 제품이에요. 추천합니다.', sysdate(), CONCAT(CONCAT('user', FLOOR(RAND() * 10000)),'@gmail.com'), CONCAT('사용자', FLOOR(RAND() * 100)), 4, sysdate(), FLOOR(RAND() * 9) + 1);
+INSERT INTO Review (id, content, created_at, email, name, rating, updated_at, item_id)
+VALUES
+(27, '만족스러운 제품입니다.', sysdate(), CONCAT(CONCAT('user', FLOOR(RAND() * 10000)),'@gmail.com'), CONCAT('사용자', FLOOR(RAND() * 100)), 4, sysdate(), FLOOR(RAND() * 9) + 1);
+INSERT INTO Review (id, content, created_at, email, name, rating, updated_at, item_id)
+VALUES
+(28, '적극 추천합니다.', sysdate(), CONCAT(CONCAT('user', FLOOR(RAND() * 10000)),'@gmail.com'), CONCAT('사용자', FLOOR(RAND() * 100)), 4, sysdate(), FLOOR(RAND() * 9) + 1);
+INSERT INTO Review (id, content, created_at, email, name, rating, updated_at, item_id)
+VALUES
+(29, '제품이 매우 만족스럽습니다. 사용하기 편하고 성능도 훌륭합니다.', sysdate(), CONCAT(CONCAT('user', FLOOR(RAND() * 10000)),'@gmail.com'), CONCAT('사용자', FLOOR(RAND() * 100)), 4, sysdate(), FLOOR(RAND() * 9) + 1);
+INSERT INTO Review (id, content, created_at, email, name, rating, updated_at, item_id)
+VALUES
+(30, '이 제품은 정말 가성비가 좋아서 놀랐어요. 추천합니다!', sysdate(), CONCAT(CONCAT('user', FLOOR(RAND() * 10000)),'@gmail.com'), CONCAT('사용자', FLOOR(RAND() * 100)), 4, sysdate(), FLOOR(RAND() * 9) + 1);
+INSERT INTO Review (id, content, created_at, email, name, rating, updated_at, item_id)
+VALUES
+(31, '사용해보니까 정말 편리하고 신세계를 경험한 느낌이에요.', sysdate(), CONCAT(CONCAT('user', FLOOR(RAND() * 10000)),'@gmail.com'), CONCAT('사용자', FLOOR(RAND() * 100)), 4, sysdate(), FLOOR(RAND() * 9) + 1);
+INSERT INTO Review (id, content, created_at, email, name, rating, updated_at, item_id)
+VALUES
+(32, '이 제품은 디자인도 멋지고 성능도 훌륭해서 완전 만족합니다.', sysdate(), CONCAT(CONCAT('user', FLOOR(RAND() * 10000)),'@gmail.com'), CONCAT('사용자', FLOOR(RAND() * 100)), 4, sysdate(), FLOOR(RAND() * 9) + 1);
+INSERT INTO Review (id, content, created_at, email, name, rating, updated_at, item_id)
+VALUES
+(33, '사용하면서 불편함을 전혀 느끼지 않아서 좋아요. 추천합니다!', sysdate(), CONCAT(CONCAT('user', FLOOR(RAND() * 10000)),'@gmail.com'), CONCAT('사용자', FLOOR(RAND() * 100)), 4, sysdate(), FLOOR(RAND() * 9) + 1);
+
 
 commit;]]></console>
     </connection>
