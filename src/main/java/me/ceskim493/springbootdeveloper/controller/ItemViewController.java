@@ -69,7 +69,18 @@ public class ItemViewController {
         Item product = itemService.findById(id);
         Long category_id = product.getCategory().getId();
 
-        List<Item> items = categoryService.findItemsByCategory(category_id);
+        // 카테고리에 해당하는 상품들을 가져온다.
+        List<ItemListViewResponse> items = categoryService.findItemsByCategory(category_id).stream()
+                .map(item -> {
+                    item.setAvgRating(item.getReviews().stream()
+                            .mapToInt(Review::getRating)
+                            .average()
+                            .getAsDouble()
+                    );
+                    return item;
+                })
+                .map(ItemListViewResponse::new)
+                .toList();
 
         // 카테고리가 속해 있는 카테고리들을 전부 갖고온다.
         List<CategoryViewResponse> parents = categoryService.findParentsCategoryByCategory(category_id).stream()
@@ -125,7 +136,17 @@ public class ItemViewController {
         model = mainService.getMainLayout(model, sUser);
 
         // 세일상품을 갖고온다. (30% 이상 세일 상품)
-        List<Item> items = itemService.findByDiscountGreaterThanEqual(0.3F);
+        List<ItemListViewResponse> items = itemService.findByDiscountGreaterThanEqual(0.3F).stream()
+                .map(item -> {
+                    item.setAvgRating(item.getReviews().stream()
+                            .mapToInt(Review::getRating)
+                            .average()
+                            .getAsDouble()
+                    );
+                    return item;
+                })
+                .map(ItemListViewResponse::new)
+                .toList();
 
         List<Category> parents = new ArrayList<>();
 
@@ -163,11 +184,21 @@ public class ItemViewController {
             depth1Cate = currentCate;
         }
         // 카테고리에 해당하는 상품리스트를 갖고온다. (paging)
-        List<Item> origin = categoryService.search(id, search, sortBy);
+        List<Item> origin = categoryService.search(id, search, sortBy).stream()
+                .map(item -> {
+                    item.setAvgRating(item.getReviews().stream()
+                            .mapToInt(Review::getRating)
+                            .average()
+                            .getAsDouble()
+                    );
+                    return item;
+                })
+                .toList();
 
-        List<Item> items = IntStream.range(0, origin.size())
+        List<ItemListViewResponse> items = IntStream.range(0, origin.size())
                 .filter(index -> index >= startNumber && index < endNumber)
                 .mapToObj(origin::get)
+                .map(ItemListViewResponse::new)
                 .collect(Collectors.toList());
 
         int startPage = (((int) Math.ceil(((double) pageNumber / pageLimit))) - 1) * pageLimit + 1;
@@ -211,7 +242,19 @@ public class ItemViewController {
         Item product = itemService.findById(id);
         Long category_id = product.getCategory().getId();
 
-        List<Item> items = categoryService.findItemsByCategory(category_id);
+
+        // 카테고리에 해당하는 상품들을 가져온다.
+        List<ItemListViewResponse> items = categoryService.findItemsByCategory(category_id).stream()
+                .map(item -> {
+                    item.setAvgRating(item.getReviews().stream()
+                            .mapToInt(Review::getRating)
+                            .average()
+                            .getAsDouble()
+                    );
+                    return item;
+                })
+                .map(ItemListViewResponse::new)
+                .toList();
 
         // 카테고리가 속해 있는 카테고리들을 전부 갖고온다.
         List<CategoryViewResponse> parents = categoryService.findParentsCategoryByCategory(category_id).stream()

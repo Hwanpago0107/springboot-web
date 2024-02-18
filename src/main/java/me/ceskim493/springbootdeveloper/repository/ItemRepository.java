@@ -12,7 +12,7 @@ import java.util.List;
 public interface ItemRepository extends JpaRepository<Item, Long> {
     List<Item> findByDiscountGreaterThanEqual(Float discount);
 
-    @Query("select i from Item i, OrderItem o where i.id = o.item.id order by o.count limit 5")
+    @Query("select i from Item i, OrderItem o where i.id = o.item.id order by o.count desc limit 5")
     List<Item> findBySaleCountsLimit5();
 
     List<Item> findAllByCategoryAndAndNameContainsIgnoreCase(Category category, String name);

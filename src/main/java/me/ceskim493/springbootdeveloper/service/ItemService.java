@@ -169,8 +169,4 @@ public class ItemService {
     }
 
     public List<ImgFile> findAllImgFiles() {return imgFileRepository.findAll();}
-
-    List<Item> findAllWithAvgRating(){
-        return itemRepository.findAll();
-    }
 }

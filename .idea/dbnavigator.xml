@@ -13,7 +13,9 @@
   </component>
   <component name="DBNavigator.Project.DatabaseConsoleManager">
     <connection id="d0d3338a-8875-4185-a874-c993f4d3f7e1">
-      <console name="Connection" type="STANDARD" schema="ebdb" session="Main"><![CDATA[-- 처음시작시 커밋 목록
+      <console name="Connection" type="STANDARD" schema="ebdb" session="Main"><![CDATA[select * from `Category`
+
+-- 처음시작시 커밋 목록
 ---Cartegory
 --depth 1
 INSERT INTO Category (category_id, name)
@@ -232,14 +234,18 @@ values  (22, '시러요', sysdate(), 'test1@gmail.com', '테스트', 1, sysdate(
 INSERT INTO Review (id, content, created_at, email, name, rating, updated_at, item_id)
 values  (23, '완전 짱!!.', sysdate(), 'ttt@gmail.com', '짱조아', 3, sysdate(), 4);
 INSERT INTO Review (id, content, created_at, email, name, rating, updated_at, item_id)
-values  (24, '짱조아.', sysdate(), 'ff234@gmail.com', '보부상', 4, sysdate(), 5);]]></console>
+values  (24, '짱조아.', sysdate(), 'ff234@gmail.com', '보부상', 4, sysdate(), 5);
+
+commit;]]></console>
     </connection>
   </component>
   <component name="DBNavigator.Project.DatabaseEditorStateManager">
     <last-used-providers />
   </component>
   <component name="DBNavigator.Project.DatabaseFileManager">
-    <open-files />
+    <open-files>
+      <object connection-id="d0d3338a-8875-4185-a874-c993f4d3f7e1" object-ref="consoles/Connection" />
+    </open-files>
   </component>
   <component name="DBNavigator.Project.DatabaseSessionManager">
     <connection id="d0d3338a-8875-4185-a874-c993f4d3f7e1" />

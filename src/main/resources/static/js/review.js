@@ -67,7 +67,7 @@ function getProduct(id, pageNumber) {
 
 $(document).ready(function () {
     const tabnum = $("#tab_num").val();
-    tabClick();
+    tabClick(tabnum);
 });
 
 function tabClick(tabnum) {

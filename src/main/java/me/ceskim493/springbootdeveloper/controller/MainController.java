@@ -2,6 +2,7 @@ package me.ceskim493.springbootdeveloper.controller;
 
 import lombok.RequiredArgsConstructor;
 import me.ceskim493.springbootdeveloper.annotation.LoginUser;
+import me.ceskim493.springbootdeveloper.domain.Item;
 import me.ceskim493.springbootdeveloper.domain.Review;
 import me.ceskim493.springbootdeveloper.domain.SessionUser;
 import me.ceskim493.springbootdeveloper.domain.User;
@@ -16,6 +17,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import java.util.Comparator;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -43,8 +45,8 @@ public class MainController {
         model = mainService.getMainLayout(model, sUser);
 
         if (pageName.equals("home")) {
-            // 등록된 상품리스트
-            List<ItemListViewResponse> items = itemService.findAll().stream()
+            // 평균별점까지 포함된 등록 상품리스트
+            List<Item> itemList = itemService.findAll().stream()
                     .map(item -> {
                         item.setAvgRating(item.getReviews().stream()
                                 .mapToInt(Review::getRating)
@@ -53,6 +55,10 @@ public class MainController {
                         );
                         return item;
                     })
+                    .toList();
+
+            // 등록된 상품리스트
+            List<ItemListViewResponse> items = itemList.stream()
                     .map(ItemListViewResponse::new)
                     .toList();
 
@@ -66,9 +72,26 @@ public class MainController {
                     .map(ItemListViewResponse::new)
                     .toList();
 
+            // 낮은 가격순 (상위 5품목)
+            List<ItemListViewResponse> row5 = itemList.stream()
+                    .sorted((a,b) ->
+                            (int) ((a.getPrice() * (1 - a.getDiscount())) - (b.getPrice() * (1 - b.getDiscount()))))
+                    .limit(5)
+                    .map(ItemListViewResponse::new)
+                    .toList();
+
+            // 평점순 (상위 5품목)
+            List<ItemListViewResponse> topRating5 = itemList.stream()
+                    .sorted(Comparator.comparing(Item::getAvgRating).reversed())
+                    .limit(5)
+                    .map(ItemListViewResponse::new)
+                    .toList();
+
             model.addAttribute("items", items);
             model.addAttribute("hotdeals", hotdeals);
             model.addAttribute("top5", top5);
+            model.addAttribute("row5", row5);
+            model.addAttribute("topRating5", topRating5);
         } else if (pageName.equals("myInfo")) {
             return "myInfo";
         } else if (pageName.equals("myCart")) {

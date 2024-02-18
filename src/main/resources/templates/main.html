@@ -257,7 +257,7 @@
 									<img th:src="|/images/${top.getFileName()}|"/>
 								</div>
 								<div class="product-body">
-									<p class="product-category" th:text="${top.getCategory()?.getName()}"></p>
+									<p class="product-category" th:text="|${top.getCategory()?.getName()} (${#numbers.formatDecimal(top.getAvgRating(), 1, 1)})|"></p>
 									<h3 class="product-name"><a th:href="|/items/${top.id}|" th:text="${top.name}"></a></h3>
 									<h4 class="product-price" style="display: inline;" th:text="|￦${#numbers.formatDecimal(top.price * (1-top.getDiscount()), 0, 'DEFAULT', 0, 'DEFAULT')}|"></h4>
 									<h4 style="display: inline-block;"><del class="product-old-price" th:text="|￦${#numbers.formatDecimal(top.price, 0, 'DEFAULT', 0, 'DEFAULT')}|"></del></h4>
@@ -270,7 +270,7 @@
 
 				<div class="col-md-4 col-xs-6">
 					<div class="section-title">
-						<h4 class="title">Top selling</h4>
+						<h4 class="title">Row Price</h4>
 						<div class="section-nav">
 							<div id="slick-nav-4" class="products-slick-nav"></div>
 						</div>
@@ -279,15 +279,15 @@
 					<div class="products-widget-slick" data-nav="#slick-nav-4">
 						<div>
 							<!-- product widget -->
-							<div class="product-widget" th:each="top : ${top5}">
+							<div class="product-widget" th:each="row : ${row5}">
 								<div class="product-img">
-									<img th:src="|/images/${top.getFileName()}|"/>
+									<img th:src="|/images/${row.getFileName()}|"/>
 								</div>
 								<div class="product-body">
-									<p class="product-category" th:text="${top.getCategory()?.getName()}"></p>
-									<h3 class="product-name"><a th:href="|/items/${top.id}|" th:text="${top.name}"></a></h3>
-									<h4 class="product-price" style="display: inline;" th:text="|￦${#numbers.formatDecimal(top.price * (1-top.getDiscount()), 0, 'DEFAULT', 0, 'DEFAULT')}|"></h4>
-									<h4 style="display: inline-block;"><del class="product-old-price" th:text="|￦${#numbers.formatDecimal(top.price, 0, 'DEFAULT', 0, 'DEFAULT')}|"></del></h4>
+									<p class="product-category" th:text="|${row.getCategory()?.getName()} (${#numbers.formatDecimal(row.getAvgRating(), 1, 1)})|"></p>
+									<h3 class="product-name"><a th:href="|/items/${row.id}|" th:text="${row.name}"></a></h3>
+									<h4 class="product-price" style="display: inline;" th:text="|￦${#numbers.formatDecimal(row.price * (1-row.getDiscount()), 0, 'DEFAULT', 0, 'DEFAULT')}|"></h4>
+									<h4 style="display: inline-block;"><del class="product-old-price" th:text="|￦${#numbers.formatDecimal(row.price, 0, 'DEFAULT', 0, 'DEFAULT')}|"></del></h4>
 								</div>
 							</div>
 							<!-- /product widget -->
@@ -299,7 +299,7 @@
 
 				<div class="col-md-4 col-xs-6">
 					<div class="section-title">
-						<h4 class="title">Top selling</h4>
+						<h4 class="title">Top Rating</h4>
 						<div class="section-nav">
 							<div id="slick-nav-5" class="products-slick-nav"></div>
 						</div>
@@ -308,12 +308,12 @@
 					<div class="products-widget-slick" data-nav="#slick-nav-5">
 						<div>
 							<!-- product widget -->
-							<div class="product-widget" th:each="top : ${top5}">
+							<div class="product-widget" th:each="top : ${topRating5}">
 								<div class="product-img">
 									<img th:src="|/images/${top.getFileName()}|"/>
 								</div>
 								<div class="product-body">
-									<p class="product-category" th:text="${top.getCategory()?.getName()}"></p>
+									<p class="product-category" th:text="|${top.getCategory()?.getName()} (${#numbers.formatDecimal(top.getAvgRating(), 1, 1)})|"></p>
 									<h3 class="product-name"><a th:href="|/items/${top.id}|" th:text="${top.name}"></a></h3>
 									<h4 class="product-price" style="display: inline;" th:text="|￦${#numbers.formatDecimal(top.price * (1-top.getDiscount()), 0, 'DEFAULT', 0, 'DEFAULT')}|"></h4>
 									<h4 style="display: inline-block;"><del class="product-old-price" th:text="|￦${#numbers.formatDecimal(top.price, 0, 'DEFAULT', 0, 'DEFAULT')}|"></del></h4>
