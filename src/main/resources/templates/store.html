@@ -12,8 +12,9 @@
 				<div class="col-md-12">
 					<ul class="breadcrumb-tree" th:if="${parents != null && parents.size() > 0}">
 						<li><a th:href="@{/main/home}">Home</a></li>
-						<li th:each="i : ${#numbers.sequence(parents.size()-1, 0, -1)}" th:with="category=${parents[i]}">
-							<a th:onclick="|getStore(${category.id}, 1)|" th:text="${category.getName()}"></a>
+						<li th:if="${kind == 'hotdeal'}">HOT DEAL</li>
+						<li th:if="${kind != 'hotdeal' && parents != null}" th:each="i : ${#numbers.sequence(parents.size()-1, 0, -1)}" th:with="category=${parents[i]}">
+							<a th:onclick="|getStore(${category.getId}, 1)|" th:text="${category.getName()}"></a>
 						</li>
 					</ul>
 					<ul class="breadcrumb-tree" th:unless="${parents != null && parents.size() > 0}">
@@ -193,8 +194,9 @@
 							<li><a href="#"><i class="fa fa-angle-left"></i></a></li>
 							<li th:each="page : ${#numbers.sequence(startPage, endPage)}"
 							th:text="${page}"
-								th:onclick="|getStore(${currentCate.id}, ${page})|"
+								th:onclick="|getStore(${currentCate.id}, ${page}, this.getAttribute('data'))|"
 								th:classappend="${page == currentPage} ? 'active' : ''"
+								th:data="${kind}"
 								style="cursor: pointer;"></li>
 							<li><a href="#"><i class="fa fa-angle-right"></i></a></li>
 						</ul>

@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -62,7 +61,7 @@ public class ItemViewController {
 
     @GetMapping("/items/{id}")
     public String getItem(Model model, @PathVariable Long id, @LoginUser SessionUser sUser) {
-        // yout.html
+        // MainLayout.html
         model = mainService.getMainLayout(model, sUser);
 
         // 해당하는 상품 하나를 가져온다.
@@ -72,11 +71,13 @@ public class ItemViewController {
         // 카테고리에 해당하는 상품들을 가져온다.
         List<ItemListViewResponse> items = categoryService.findItemsByCategory(category_id).stream()
                 .map(item -> {
-                    item.setAvgRating(item.getReviews().stream()
-                            .mapToInt(Review::getRating)
-                            .average()
-                            .getAsDouble()
-                    );
+                    if (item.getReviews() != null && item.getReviews().size() > 0) {
+                        item.setAvgRating(item.getReviews().stream()
+                                .mapToInt(Review::getRating)
+                                .average()
+                                .getAsDouble()
+                        );
+                    }
                     return item;
                 })
                 .map(ItemListViewResponse::new)
@@ -125,34 +126,6 @@ public class ItemViewController {
         model.addAttribute("reviewOrigin", origin);
         model.addAttribute("tabNumber", 1);
         model.addAttribute("ratings", ratings);
-        model.addAttribute("productYn", "Y");
-
-        return  "product";
-    }
-
-    @GetMapping("/hotdeals")
-    public String getHotdeals(Model model, @LoginUser SessionUser sUser) {
-        // MainLayout.html
-        model = mainService.getMainLayout(model, sUser);
-
-        // 세일상품을 갖고온다. (30% 이상 세일 상품)
-        List<ItemListViewResponse> items = itemService.findByDiscountGreaterThanEqual(0.3F).stream()
-                .map(item -> {
-                    item.setAvgRating(item.getReviews().stream()
-                            .mapToInt(Review::getRating)
-                            .average()
-                            .getAsDouble()
-                    );
-                    return item;
-                })
-                .map(ItemListViewResponse::new)
-                .toList();
-
-        List<Category> parents = new ArrayList<>();
-
-        model.addAttribute("items", items);
-        model.addAttribute("parents", parents);
-        model.addAttribute("hotdealYn", "Y");
 
         return  "product";
     }
@@ -163,7 +136,8 @@ public class ItemViewController {
                            @RequestParam(required = false, name = "page_number") int pageNumber,
                            @RequestParam(required = false, name = "page_limit") int pageLimit,
                            @RequestParam(required = false, defaultValue = "", name = "search_text") String search,
-                           @RequestParam(required = false, name = "sort_by") String sortBy) {
+                           @RequestParam(required = false, name = "sort_by") String sortBy,
+                           @RequestParam(required = false, name = "kind") String kind) {
 
         // MainLayout.html
         model = mainService.getMainLayout(model, sUser);
@@ -183,18 +157,38 @@ public class ItemViewController {
         if ("1".equals(currentCate.getDepth())) {
             depth1Cate = currentCate;
         }
-        // 카테고리에 해당하는 상품리스트를 갖고온다. (paging)
-        List<Item> origin = categoryService.search(id, search, sortBy).stream()
-                .map(item -> {
-                    item.setAvgRating(item.getReviews().stream()
-                            .mapToInt(Review::getRating)
-                            .average()
-                            .getAsDouble()
-                    );
-                    return item;
-                })
-                .toList();
 
+        List<Item> origin = null;
+        if ("hotdeal".equals(kind)) {
+            // 세일상품을 갖고온다. (30% 이상 세일 상품)
+            origin = itemService.findByDiscountGreaterThanEqual(0.3F).stream()
+                    .map(item -> {
+                        if (item.getReviews() != null && item.getReviews().size() > 0) {
+                            item.setAvgRating(item.getReviews().stream()
+                                    .mapToInt(Review::getRating)
+                                    .average()
+                                    .getAsDouble()
+                            );
+                        }
+                        return item;
+                    })
+                    .toList();
+        } else {
+            // 카테고리에 해당하는 상품리스트를 갖고온다.
+            origin = categoryService.search(id, search, sortBy).stream()
+                    .map(item -> {
+                        if (item.getReviews() != null && item.getReviews().size() > 0) {
+                            item.setAvgRating(item.getReviews().stream()
+                                    .mapToInt(Review::getRating)
+                                    .average()
+                                    .getAsDouble()
+                            );
+                        }
+                        return item;
+                    })
+                    .toList();
+        }
+        // paging
         List<ItemListViewResponse> items = IntStream.range(0, origin.size())
                 .filter(index -> index >= startNumber && index < endNumber)
                 .mapToObj(origin::get)
@@ -224,6 +218,7 @@ public class ItemViewController {
         model.addAttribute("endPage", endPage);
         model.addAttribute("currentPage", pageNumber);
         model.addAttribute("sortBy", sortBy);
+        model.addAttribute("kind", kind);
         model.addAttribute("currentLimit", pageLimit);
 
         return "store";
@@ -246,11 +241,13 @@ public class ItemViewController {
         // 카테고리에 해당하는 상품들을 가져온다.
         List<ItemListViewResponse> items = categoryService.findItemsByCategory(category_id).stream()
                 .map(item -> {
-                    item.setAvgRating(item.getReviews().stream()
-                            .mapToInt(Review::getRating)
-                            .average()
-                            .getAsDouble()
-                    );
+                    if (item.getReviews() != null && item.getReviews().size() > 0) {
+                        item.setAvgRating(item.getReviews().stream()
+                                .mapToInt(Review::getRating)
+                                .average()
+                                .getAsDouble()
+                        );
+                    }
                     return item;
                 })
                 .map(ItemListViewResponse::new)
@@ -297,7 +294,6 @@ public class ItemViewController {
         model.addAttribute("reviewOrigin", origin);
         model.addAttribute("tabNumber", tabNumber);
         model.addAttribute("ratings", ratings);
-        model.addAttribute("productYn", "Y");
 
         return "product";
     }

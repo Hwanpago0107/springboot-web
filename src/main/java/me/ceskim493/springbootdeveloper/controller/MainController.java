@@ -48,11 +48,13 @@ public class MainController {
             // 평균별점까지 포함된 등록 상품리스트
             List<Item> itemList = itemService.findAll().stream()
                     .map(item -> {
-                        item.setAvgRating(item.getReviews().stream()
-                                .mapToInt(Review::getRating)
-                                .average()
-                                .getAsDouble()
-                        );
+                        if (item.getReviews() != null && item.getReviews().size() > 0) {
+                            item.setAvgRating(item.getReviews().stream()
+                                    .mapToInt(Review::getRating)
+                                    .average()
+                                    .getAsDouble()
+                            );
+                        }
                         return item;
                     })
                     .toList();

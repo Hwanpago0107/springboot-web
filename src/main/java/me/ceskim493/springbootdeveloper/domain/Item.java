@@ -50,7 +50,7 @@ public class Item {
     private String detailImgPath;
 
     @Transient
-    private Double avgRating;
+    private Double avgRating = 0.0;
 
     @OneToMany(mappedBy = "item", cascade = CascadeType.ALL)
     private List<Review> reviews = new ArrayList<>();

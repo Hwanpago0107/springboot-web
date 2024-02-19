@@ -208,7 +208,7 @@ $(document).on('show.bs.dropdown', function(event) {
 	$('.dropdown-backdrop').off().remove();
 });
 
-function getStore(id, pageNumber) {
+function getStore(id, pageNumber, kind) {
 	if (pageNumber == null || pageNumber == undefined) {
 		pageNumber = 1;
 	}
@@ -221,6 +221,10 @@ function getStore(id, pageNumber) {
 	let sortBy = $('#sort_by option:selected').val();
 	if (sortBy == null || sortBy == undefined) {
 		sortBy = "popular";
+	}
+
+	if (kind == null) {
+		kind = "";
 	}
 
 	const form = document.createElement("form");
@@ -251,6 +255,12 @@ function getStore(id, pageNumber) {
 	input4.setAttribute("name", "sort_by");
 	input4.setAttribute("value", sortBy);
 	form.appendChild(input4);
+
+	var input5 = document.createElement("input");
+	input5.setAttribute("type", "hidden");
+	input5.setAttribute("name", "kind");
+	input5.setAttribute("value", kind);
+	form.appendChild(input5);
 
 	document.body.appendChild(form);
 	form.submit();

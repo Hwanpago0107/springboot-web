@@ -189,7 +189,7 @@
             <!-- NAV -->
             <ul class="main-nav nav navbar-nav">
                 <li class="active"><a th:href="@{/main/home}">Home</a></li>
-                <li><a href="/hotdeals" style="color: red;">핫딜</a></li>
+                <li><a th:onclick="|getStore(0, 1, 'hotdeal')|" style="color: red;">핫딜</a></li>
                 <li><a th:onclick="|getStore(0, 1)|">전체</a></li>
                 <li th:each="category : ${depth1}">
                     <a th:onclick="|getStore(${category.id}, 1)|" th:text="${category.name}"></a>
@@ -274,7 +274,7 @@
                         <div class="footer">
                             <h3 class="footer-title">Categories</h3>
                             <ul class="footer-links">
-                                <li><a href="/hotdeals">Hot deals</a></li>
+                                <li><a th:onclick="|getStore(0, 1, 'hotdeal')|">Hot deals</a></li>
                                 <li th:each="category : ${depth1}">
                                     <a th:onclick="|getStore(${category.id}, 1)|" th:text="${category.getName()}"></a>
                                 </li>
