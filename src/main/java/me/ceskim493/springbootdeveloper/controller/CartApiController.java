@@ -46,20 +46,14 @@ public class CartApiController {
                 .toList();
 
         return ResponseEntity.ok()
-                .body(cartItems);
+                .build();
     }
 
     @DeleteMapping("/api/carts/checked")
     public ResponseEntity<Void> deleteItem(@RequestBody DeleteCartRequest request) {
-        cartService.delete(request.getChecked());
+        User user = userService.findByEmail(SecurityUtil.getCurrentUserEmail());
 
-        return ResponseEntity.ok()
-                .build();
-    }
-
-    @DeleteMapping("/api/carts")
-    public ResponseEntity<Void> deleteItem() {
-        cartService.deleteAll();
+        cartService.delete(user, request.getChecked());
 
         return ResponseEntity.ok()
                 .build();

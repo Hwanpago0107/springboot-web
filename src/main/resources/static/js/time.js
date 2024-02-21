@@ -1,10 +1,11 @@
 function timeToLimit() {
+    let date = new Date();
     let thisDate = new Date();
     let today = thisDate.getDay();
     // 이번주 월요일
-    let thisWeekStart = new Date(thisDate.setDate(thisDate.getDate() - today));
+    let thisWeekStart = new Date(date.setDate(thisDate.getDate() - today + 1));
     // 이번주 주말
-    let thisWeekend = new Date(thisWeekStart.setDate(thisWeekStart.getDate() + 6));
+    let thisWeekend = new Date(date.setDate(thisWeekStart.getDate() + 6));
 
     let endDate = new Date(thisWeekend.getFullYear(), thisWeekend.getMonth(),
         thisWeekend.getDate(), 23, 59, 59);

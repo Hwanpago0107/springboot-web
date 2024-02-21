@@ -19,4 +19,6 @@ public class UpdateItemRequest {
     private String description;
     private String detailImgName;
     private String detailImgPath;
+    private String[] optionNames;
+    private String[] optionValues;
 }

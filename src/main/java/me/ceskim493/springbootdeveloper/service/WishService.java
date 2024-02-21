@@ -28,43 +28,40 @@ public class WishService {
                 .orElseThrow(() -> new IllegalArgumentException("no items"));
 
         // 사용자가 갖고 있는 위시리스트가 없으면 만들어준다.
-        if (wishRepository.findWishByUser(user).isEmpty()) {
-            Wish wish = new Wish(user);
+        Wish wish = wishRepository.findWishByUser(user);
+        if (wish == null) {
+            wish = new Wish(user);
             wishRepository.save(wish);
         }
 
-        Wish wish = wishRepository.findWishByUser(user).get();
+        // 위시리스트에 이미 해당 아이템이 있으면 옵션만 업데이트 해준다.
+        WishItem wishItem = wishItemRepository.findWishItemByWishAndItem_Id(wish, request.getItem_id());
 
-        // 위시리스트에 이미 해당 아이템이 있으면 그냥 넘어간다.
-        List<WishItem> wishItems = wishItemRepository.findWishItemByItem_Id(request.getItem_id());
-
-        WishItem wishItem = null;
-        if (wishItems != null && wishItems.size() > 0) {
-            return wishItems.get(0);
+        if (wishItem != null) {
+            wishItem.update(wish, item, request.getOption_text());
         } else {
-            wishItem = new WishItem(wish, item);
-            return wishItemRepository.save(wishItem);
+            wishItem = new WishItem(wish, item, request.getOption_text());
         }
+
+        return wishItemRepository.save(wishItem);
     }
 
     @Transactional
     public List<WishItem> findAll(User user) {
-        if (wishRepository.findWishByUser(user).isEmpty()) {
-            return new ArrayList<WishItem>();
-        }
-        Wish wish = wishRepository.findWishByUser(user).get();
-        return wishItemRepository.findAllByWish(wish);
+        return wishRepository.findWishByUser(user) == null ? new ArrayList<>() :
+                wishItemRepository.findAllByWish(wishRepository.findWishByUser(user));
     }
 
     @Transactional
     public void delete(List<Long> checked, User user) {
-        Wish wish = wishRepository.findWishByUser(user).get();
+        Wish wish = wishRepository.findWishByUser(user);
         for (Long check : checked) {
             wishItemRepository.deleteAllByItem_IdAndWish(check, wish);
         }
     }
 
-    public void deleteAll() {
-        wishItemRepository.deleteAll();
+    public void deleteAll(User user) {
+        Wish wish = wishRepository.findWishByUser(user);
+        wishItemRepository.deleteAllByWish(wish);
     }
 }

@@ -55,6 +55,9 @@ public class Item {
     @OneToMany(mappedBy = "item", cascade = CascadeType.ALL)
     private List<Review> reviews = new ArrayList<>();
 
+    @OneToMany(mappedBy = "item", cascade = CascadeType.ALL)
+    private List<Option> options = new ArrayList<>();
+
     @Builder // 빌더 패턴으로 객체 생성
     public Item(Long id, String name, int price, int stockQuantity, float discount, String fileName, String filePath, Long fileSize,
                 Category category, String description, String detailImgName, String detailImgPath){

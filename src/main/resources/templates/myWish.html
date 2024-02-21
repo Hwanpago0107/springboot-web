@@ -49,17 +49,19 @@
 						</div>
 						<div class="carts-col carts-content" th:each="wish : ${wishes}">
 							<div>
-								<input type="checkbox" name="checkbox-wish-item-id" th:checked="false" th:value="${wish?.getItem()?.getId()}"></input>
+								<input type="checkbox" name="checkbox-wish-item-id" th:checked="false" th:value="${wish.getId()}"></input>
 							</div>
-							<div><strong th:text="${wish.getItem().name}"></strong></div>
-							<div>
+							<div><strong th:text="${wish.getItem().name}" th:onclick="|getProduct(${wish.getItem().id}, 1)|"
+										style="cursor: pointer;"></strong></div>
+							<div class="tooltip-target">
 								<img style="width: 100%;" th:src="|/images/${wish.getItem().fileName}|"/>
+								<span class="custom-tooltip" th:text="${wish.getOptions()}" style="margin: -10px 0px 0px -90px;"></span>
 							</div>
 							<div th:text="${#numbers.formatDecimal(wish.getItem().price * (1 - wish.getItem().getDiscount()), 0, 'DEFAULT', 0, 'DEFAULT')}"></div>
 						</div>
 					</div>
 					<div style="text-align: right;">
-						<a id="create-wish-chk-btn" class="secondary-btn order-submit" style="cursor: pointer;">선택 추가</a>
+						<a id="create-wish-chk-btn" class="secondary-btn order-submit" style="cursor: pointer;">선택 장바구니</a>
 						<a id="delete-wish-chk-btn" class="primary-btn order-submit" style="cursor: pointer;">선택 삭제</a>
 					</div>
 				</div>
@@ -69,8 +71,8 @@
 		</div>
 	</div>
 	<!-- /SECTION -->
+	<script src="/js/review.js"></script>
 </div>
 <!-- /container -->
-</div>
 </body>
 </html>

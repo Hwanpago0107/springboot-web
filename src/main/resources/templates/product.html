@@ -86,16 +86,11 @@
 						<p th:text="${product.getDescription()}"></p>
 
 						<div class="product-options">
-							<label>
-								Size
-								<select class="input-select">
-									<option value="0">X</option>
-								</select>
-							</label>
-							<label>
-								Color
-								<select class="input-select">
-									<option value="0">Red</option>
+							<label th:each="option : ${product.getOptions()}">
+								<span th:text="${option.getName()}"></span>
+								<select class="input-select" style="padding-left: 5px;">
+									<option th:each="val : ${#strings.arraySplit(option.getValue(), ',')}"
+										th:value="${val}" th:text="${val}"></option>
 								</select>
 							</label>
 						</div>
@@ -110,11 +105,11 @@
 									<input type="hidden" th:value="${product.stockQuantity}" id="product-stock">
 								</div>
 							</div>
-							<button class="add-to-cart-btn" th:onclick="|createCart([${product.id}])|"><i class="fa fa-shopping-cart"></i> add to cart</button>
+							<button class="add-to-cart-btn" th:onclick="|createCart(${product.id}, 1, this)|"><i class="fa fa-shopping-cart"></i> add to cart</button>
 						</div>
 
 						<ul class="product-btns">
-							<li><a th:onclick="|createWish(${product.id})|" style="cursor: pointer;">
+							<li th:onclick="|createWish(${product.id}, this)|"><a style="cursor: pointer;">
 								<i class="fa fa-heart-o"></i> add to wishlist</a>
 							</li>
 							<li><a href="#"><i class="fa fa-exchange"></i> add to compare</a></li>
@@ -363,15 +358,16 @@
 							</div>
 							<div class="product-btns">
 								<button class="add-to-wishlist"
-										th:onclick="|createWish(${item.id})|"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
+										th:onclick="|createWish(${item.id}, this)|"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
 								<button class="add-to-compare"
 										th:onclick="|alert('비교기능은 지원예정입니다.')|"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>
-								<button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
+								<button class="quick-view dropdown-toggle" data-toggle="dropdown" aria-expanded="true"><i class="fa fa-eye"></i><span class="tooltipp">view option</span></button>
+								<div class="product-dropdown product-options" th:value="${item.id}"></div>
 							</div>
 						</div>
 						<div class="add-to-cart">
 							<button class="add-to-cart-btn"
-									th:onclick="|createCart([${item.id}])|"><i class="fa fa-shopping-cart"></i> add to cart</button>
+									th:onclick="|createCart(${item.id}, 1, this)|"><i class="fa fa-shopping-cart"></i> add to cart</button>
 						</div>
 					</div>
 				</div>

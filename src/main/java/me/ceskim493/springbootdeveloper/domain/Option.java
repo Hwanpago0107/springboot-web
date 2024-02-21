@@ -4,24 +4,24 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class Cart {
+@Table(name = "options")
+public class Option {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    private User user;
+    @JoinColumn(name = "item_id")
+    private Item item;
 
-    public Cart(User user) {
-        this.user = user;
-    }
+    @Column(name = "option_name")
+    private String name;
+
+    @Column(name = "option_val")
+    private String value;
 }

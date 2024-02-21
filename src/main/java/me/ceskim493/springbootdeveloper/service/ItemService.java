@@ -5,11 +5,13 @@ import lombok.extern.slf4j.Slf4j;
 import me.ceskim493.springbootdeveloper.domain.Category;
 import me.ceskim493.springbootdeveloper.domain.ImgFile;
 import me.ceskim493.springbootdeveloper.domain.Item;
+import me.ceskim493.springbootdeveloper.domain.Option;
 import me.ceskim493.springbootdeveloper.dto.AddItemRequest;
 import me.ceskim493.springbootdeveloper.dto.UpdateItemRequest;
 import me.ceskim493.springbootdeveloper.repository.CategoryRepository;
 import me.ceskim493.springbootdeveloper.repository.ImgFileRepository;
 import me.ceskim493.springbootdeveloper.repository.ItemRepository;
+import me.ceskim493.springbootdeveloper.repository.OptionRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -28,6 +30,7 @@ public class ItemService {
     private final ItemRepository itemRepository;
     private final CategoryRepository categoryRepository;
     private final ImgFileRepository imgFileRepository;
+    private final OptionRepository optionRepository;
 
     @Transactional
     public Item save(AddItemRequest request, MultipartFile imgFile) throws Exception {
@@ -45,12 +48,32 @@ public class ItemService {
             log.info("no category {}", request.getCategory_id());
         }
 
-        return itemRepository.save(request.toEntity(item));
+        // 상품등록
+        item = itemRepository.save(request.toEntity(item));
+
+        // 옵션이 있으면 저장해준다.
+        if (request.getOptionNames() != null && request.getOptionNames().length > 0 &&
+                request.getOptionValues() != null && request.getOptionValues().length > 0) {
+            for (int i = 0; i < request.getOptionValues().length; i++) {
+                Option option = new Option();
+                option.setItem(item);
+                option.setName(request.getOptionNames()[i]);
+                option.setValue(request.getOptionValues()[i]);
+                optionRepository.save(option);
+            }
+        }
+
+        return item;
     }
 
     public Item findById(Long id) {
-        return itemRepository.findById(id)
+        Item item = itemRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("unexpected Item"));
+
+        List<Option> options = optionRepository.findAllByItem_Id(id);
+        item.setOptions(options);
+
+        return item;
     }
 
     public List<Item> findByDiscountGreaterThanEqual(Float discount) {
@@ -90,12 +113,28 @@ public class ItemService {
                 request.getDiscount(), item.getFileName(), item.getFilePath(), item.getFileSize(), item.getCategory(),
                 request.getDescription(), request.getDetailImgName(), request.getDetailImgPath());
 
+        //Option은 다 지우고 다시 만들어준다.
+        optionRepository.deleteAllByItem_Id(id);
+        // 옵션이 있으면 저장해준다.
+        if (request.getOptionNames() != null && request.getOptionNames().length > 0 &&
+                request.getOptionValues() != null && request.getOptionValues().length > 0) {
+            for (int i = 0; i < request.getOptionValues().length; i++) {
+                Option option = new Option();
+                option.setItem(item);
+                option.setName(request.getOptionNames()[i]);
+                option.setValue(request.getOptionValues()[i]);
+                optionRepository.save(option);
+            }
+        }
+
         return item;
     }
 
     public void delete(long id) {
         Item item = itemRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("not found " + id));
+
+        optionRepository.deleteAllByItem_Id(id);
 
         itemRepository.delete(item);
     }

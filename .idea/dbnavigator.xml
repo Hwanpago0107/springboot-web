@@ -87,8 +87,8 @@ INSERT INTO Item (dtype, item_id, name, price, stockquantity, discount, filename
 values  ('item', 9, 'REIKA 카메라', 400000, 800, 0, 'product09.png', '/upload/img/product09.png', 100, 17, '101미터 거리까지 보이는 디카');
 
 -- users
-INSERT INTO users (id, email, nickname)
-values (1, 'blessu0107@gmail.com', 'SH K');
+--INSERT INTO users (id, email, nickname)
+--values (1, 'blessu0107@gmail.com', 'SH K');
 INSERT INTO users (id, email, nickname)
 values (2, 'test123@gmail.com', '임꺽정');
 INSERT INTO users (id, email, nickname)

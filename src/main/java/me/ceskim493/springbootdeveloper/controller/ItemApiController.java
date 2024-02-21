@@ -6,8 +6,10 @@ import me.ceskim493.springbootdeveloper.domain.ImgFile;
 import me.ceskim493.springbootdeveloper.domain.Item;
 import me.ceskim493.springbootdeveloper.dto.AddItemRequest;
 import me.ceskim493.springbootdeveloper.dto.ItemResponse;
+import me.ceskim493.springbootdeveloper.dto.OptionResponse;
 import me.ceskim493.springbootdeveloper.dto.UpdateItemRequest;
 import me.ceskim493.springbootdeveloper.service.ItemService;
+import me.ceskim493.springbootdeveloper.service.OptionService;
 import org.springframework.core.io.UrlResource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,6 +26,7 @@ import java.util.List;
 public class ItemApiController {
 
     private final ItemService itemService;
+    private final OptionService optionService;
 
     // HTTP 메서드가 POST일 때 전달받은 URL과 동일하면 메서드로 매핑
     @PostMapping("/api/items")
@@ -91,5 +94,17 @@ public class ItemApiController {
         // 요청한 자원이 성공적으로 생성되었으며 저장된 아이템 정보를 응답 객체에 담아 전송
         return ResponseEntity.status(HttpStatus.CREATED)
                 .build();
+    }
+
+    @GetMapping("/api/options/{id}")
+    public ResponseEntity<List<OptionResponse>> getOptions(@PathVariable long id) {
+        List<OptionResponse> options = optionService.findAllByItem_id(id).stream()
+                        .map(OptionResponse::new)
+                        .toList();
+
+        log.info("options: {}", options);
+
+        return ResponseEntity.ok()
+                .body(options);
     }
 }

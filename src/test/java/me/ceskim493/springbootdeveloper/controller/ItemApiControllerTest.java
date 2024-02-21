@@ -58,7 +58,7 @@ class ItemApiControllerTest {
         final String name = "name";
         final int price = 100;
         final int stockQuantity = 10;
-        final AddItemRequest userRequest = new AddItemRequest(name, price, stockQuantity, "", "", 1L);
+        final AddItemRequest userRequest = new AddItemRequest();
 
         // 객체 JSON 직렬화
         final String requestBody = objectMapper.writeValueAsString(userRequest);
@@ -113,8 +113,7 @@ class ItemApiControllerTest {
         final String newFilePath = "/upload/img/1.jpg";
         final Long newFileSize = 1L;
 
-        UpdateItemRequest request = new UpdateItemRequest(newName, newPrice, newStock, 0.1F,
-                newFileName, newFilePath, newFileSize);
+        UpdateItemRequest request = new UpdateItemRequest();
 
         // when : update api로 수정 요청을 보내고, 이때 요청 타입은 JSON이고 given절에서 만들어둔 객체를 요청 본문으로 함계 보낸다.
         ResultActions result = mockMvc.perform(put(url, savedItem.getId())

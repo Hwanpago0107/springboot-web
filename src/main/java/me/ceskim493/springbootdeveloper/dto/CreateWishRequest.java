@@ -12,4 +12,6 @@ import java.util.List;
 public class CreateWishRequest {
     private Long item_id;
     private List<Long> checked;
+    private String option_text;
+    private List<String> option_texts;
 }

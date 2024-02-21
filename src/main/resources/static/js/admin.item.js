@@ -8,13 +8,25 @@ if (createItemButton) {
             return;
         }
 
+        var optionNames = [];
+        for (const optionName of document.getElementsByName("option_name").values()) {
+            optionNames.push(optionName.value);
+        }
+
+        var optionValues = [];
+        for (const optionValue of document.getElementsByName("option_value").values()) {
+            optionValues.push(optionValue.value);
+        }
+
         body = JSON.stringify({
             name: document.getElementById("name").value,
             price: document.getElementById("price").value,
             stockQuantity: document.getElementById("stockQuantity").value,
             discount: document.getElementById("discount").value,
             category_id: Number($('#category option:selected').val()),
-            description: document.getElementById("description").value
+            description: document.getElementById("description").value,
+            optionNames: optionNames,
+            optionValues: optionValues
         });
 
         const formData = new FormData();
@@ -42,13 +54,25 @@ if (modifyItemButton) {
         let params = new URLSearchParams(location.search);
         let id = params.get("id");
 
+        var optionNames = [];
+        for (const optionName of document.getElementsByName("option_name").values()) {
+            optionNames.push(optionName.value);
+        }
+
+        var optionValues = [];
+        for (const optionValue of document.getElementsByName("option_value").values()) {
+            optionValues.push(optionValue.value);
+        }
+
         body = JSON.stringify({
             name: document.getElementById("name").value,
             price: document.getElementById("price").value,
             stockQuantity: document.getElementById("stockQuantity").value,
             discount: document.getElementById("discount").value,
             category_id: Number($('#category option:selected').val()),
-            description: document.getElementById("description").value
+            description: document.getElementById("description").value,
+            optionNames: optionNames,
+            optionValues: optionValues
         });
 
         const formData = new FormData();
@@ -84,4 +108,29 @@ function deleteItem(id) {
 
         httpRequest("DELETE", "/api/items/" + id, null, success, fail);
     }
+}
+
+// 파일 추가
+function addOption() {
+    const optionDiv = document.createElement("div");
+    optionDiv.innerHTML =`
+            <input type="text" class="form-control adm-small-input" placeholder="옵션명" name="option_name"
+                   style="display: inline-block; width: 150px; margin-bottom: 5px;">
+            <input type="text" class="form-control adm-small-input" placeholder="각 값마다 [,]로 구분하여 기입" name="option_value"
+                   style="display: inline-block; width: calc(95% - 200px);">
+            <button type="button" onclick="removeOption(this);" class="btn btn-danger btn-sm del_btn">삭제</button>
+        `;
+    optionDiv.style.width = "100%";
+    document.querySelector("#option_list").appendChild(optionDiv);
+}
+
+// 파일 삭제
+function removeOption(element) {
+    const fileAddBtn = element.nextElementSibling;
+    if (fileAddBtn) {
+        const inputs = element.previousElementSibling.querySelectorAll("input");
+        inputs.forEach(input => input.value = '')
+        return false;
+    }
+    element.parentElement.remove();
 }

@@ -4,6 +4,10 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import me.ceskim493.springbootdeveloper.domain.Category;
 import me.ceskim493.springbootdeveloper.domain.Item;
+import me.ceskim493.springbootdeveloper.domain.Option;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @NoArgsConstructor
 @Getter
@@ -19,6 +23,7 @@ public class ItemViewResponse {
     private Long fileSize;
     private Category category;
     private String description;
+    private List<Option> options = new ArrayList<>();
 
     public ItemViewResponse(Item item) {
         this.id = item.getId();
@@ -31,5 +36,6 @@ public class ItemViewResponse {
         this.fileSize = item.getFileSize();
         this.category = item.getCategory();
         this.description = item.getDescription();
+        this.options = item.getOptions();
     }
 }

@@ -12,6 +12,11 @@
 		e.stopPropagation();
 	});
 
+	// Fix product dropdown from closing
+	$('.product-dropdown').on('click', function (e) {
+		e.stopPropagation();
+	});
+
 	/////////////////////////////////////////
 
 	// Products Slick
@@ -22,7 +27,7 @@
 		$this.slick({
 			slidesToShow: 4,
 			slidesToScroll: 1,
-			autoplay: true,
+			autoplay: false,
 			infinite: true,
 			speed: 300,
 			dots: false,
@@ -204,8 +209,41 @@
 	});
 })(jQuery);
 
-$(document).on('show.bs.dropdown', function(event) {
+$(".dropdown").on('show.bs.dropdown', function(event) {
 	$('.dropdown-backdrop').off().remove();
+});
+
+$(".product-btns").on('show.bs.dropdown', function(event) {
+	const el = $(this).find(".product-dropdown");
+	const id = el.attr("value");
+
+	if (el.get(0).innerHTML != "") {
+		return;
+	}
+
+	function success(datas) {
+		console.log(datas);
+		let htmlText = "";
+		for (const data of datas) {
+			htmlText += "<div>";
+			htmlText +=	"<div style='display: inline-block; width: 20%;'>" + data.name + "</div>: ";
+			htmlText += "<select class='input-select' style='display: inline-block; padding-left: 5px; width:75%;" +
+				" margin-bottom: 5px;'>";
+			for (const val of data.val.split(",")) {
+				htmlText += "<option>" + val + "</option>";
+			}
+			htmlText += "</select>";
+			htmlText += "</div>";
+		}
+
+		el.get(0).innerHTML = htmlText;
+	}
+
+	function fail() {
+		el.innerHTML = "<div>아이템 옵션을 가져오지 못했습니다.</div>";
+	}
+
+	httpRequestBody("GET", "/api/options/" + id, null, success, fail);
 });
 
 function getStore(id, pageNumber, kind) {

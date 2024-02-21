@@ -119,6 +119,19 @@ if (createOrderBtn) {
             return;
         }
 
+        let checked = [];
+        let elements = document.getElementsByName("checkbox-id");
+        for (let i = 0; i < elements.length; i++) {
+            if (elements[i].checked) {
+                checked.push(Number(elements[i].value));
+            }
+        }
+
+        if (checked.length < 1) {
+            alert("주문할 상품을 선택하여 주세요.");
+            return;
+        }
+
         body = {
             name: document.getElementById("name").value,
             receiver: document.getElementById("receiver").value,
@@ -130,8 +143,7 @@ if (createOrderBtn) {
             },
             payment: elpayment.value,
             orderNote: document.getElementById("orderNote").value,
-            cart_item_id: Array.from(document.getElementsByName("checkbox-item-id"))
-                            .map(el => Number(el.value))
+            cart_item_id: checked
         }
         function success() {
             alert("상품 주문이 완료되었습니다.");

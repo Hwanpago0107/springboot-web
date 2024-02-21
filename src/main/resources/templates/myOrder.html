@@ -50,8 +50,9 @@
 						</div>
 						<div class="carts-col carts-content" th:each="orderItem : ${order.orderItems}">
 							<div><strong th:text="${orderItem.item.name}"></strong></div>
-							<div style="width: 150px;">
+							<div style="width: 150px;" class="tooltip-target">
 								<img style="width: 100%;" th:src="|/images/${orderItem.item.fileName}|"/>
+								<span class="custom-tooltip" th:text="${orderItem.getOptions()}" style="margin: -10px 0px 0px -70px;"></span>
 							</div>
 							<div th:text="${#numbers.formatDecimal(orderItem.item.price * (1 - orderItem.item.discount), 0, 'DEFAULT', 0, 'DEFAULT')}"></div>
 							<div th:text="${orderItem.count}"></div>
@@ -74,7 +75,7 @@
 									<strong>요청사항</strong><div class="cart-end-sub" th:text="${order.getOrderNote()}"></div>
 								</div>
 								<div class="carts-end-col">
-									<strong>주문금액</strong><div class="cart-end-sub" th:text="${#numbers.formatDecimal(order.getTotalPrice() , 0, 'DEFAULT', 0, 'DEFAULT')}"></div>
+									<strong>주문금액</strong><div class="cart-end-sub" th:text="|￦${#numbers.formatDecimal(order.getTotalPrice() , 0, 'DEFAULT', 0, 'DEFAULT')}|"></div>
 								</div>
 								<div class="carts-end-col">
 									<strong>주문일시</strong><div class="cart-end-sub" th:text="${#temporals.format(order.getOrderDate(), 'yyyy년 M월 dd일 HH:mm:ss')}"></div>

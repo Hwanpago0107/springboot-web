@@ -21,6 +21,8 @@ public class AddItemRequest {
     private String description;
     private String detailImgName;
     private String detailImgPath;
+    private String[] optionNames;
+    private String[] optionValues;
 
     public Item toEntity(Item item) { // 생성자를 사용해 객체 생성
         return Item.builder()

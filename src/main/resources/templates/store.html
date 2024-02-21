@@ -171,15 +171,16 @@
 									</div>
 									<div class="product-btns">
 										<button class="add-to-wishlist"
-												th:onclick="|createWish(${item.id})|"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
+												th:onclick="|createWish(${item.id}, this)|"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
 										<button class="add-to-compare"
 												th:onclick="|alert('비교기능은 지원예정입니다.')|"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>
-										<button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
+										<button class="quick-view dropdown-toggle" data-toggle="dropdown" aria-expanded="true"></i><span class="tooltipp">view option</span></button>
+										<div class="product-dropdown product-options" th:value="${item.id}"></div>
 									</div>
 								</div>
 								<div class="add-to-cart">
 									<button class="add-to-cart-btn"
-											th:onclick="|createCart([${item.id}])|"><i class="fa fa-shopping-cart"></i> add to cart</button>
+											th:onclick="|createCart(${item.id}, 1, this)|"><i class="fa fa-shopping-cart"></i> add to cart</button>
 								</div>
 							</div>
 						</div>

@@ -1,7 +1,22 @@
 // 등록 기능
-function createWish(id) {
+function createWish(id, el) {
+    const target = $(el).parent().parent().find(".product-options");
+    let optionText = "";
+    let length = target.children().length;
+    if (length == 0) {
+        alert("VIEW OPTION을 클릭하여 옵션을 선택하여 주세요.");
+        return;
+    }
+    target.children().each(function (index) {
+        optionText = optionText.concat($(this).children().first().text());
+        optionText = optionText.concat(": ");
+        optionText = optionText.concat($(this).children(".input-select").find("option:selected").text());
+        if (index != (length - 1)) optionText = optionText.concat(", ");
+    });
+
     body = {
         item_id: Number(id),
+        option_text: optionText
     }
     function success() {
         alert("위시리스트에 상품을 추가하였습니다.");

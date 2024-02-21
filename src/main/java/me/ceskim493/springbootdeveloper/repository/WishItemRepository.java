@@ -9,7 +9,9 @@ import java.util.List;
 public interface WishItemRepository extends JpaRepository<WishItem, Long> {
     List<WishItem> findAllByWish(Wish wish);
 
-    List<WishItem> findWishItemByItem_Id(Long item_id);
+    WishItem findWishItemByWishAndItem_Id(Wish wish, Long item_id);
 
     void deleteAllByItem_IdAndWish(Long item_id, Wish wish);
+
+    void deleteAllByWish(Wish wish);
 }

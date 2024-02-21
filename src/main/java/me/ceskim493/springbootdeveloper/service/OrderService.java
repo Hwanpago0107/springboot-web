@@ -14,12 +14,10 @@ import java.util.List;
 @Service
 public class OrderService {
 
-    private final CartRepository cartRepository;
     private final CartItemRepository cartItemRepository;
-    private final ItemRepository itemRepository;
-    private final UserRepository userRepository;
     private final OrderRepository orderRepository;
     private final OrderItemRepository orderItemRepository;
+    private final CartService cartService;
 
     @Transactional
     public Order save(CreateOrderRequest request, User user) {
@@ -32,7 +30,7 @@ public class OrderService {
             CartItem cartItem = cartItemRepository.findById(id).get();
             orderItem = OrderItem.createOrderItem(cartItem.getItem()
                     , (int) (cartItem.getItem().getPrice() * (1 - cartItem.getItem().getDiscount()) * cartItem.getQuantity())
-                    , cartItem.getQuantity());
+                    , cartItem.getQuantity(), cartItem.getOptions());
             orderItems.add(orderItem);
             orderItemRepository.save(orderItem);
         }
@@ -45,8 +43,8 @@ public class OrderService {
 
         order = orderRepository.save(order);
         
-        // 주문 성공하면 사용자 장바구니 삭제
-        cartRepository.deleteAll();
+        // 주문 성공하면 사용자 장바구니 항목 삭제
+        cartService.deleteAll(user);
 
         return order;
     }
@@ -71,10 +69,12 @@ public class OrderService {
         return orders;
     }
 
+    @Transactional
     public void delete(long id) {
         Order order = orderRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("not found " + id));
 
+        orderItemRepository.deleteAllByOrder(order);
         orderRepository.delete(order);
     }
 }

@@ -51,11 +51,13 @@
 						</div>
 						<div class="carts-col carts-content" th:each="cart : ${cartItems}">
 							<div>
-								<input type="checkbox" name="checkbox-item-id" th:checked="false" th:value="${cart.id}"></input>
+								<input type="checkbox" name="checkbox-id" th:checked="false" th:value="${cart.id}"></input>
 							</div>
-							<div><strong th:text="${cart.getItem().name}"></strong></div>
-							<div style="width: 150px;">
-								<img style="width: 100%;" th:src="|/images/${cart.getItem().fileName}|"/>
+							<div><strong th:text="${cart.getItem().name}" th:onclick="|getProduct(${cart.getItem().id}, 1)|"
+											style="cursor: pointer;"></strong></div>
+							<div style="width: 150px;" class="tooltip-target">
+								<img style="width: 100%;" th:src="|/images/${cart.getItem().fileName}|">
+								<span class="custom-tooltip" th:text="${cart.getOptions()}" style="margin: -10px 0px 0px -40px;"></span>
 							</div>
 							<div th:text="${#numbers.formatDecimal(cart.getItem().price * (1 - cart.getItem().getDiscount()), 0, 'DEFAULT', 0, 'DEFAULT')}"></div>
 							<div th:text="${cart.getQuantity()}"></div>
@@ -106,7 +108,7 @@
 								계좌이체
 							</label>
 							<div class="caption">
-								<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+								<p>계좌로 현금을 이체하는 방식입니다.</p>
 							</div>
 						</div>
 						<div class="input-radio">
@@ -116,7 +118,7 @@
 								카드결제
 							</label>
 							<div class="caption">
-								<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+								<p>카드번호와 패스워드로 결제하는 방식입니다.</p>
 							</div>
 						</div>
 						<div class="input-radio">
@@ -126,7 +128,7 @@
 								Npay
 							</label>
 							<div class="caption">
-								<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+								<p>보유하고 있는 NEVER PAY로 결제하는 방식입니다.</p>
 							</div>
 						</div>
 					</div>
@@ -173,8 +175,13 @@
 		</div>
 	</div>
 	<!--Modal-->
+	<script src="/js/review.js"></script>
+	<script>
+		$(document).on('ready', function(event) {
+			$('.dropdown').css("pointer-events", "none");
+		});
+	</script>
 </div>
 <!-- /container -->
-</div>
 </body>
 </html>

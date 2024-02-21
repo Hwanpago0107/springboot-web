@@ -14,11 +14,13 @@ public class CartViewResponse {
     private Cart cart;
     private Item item;
     private int quantity;
+    private String options;
 
     public CartViewResponse(CartItem item) {
         this.id = item.getId();
         this.cart = item.getCart();
         this.item = item.getItem();
         this.quantity = item.getQuantity();
+        this.options = item.getOptions();
     }
 }

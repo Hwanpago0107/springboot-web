@@ -44,7 +44,7 @@ public class WishApiController {
 
         User user = userService.findByEmail(SecurityUtil.getCurrentUserEmail());
 
-        cartService.saveAll(request.getChecked(), user);
+        cartService.saveAll(request, user);
 
         // 요청한 자원이 성공적으로 생성
         return ResponseEntity.status(HttpStatus.CREATED)
@@ -76,7 +76,9 @@ public class WishApiController {
 
     @DeleteMapping("/api/wishes")
     public ResponseEntity<Void> deleteAllWishItems() {
-        wishService.deleteAll();
+        User user = userService.findByEmail(SecurityUtil.getCurrentUserEmail());
+
+        wishService.deleteAll(user);
 
         return ResponseEntity.ok()
                 .build();

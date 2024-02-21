@@ -4,8 +4,6 @@ import lombok.RequiredArgsConstructor;
 import me.ceskim493.springbootdeveloper.domain.Order;
 import me.ceskim493.springbootdeveloper.domain.User;
 import me.ceskim493.springbootdeveloper.dto.CreateOrderRequest;
-import me.ceskim493.springbootdeveloper.service.CartService;
-import me.ceskim493.springbootdeveloper.service.ItemService;
 import me.ceskim493.springbootdeveloper.service.OrderService;
 import me.ceskim493.springbootdeveloper.service.UserService;
 import me.ceskim493.springbootdeveloper.util.SecurityUtil;
@@ -17,8 +15,6 @@ import org.springframework.web.bind.annotation.*;
 @RestController // http Response Body에 객체 데이터를 JSON 형식으로 변환하는 컨트롤러
 public class OrderApiController {
 
-    private final ItemService itemService;
-    private final CartService cartService;
     private final UserService userService;
     private final OrderService orderService;
 

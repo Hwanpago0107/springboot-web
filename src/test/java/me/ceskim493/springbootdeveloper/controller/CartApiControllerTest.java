@@ -79,7 +79,7 @@ class CartApiControllerTest {
     public void createCart() throws Exception {
 
         // given
-        CreateCartRequest request = new CreateCartRequest(1L, 1);
+        CreateCartRequest request = new CreateCartRequest();
 
         Item savedItem = createDefaultItem();
 
@@ -97,7 +97,7 @@ class CartApiControllerTest {
         // then
         result.andExpect(status().isCreated());
 
-        Cart cart = cartRepository.findCartByUser(user).get();
+        Cart cart = cartRepository.findCartByUser(user);
 
         assertThat(cart.getUser().getId()).isEqualTo(user.getId());
     }

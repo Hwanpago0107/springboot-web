@@ -1,6 +1,5 @@
 package me.ceskim493.springbootdeveloper.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -31,17 +30,20 @@ public class CartItem {
     @Column(nullable = false)
     private int quantity;
 
+    private String options;
+
     @Builder
-    public CartItem(Cart cart, Item item, int quantity) {
+    public CartItem(Cart cart, Item item, int quantity, String options) {
         this.cart = cart;
         this.item = item;
         this.quantity = quantity;
+        this.options = options;
     }
 
-    public void update(Long id, Cart cart, Item item, int quantity) {
-        this.id = id;
+    public void update(Cart cart, Item item, int quantity, String options) {
         this.cart = cart;
         this.item = item;
         this.quantity = quantity;
+        this.options = options;
     }
 }

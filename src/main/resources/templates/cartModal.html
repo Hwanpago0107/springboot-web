@@ -18,7 +18,7 @@
                 <tbody>
                 <tr th:each="item : ${cartItems}">
                     <th scope="row" class="modal-check modal-row">
-                        <input type="checkbox" name="checkbox-item-id" th:checked="false" th:value="${item.id}"></input>
+                        <input type="checkbox" name="checkbox-id" th:checked="false" th:value="${item.id}"></input>
                     </th>
                     <td class="col-md-2 modal-row">
                         <img class="modal-img" th:src="|/images/${item.getItem().fileName}|"/>

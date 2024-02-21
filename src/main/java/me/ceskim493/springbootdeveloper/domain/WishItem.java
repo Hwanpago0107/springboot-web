@@ -27,15 +27,18 @@ public class WishItem {
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Item item;
 
+    private String options;
+
     @Builder
-    public WishItem(Wish wish, Item item) {
+    public WishItem(Wish wish, Item item, String options) {
         this.wish = wish;
         this.item = item;
+        this.options = options;
     }
 
-    public void update(Long id, Wish wish, Item item) {
-        this.id = id;
+    public void update(Wish wish, Item item, String options) {
         this.wish = wish;
         this.item = item;
+        this.options = options;
     }
 }

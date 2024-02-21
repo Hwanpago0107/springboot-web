@@ -10,4 +10,5 @@ import lombok.NoArgsConstructor;
 public class CreateCartRequest {
     private Long item_id;
     private int quantity;
+    private String option_text;
 }
