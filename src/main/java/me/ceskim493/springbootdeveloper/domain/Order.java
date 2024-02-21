@@ -44,8 +44,6 @@ public class Order {
     @Transient
     private int totalPrice;
 
-    private String option;
-
     private void setDelivery(Delivery delivery) {
         this.delivery = delivery;
         delivery.setOrder(this);
