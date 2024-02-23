@@ -87,12 +87,14 @@ INSERT INTO Item (dtype, item_id, name, price, stockquantity, discount, filename
 values  ('item', 9, 'REIKA 카메라', 400000, 800, 0, 'product09.png', '/upload/img/product09.png', 100, 17, '101미터 거리까지 보이는 디카');
 
 -- users
---INSERT INTO users (id, email, nickname)
---values (1, 'blessu0107@gmail.com', 'SH K');
-INSERT INTO users (id, email, nickname)
-values (2, 'test123@gmail.com', '임꺽정');
-INSERT INTO users (id, email, nickname)
-values (3, 'test222@gmail.com', '홍길동');
+--INSERT INTO users (id, email, name, nickname, role, valid)
+--values (1, 'blessu0107@gmail.com', 'SH K', 'SH K', 'SUPERADMIN', 1);
+INSERT INTO users (id, email, name, nickname, role, valid)
+values (4, 'test123@gmail.com', '임꺽정', '임꺽정', 'USER', 1);
+INSERT INTO users (id, email, name, nickname, role, valid)
+values (3, 'test222@gmail.com', '홍길동', '홍길동', 'USER', 1);
+
+select * from users;
 
 --options
 INSERT INTO options (id, option_name, option_val, item_id)
@@ -301,7 +303,9 @@ commit;]]></console>
     <last-used-providers />
   </component>
   <component name="DBNavigator.Project.DatabaseFileManager">
-    <open-files />
+    <open-files>
+      <object connection-id="d0d3338a-8875-4185-a874-c993f4d3f7e1" object-ref="consoles/Connection" />
+    </open-files>
   </component>
   <component name="DBNavigator.Project.DatabaseSessionManager">
     <connection id="d0d3338a-8875-4185-a874-c993f4d3f7e1" />
