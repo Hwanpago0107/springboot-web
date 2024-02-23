@@ -68,11 +68,13 @@ public class UserService {
     public void updateUser(Long id, String type) {
         User user = findById(id);
         if ("register".equals(type)) {
-            user.setRole(Role.ADMIN); // 어드민 권한 부여
+            // 어드민 권한 부여
+            user.setRole(Role.ADMIN);
             log.info("add admin {}", user);
         } else if ("disable".equals(type)) {
             log.info("disable user {}", user);
-            user.setIsValid(0); // 삭제 상태로 만듦
+            // 삭제 상태로 만듦
+            user.setIsValid(0);
         }
     }
 }
