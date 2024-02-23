@@ -31,7 +31,7 @@ public class MainController {
 
     @GetMapping("/")
     public String root() {
-        return "redirect:/login";
+        return "redirect:/main";
     }
 
     @GetMapping("/main")

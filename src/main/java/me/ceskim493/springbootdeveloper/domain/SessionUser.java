@@ -9,6 +9,6 @@ public class SessionUser implements Serializable {
     private String name;
 
     public SessionUser(User user) {
-        this.name = user.getUsername();
+        this.name = user.getEmail();
     }
 }

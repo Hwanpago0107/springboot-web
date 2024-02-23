@@ -7,13 +7,7 @@
 		$('#responsive-nav').toggleClass('active');
 	})
 
-	// Fix cart dropdown from closing
-	$('.cart-dropdown').on('click', function (e) {
-		e.stopPropagation();
-	});
-
-	// Fix product dropdown from closing
-	$('.product-dropdown').on('click', function (e) {
+	$(".cart-dropdown, .product-dropdown").on('click', function (e) {
 		e.stopPropagation();
 	});
 
@@ -27,7 +21,7 @@
 		$this.slick({
 			slidesToShow: 4,
 			slidesToScroll: 1,
-			autoplay: false,
+			autoplay: true,
 			infinite: true,
 			speed: 300,
 			dots: false,
@@ -214,6 +208,9 @@ $(".dropdown").on('show.bs.dropdown', function(event) {
 });
 
 $(".product-btns").on('show.bs.dropdown', function(event) {
+	// 드롭다운 백드롭 지우고 시작
+	$('.dropdown-backdrop').off().remove();
+
 	const el = $(this).find(".product-dropdown");
 	const id = el.attr("value");
 

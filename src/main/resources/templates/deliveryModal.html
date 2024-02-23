@@ -24,27 +24,27 @@
                                 <div class="form-group">
                                     <h4 class="title">주문자 성명</h4>
                                     <input class="input" type="text" disabled
-                                           name="name" placeholder="주문자" th:value="${userInfo.getName()}" id="name">
+                                           name="name" placeholder="주문자" th:value="${userInfo?.getName()}" id="name">
                                 </div>
                                 <div class="form-group">
                                     <h4 class="title">받는분 성명</h4>
                                     <input class="input" type="text"
                                            name="name" placeholder="받는분" id="receiver">
-                                    <input class="input" type="hidden" th:value="${userInfo.getName()}"
+                                    <input class="input" type="hidden" th:value="${userInfo?.getName()}"
                                            name="name" placeholder="이름" id="hiddenReceiver">
                                 </div>
                                 <div class="form-group">
                                     <h4 class="title">전화번호</h4>
                                     <input class="input" type="tel"
                                            name="tel" placeholder="Telephone" id="phone">
-                                    <input class="input" type="hidden" th:value="${userInfo.getPhone()}"
+                                    <input class="input" type="hidden" th:value="${userInfo?.getPhone()}"
                                            name="tel" placeholder="Telephone" id="hiddenPhone">
                                 </div>
                                 <div class="form-group">
                                     <h4 class="title">주소</h4>
                                     <input class="input" type="text"
                                            name="zipcode" placeholder="ZIP Code" id="zipcode" style="width: calc(100% - 95px);">
-                                    <input class="input" type="hidden" th:value="${userInfo.getAddress()?.getZipcode()}"
+                                    <input class="input" type="hidden" th:value="${userInfo?.getAddress()?.getZipcode()}"
                                            name="zipcode" placeholder="ZIP Code" id="hiddenZipcode" style="width: calc(100% - 95px);">
                                     <button th:onclick="|findAddr()|" type="button" class="btn btn-info"
                                             style="margin-left: 5px; margin-bottom: 5px; display: inline-block; width: 85px;">주소 찾기</button>
@@ -52,13 +52,13 @@
                                 <div class="form-group">
                                     <input class="input" type="text"
                                            name="street" placeholder="Street" id="streetAddr">
-                                    <input class="input" type="hidden" th:value="${userInfo.getAddress()?.getStreetAddr()}"
+                                    <input class="input" type="hidden" th:value="${userInfo?.getAddress()?.getStreetAddr()}"
                                            name="street" placeholder="Street" id="hiddenStreetAddr">
                                 </div>
                                 <div class="form-group">
                                     <input class="input" type="text"
                                            name="detail" placeholder="detail" id="detailAddr">
-                                    <input class="input" type="hidden" th:value="${userInfo.getAddress()?.getDetailAddr()}"
+                                    <input class="input" type="hidden" th:value="${userInfo?.getAddress()?.getDetailAddr()}"
                                            name="detail" placeholder="detail" id="hiddenDetailAddr">
                                 </div>
                             </div>

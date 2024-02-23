@@ -1,8 +1,13 @@
 package me.ceskim493.springbootdeveloper.service;
 
 import lombok.RequiredArgsConstructor;
-import me.ceskim493.springbootdeveloper.domain.*;
-import me.ceskim493.springbootdeveloper.dto.*;
+import me.ceskim493.springbootdeveloper.domain.CartItem;
+import me.ceskim493.springbootdeveloper.domain.SessionUser;
+import me.ceskim493.springbootdeveloper.domain.User;
+import me.ceskim493.springbootdeveloper.dto.CartViewResponse;
+import me.ceskim493.springbootdeveloper.dto.CategoryViewResponse;
+import me.ceskim493.springbootdeveloper.dto.UserViewResponse;
+import me.ceskim493.springbootdeveloper.dto.WishViewResponse;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
@@ -15,7 +20,6 @@ public class MainService {
     private final UserService userService;
     private final CategoryService categoryService;
     private final CartService cartService;
-    private final OrderService orderService;
     private final WishService wishService;
 
     public Model getMainLayout(Model model, SessionUser sUser) {

@@ -23,6 +23,8 @@ public class UserViewResponse {
 
     private String picture;
 
+    private String role;
+
     public UserViewResponse(User user) {
         this.id = user.getId();
         this.email = user.getEmail();
@@ -31,5 +33,6 @@ public class UserViewResponse {
         this.phone = user.getPhone();
         this.address = user.getAddress();
         this.picture = user.getPicture();
+        this.role = user.getUserRole();
     }
 }

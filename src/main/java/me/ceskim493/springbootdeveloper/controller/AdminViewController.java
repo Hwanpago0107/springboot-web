@@ -6,7 +6,6 @@ import me.ceskim493.springbootdeveloper.domain.ImgFile;
 import me.ceskim493.springbootdeveloper.domain.SessionUser;
 import me.ceskim493.springbootdeveloper.service.AdminService;
 import me.ceskim493.springbootdeveloper.service.ItemService;
-import me.ceskim493.springbootdeveloper.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,7 +16,6 @@ import java.util.List;
 @Controller
 public class AdminViewController {
 
-    private final UserService userService;
     private final ItemService itemService;
     private final AdminService adminService;
     
@@ -25,14 +23,14 @@ public class AdminViewController {
     public String getAdmin(Model model, @LoginUser SessionUser user) {
         model = adminService.getAdminLayout(model, user);
 
-        return "admin"; // admin.html 뷰 조회
+        return "admin/admin"; // admin.html 뷰 조회
     }
 
     @GetMapping("/newImages")
     public String newImages(Model model, @LoginUser SessionUser user) {
         model = adminService.getAdminLayout(model, user);
 
-        return "newImages";
+        return "admin/newImages";
     }
 
     @GetMapping("/images")
@@ -42,7 +40,7 @@ public class AdminViewController {
 
         model.addAttribute("images", images);
 
-        return "imageList";
+        return "admin/imageList";
     }
 
 }

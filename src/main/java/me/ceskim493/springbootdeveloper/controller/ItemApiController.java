@@ -38,7 +38,7 @@ public class ItemApiController {
 
         // 요청한 자원이 성공적으로 생성되었으며 저장된 아이템 정보를 응답 객체에 담아 전송
         return ResponseEntity.status(HttpStatus.CREATED)
-                .body(savedItem);
+                .build();
     }
 
     @GetMapping("/api/items")
@@ -49,7 +49,7 @@ public class ItemApiController {
                 .toList();
 
         return ResponseEntity.ok()
-                .body(items);
+                .build();
     }
 
     @PutMapping("/api/items/{id}")
@@ -59,7 +59,7 @@ public class ItemApiController {
         Item updatedItem = itemService.update(id, request, imgFile);
 
         return ResponseEntity.ok()
-                .body(updatedItem);
+                .build();
     }
 
     @DeleteMapping("/api/items/{id}")

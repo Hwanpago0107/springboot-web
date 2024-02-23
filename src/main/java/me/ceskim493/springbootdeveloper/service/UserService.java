@@ -1,7 +1,9 @@
 package me.ceskim493.springbootdeveloper.service;
 
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import me.ceskim493.springbootdeveloper.domain.Role;
 import me.ceskim493.springbootdeveloper.domain.SessionUser;
 import me.ceskim493.springbootdeveloper.domain.User;
 import me.ceskim493.springbootdeveloper.dto.AddUserRequest;
@@ -17,6 +19,7 @@ import java.util.List;
 @Slf4j
 public class UserService {
 
+    private final HttpSession httpSession;
     private final UserRepository userRepository;
 //    private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
@@ -36,15 +39,19 @@ public class UserService {
 
     public User findByEmail(String email) {
         return userRepository.findByEmail(email)
-                .orElseThrow(() -> new IllegalArgumentException("Unexpected user"));
+                .orElseGet(() -> userRepository.save(User.makeGuestUser(httpSession)));
     }
 
     public List<User> findAll() {
         return userRepository.findAll();
     }
 
+    public List<User> findAllValidUser(int valid) {
+        return userRepository.findAllByIsValid(valid);
+    }
+
     public String getSessionUserName(SessionUser user) {
-        return user == null ? "Guest" : user.getName();
+        return user == null ? "Guest@mail.com" : user.getName();
     }
 
     @Transactional
@@ -55,5 +62,17 @@ public class UserService {
         user.update(request.getNickname(), request.getName(), request.getPhone(), request.getAddress());
 
         return user;
+    }
+
+    @Transactional
+    public void updateUser(Long id, String type) {
+        User user = findById(id);
+        if ("register".equals(type)) {
+            user.setRole(Role.ADMIN); // 어드민 권한 부여
+            log.info("add admin {}", user);
+        } else if ("disable".equals(type)) {
+            log.info("disable user {}", user);
+            user.setIsValid(0); // 삭제 상태로 만듦
+        }
     }
 }

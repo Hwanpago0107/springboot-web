@@ -11,10 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
 @Controller
@@ -33,7 +30,7 @@ public class UserApiController {
     public String logout(HttpServletRequest request, HttpServletResponse response) {
         new SecurityContextLogoutHandler().logout(request, response,
                 SecurityContextHolder.getContext().getAuthentication());
-        return "redirect:/login";
+        return "redirect:/main";
     }
 
     @PutMapping("/api/users")
@@ -42,5 +39,13 @@ public class UserApiController {
 
         return ResponseEntity.ok()
                 .body(updatedUser);
+    }
+
+    @PutMapping("/api/users/{id}/{type}")
+    public ResponseEntity<Void> registerAdmin(@PathVariable("id") long id, @PathVariable("type") String type) {
+        userService.updateUser(id, type);
+
+        return ResponseEntity.ok()
+                .build();
     }
 }

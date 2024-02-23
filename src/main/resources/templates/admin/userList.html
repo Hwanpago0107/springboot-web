@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{adminLayout}">
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{/admin/adminLayout}">
 <body>
 <div layout:fragment="content">
     <div class="card mb-4">
@@ -16,7 +16,7 @@
                     <th>이름</th>
                     <th>닉네임</th>
                     <th>이메일</th>
-                    <th>주소</th>
+                    <th>사용자권한</th>
                     <th>관리</th>
                 </tr>
                 </thead>
@@ -26,7 +26,7 @@
                     <th>이름</th>
                     <th>닉네임</th>
                     <th>이메일</th>
-                    <th>주소</th>
+                    <th>사용자권한</th>
                     <th>관리</th>
                 </tr>
                 </tfoot>
@@ -40,18 +40,24 @@
                     <td th:text="${user.getName()}"></td>
                     <td th:text="${user.getNickname()}"></td>
                     <td th:text="${user.getEmail()}"></td>
-                    <td th:if="${user.getAddress() != null}" th:text="|(${user.Address?.getZipcode()})
-															 ${user.Address?.getStreetAddr()},
-															 ${user.Address?.getDetailAddr()}|"></td>
-                    <td th:if="${user.getAddress() == null}"></td>
+                    <td th:text="${user.getRole()}"></td>
 
-                    <td><button type="button" id="delete-item-btn"
-                                class="btn btn-secondary btn-sm">삭제</button></td>
+                    <td><button type="button" id="register-admin-btn"
+                                class="btn btn-primary btn-sm"
+                                th:if="${!'ROLE_SUPER_ADMIN'.equals(user.getRole())}"
+                                th:onclick="|registerAdmin(${user.getId()})|">관리자 등록</button>
+                        <button type="button" id="delete-user-btn"
+                                class="btn btn-danger btn-sm"
+                                th:if="${!'ROLE_SUPER_ADMIN'.equals(user.getRole())
+                                        && !userInfo.getId().equals(user.getId())}"
+                                th:onclick="|deleteUser(${user.getId()})|">삭제</button>
+                    </td>
                 </tr>
                 </tbody>
             </table>
         </div>
     </div>
+    <script src="/js/admin.user.js"></script>
     <script>
         window.addEventListener('DOMContentLoaded', event => {
             // Simple-DataTables

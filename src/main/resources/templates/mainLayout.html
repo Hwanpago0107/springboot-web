@@ -50,14 +50,16 @@
     <div id="top-header">
         <div class="container">
             <ul class="header-links pull-left">
-                <li><a href="tel:010-9963-9301"><i class="fa fa-phone"></i>010-9963-9301</a></li>
+<!--                <li><a href="tel:010-9963-9301"><i class="fa fa-phone"></i>010-9963-9301</a></li>-->
                 <li><a href="mailto:blessu0107@gmail.com"><i class="fa fa-envelope-o"></i>blessu0107@gmail.com</a></li>
                 <li><a href="https://github.com/Hwanpago0107/springboot-web"
                         target="_blank"><i class="fa fa-map-marker"></i>Seoul Hwanpago</a></li>
             </ul>
             <ul class="header-links pull-right">
 <!--                <li><a href="#"><i class="fa fa-dollar"></i> WON</a></li>-->
-                <li><a th:href="@{/main/myInfo}"><i class="fa fa-user-o"></i> My Account</a></li>
+                <li th:if="${!#strings.contains(userInfo?.getRole(), 'ROLE_GUEST')}"><a th:href="@{/main/myInfo}"><i class="fa fa-user-o"></i> My Account</a></li>
+                <li th:if="${!#strings.contains(userInfo?.getRole(), 'ROLE_GUEST')}"><a th:href="@{/logout}"><i class="fa fa-sign-out"></i> Logout</a></li>
+                <li th:if="${#strings.contains(userInfo?.getRole(), 'ROLE_GUEST')}"><a th:href="@{/login}"><i class="fa fa-user-o"></i> Go to Login</a></li>
             </ul>
         </div>
     </div>
@@ -106,7 +108,7 @@
                             <a th:href="@{/main/myWish}" >
                                 <i class="fa fa-heart-o"></i>
                                 <span>Your Wishlist</span>
-                                <div class="qty" th:text="${wishes.size()}"></div>
+                                <div class="qty" th:if="${wishes?.size() > 0}" th:text="${wishes?.size()}"></div>
                             </a>
                         </div>
                         <!-- /Wishlist -->
@@ -116,13 +118,13 @@
                             <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
                                 <i class="fa fa-shopping-cart"></i>
                                 <span>Your Cart</span>
-                                <div class="qty" th:text="${cartItems.size()}"></div>
+                                <div class="qty" th:if="${cartItems?.size() > 0}" th:text="${cartItems?.size()}"></div>
                             </a>
                             <div class="cart-dropdown">
-                                <div class="cart-list" th:if="${cartItems.size() == 0}">
+                                <div class="cart-list" th:unless="${cartItems?.size() > 0}">
                                     장바구니가 비어있습니다.
                                 </div>
-                                <div class="cart-list" th:if="${cartItems.size() > 0}">
+                                <div class="cart-list" th:if="${cartItems?.size() > 0}">
                                     <div class="product-widget" th:each="cart : ${cartItems}">
                                         <div class="product-img">
                                             <img th:src="|/images/${cart.getItem().fileName}|"/>
@@ -137,11 +139,11 @@
                                         <button class="delete"><i class="fa fa-close"></i></button>
                                     </div>
                                 </div>
-                                <div class="cart-summary" th:if="${cartItems.size() > 0}">
+                                <div class="cart-summary" th:if="${cartItems?.size() > 0}">
                                     <small th:text="|${cartItems.size()} Item(s) selected|"></small>
                                     <h5 th:text="|합계: ￦${#numbers.formatDecimal(totalPrice, 0, 'DEFAULT', 0, 'DEFAULT')}|"></h5>
                                 </div>
-                                <div class="cart-btns" th:if="${cartItems.size() > 0}">
+                                <div class="cart-btns" th:if="${cartItems?.size() > 0}">
                                     <a th:href="@{/main/myCart}">View Cart</a>
                                     <a id="pre-order-btn2" data-target="#deliveryModal2">
                                         Checkout  <i class="fa fa-arrow-circle-right"></i></a>
@@ -265,7 +267,8 @@
                                        target="_blank"><i class="fa fa-map-marker"></i>Seoul Hwanpago</a></li>
                                 <li><a href="tel:010-9963-9301"><i class="fa fa-phone"></i>010-9963-9301</a></li>
                                 <li><a href="mailto:blessu0107@gmail.com"><i class="fa fa-envelope-o"></i>blessu0107@gmail.com</a></li>
-                                <li><a th:href="@{/admin}"><i class="fa fa-user-o"></i>admin</a></li>
+                                <li th:if="${#strings.contains(userInfo?.getRole(), 'ROLE_ADMIN')
+                                                || #strings.contains(userInfo?.getRole(), 'ROLE_SUPER_ADMIN')}"><a th:href="@{/admin}"><i class="fa fa-user-o"></i>admin</a></li>
                             </ul>
                         </div>
                     </div>
@@ -338,6 +341,7 @@
                     </div>
                 </div>
                 <!-- /row -->
+                <input type="hidden" id="hidden_role" th:value="${userInfo?.getRole()}">
             </div>
             <!-- /container -->
         </div>

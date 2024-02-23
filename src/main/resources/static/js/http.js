@@ -16,6 +16,13 @@ function getCookie(key) {
 }
 
 function httpRequest(method, url, body, success, fail) {
+    let email = document.getElementById("hidden_role").value;
+    if (email == "GUEST") {
+        alert("로그인 해주시기 바랍니다.");
+        location.replace("/login");
+        return;
+    }
+
     fetch(url, {
         method: method,
         headers: {
@@ -193,6 +200,13 @@ function sleep(ms) {
 }
 
 function httpRequestBody(method, url, body, success, fail) {
+    let email = document.getElementById("hidden_role").value;
+    if (email == "GUEST") {
+        alert("로그인 해주시기 바랍니다.");
+        location.replace("/login");
+        return;
+    }
+
     fetch(url, {
         method: method,
         headers: {

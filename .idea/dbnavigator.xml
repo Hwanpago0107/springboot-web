@@ -294,16 +294,14 @@ VALUES
 (33, '사용하면서 불편함을 전혀 느끼지 않아서 좋아요. 추천합니다!', sysdate(), CONCAT(CONCAT('user', FLOOR(RAND() * 10000)),'@gmail.com'), CONCAT('사용자', FLOOR(RAND() * 100)), 4, sysdate(), FLOOR(RAND() * 9) + 1);
 
 
-rollback;]]></console>
+commit;]]></console>
     </connection>
   </component>
   <component name="DBNavigator.Project.DatabaseEditorStateManager">
     <last-used-providers />
   </component>
   <component name="DBNavigator.Project.DatabaseFileManager">
-    <open-files>
-      <object connection-id="d0d3338a-8875-4185-a874-c993f4d3f7e1" object-ref="consoles/Connection" />
-    </open-files>
+    <open-files />
   </component>
   <component name="DBNavigator.Project.DatabaseSessionManager">
     <connection id="d0d3338a-8875-4185-a874-c993f4d3f7e1" />
@@ -315,7 +313,7 @@ rollback;]]></console>
     <retain-sticky-names value="false" />
   </component>
   <component name="DBNavigator.Project.FileConnectionMappingManager">
-    <mapping file-url="file://$PROJECT_DIR$/src/main/resources/data.sql" connection-id="d0d3338a-8875-4185-a874-c993f4d3f7e1" session-id="MAIN" current-schema="ebdb" />
+    <mapping file-url="file://$PROJECT_DIR$/src/main/resources/data.sql" connection-id="" session-id="MAIN" current-schema="" />
   </component>
   <component name="DBNavigator.Project.MethodExecutionManager">
     <method-browser />

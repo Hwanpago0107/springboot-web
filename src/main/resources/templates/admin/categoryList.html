@@ -1,34 +1,38 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{adminLayout}">
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{/admin/adminLayout}">
 <body>
 <div layout:fragment="content">
     <div class="card mb-4">
         <div class="card-header">
             <i class="fas fa-table me-1"></i>
-            일괄등록 이미지 리스트
+            상품 리스트
         </div>
         <div class="card-body">
             <table id="datatablesSimple">
                 <thead>
                 <tr>
-                    <th>이미지명</th>
-                    <th>업로드경로</th>
-                    <th>이미지</th>
+                    <th>카테고리명</th>
+                    <th>부모카테고리</th>
+                    <th>관리</th>
                 </tr>
                 </thead>
                 <tfoot>
                 <tr>
-                    <th>이미지명</th>
-                    <th>업로드경로</th>
-                    <th>이미지</th>
+                    <th>카테고리명</th>
+                    <th>부모카테고리</th>
+                    <th>관리</th>
                 </tr>
                 </tfoot>
                 <tbody>
-                <tr th:each="image : ${images}">
-                    <td th:text="${image.getFileName()}"></td>
-                    <td th:text="${image.getFilePath()}"></td>
-                    <td style="width: 20%;"><img th:src="|/images/${image.getFileName()}|" class="adm-content-img"></td>
+                <tr th:each="category : ${categories}">
+                    <td th:text="${category.getName()}"></td>
+                    <td th:text="${category.getParent()?.name}"></td>
+                    <td><button type="button" id="modify-btn"
+                                th:onclick="|location.href='@{/newCategory?id={categoryId}(categoryId=${category.id})}'|"
+                                class="btn btn-primary btn-sm">수정</button>
+                        <button type="button" id="delete-item-btn"
+                                class="btn btn-secondary btn-sm" th:onclick="|deleteCate([[${category.id}]])|">삭제</button></td>
                 </tr>
                 </tbody>
             </table>

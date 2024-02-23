@@ -1,6 +1,7 @@
 package me.ceskim493.springbootdeveloper.domain;
 
 import jakarta.persistence.*;
+import jakarta.servlet.http.HttpSession;
 import lombok.*;
 import me.ceskim493.springbootdeveloper.dto.UserViewResponse;
 import org.springframework.security.core.GrantedAuthority;
@@ -10,6 +11,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.UUID;
 
 @Table(name = "users")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -41,6 +43,13 @@ public class User implements UserDetails {
     @Column(name="picture")
     private String picture;
 
+    @Enumerated(EnumType.STRING)
+    @Column(name="role")
+    private Role role;
+
+    @Column(name="valid")
+    private int isValid;
+
     @Embedded
     private Address address;
 
@@ -48,12 +57,14 @@ public class User implements UserDetails {
     private List<Order> orders = new ArrayList<>();
 
     @Builder
-    public User(String email, String password, String name, String nickname, String picture) {
+    public User(String email, String password, String name, String nickname, String picture, Role role, int isValid) {
         this.email = email;
         this.password = password;
         this.name = name;
         this.nickname = nickname;
         this.picture = picture;
+        this.role = role;
+        this.isValid = isValid;
     }
 
     @Override
@@ -94,7 +105,7 @@ public class User implements UserDetails {
     // 계정 사용 가능 여부 반환
     @Override
     public boolean isEnabled() {
-        return true;
+        return this.isValid == 1 ? true : false;
     }
 
     // 사용자 이름 변경
@@ -113,5 +124,22 @@ public class User implements UserDetails {
 
     public UserViewResponse createUserView() {
         return new UserViewResponse(this);
+    }
+
+    public static User makeGuestUser(HttpSession httpSession) {
+        UUID uuid = UUID.randomUUID();
+        User user = User.builder()
+                .email(uuid + "@mail.com")
+                .name(String.valueOf(uuid))
+                .nickname(String.valueOf(uuid))
+                .role(Role.GUEST)
+                .isValid(0)
+                .build();
+        httpSession.setAttribute("user", new SessionUser(user));
+        return user;
+    }
+
+    public String getUserRole() {
+        return this.getRole() == null ? "" : this.getRole().getKey();
     }
 }

@@ -45,7 +45,7 @@ public class CategoryViewController {
 
         model.addAttribute("userName", userService.getSessionUserName(user)); // session에 저장된 유저이름 setting
 
-        return "newCategory";
+        return "admin/newCategory";
     }
 
     @GetMapping("/categories")
@@ -59,6 +59,6 @@ public class CategoryViewController {
 
         model.addAttribute("categories", categories);
 
-        return  "categoryList";
+        return  "admin/categoryList";
     }
 }

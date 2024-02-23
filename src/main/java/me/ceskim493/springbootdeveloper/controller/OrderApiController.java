@@ -1,7 +1,9 @@
 package me.ceskim493.springbootdeveloper.controller;
 
 import lombok.RequiredArgsConstructor;
+import me.ceskim493.springbootdeveloper.annotation.LoginUser;
 import me.ceskim493.springbootdeveloper.domain.Order;
+import me.ceskim493.springbootdeveloper.domain.SessionUser;
 import me.ceskim493.springbootdeveloper.domain.User;
 import me.ceskim493.springbootdeveloper.dto.CreateOrderRequest;
 import me.ceskim493.springbootdeveloper.service.OrderService;
@@ -21,9 +23,9 @@ public class OrderApiController {
     // HTTP 메서드가 POST일 때 전달받은 URL과 동일하면 메서드로 매핑
     @PostMapping("/api/orders")
     // @RequestBody로 요청 본문 값 매핑
-    public ResponseEntity<Order> createOrder(@RequestBody CreateOrderRequest request) throws Exception {
+    public ResponseEntity<Order> createOrder(@RequestBody CreateOrderRequest request, @LoginUser SessionUser sUser) throws Exception {
         // 로그인한 유저
-        User user = userService.findByEmail(SecurityUtil.getCurrentUserEmail());
+        User user = userService.findByEmail(userService.getSessionUserName(sUser));
 
         Order orderedItem = orderService.save(request, user);
 

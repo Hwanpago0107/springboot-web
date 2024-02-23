@@ -2,6 +2,7 @@ package me.ceskim493.springbootdeveloper.config.oauth;
 
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
+import me.ceskim493.springbootdeveloper.domain.Role;
 import me.ceskim493.springbootdeveloper.domain.SessionUser;
 import me.ceskim493.springbootdeveloper.domain.User;
 import me.ceskim493.springbootdeveloper.repository.UserRepository;
@@ -40,6 +41,8 @@ public class OAuth2UserCustomService extends DefaultOAuth2UserService {
                         .name(name)
                         .nickname(name)
                         .picture(picture)
+                        .role("blessu0107@gmail.com".equals(email) ? Role.SUPERADMIN : Role.USER)
+                        .isValid(1)
                         .build());
 
         return userRepository.save(user);

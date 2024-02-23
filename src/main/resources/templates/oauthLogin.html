@@ -1,37 +1,59 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>로그인</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{mainLayout}">
+<body>
+<div layout:fragment="content">
+	<!-- BREADCRUMB -->
+	<div id="breadcrumb" class="section">
+		<!-- container -->
+		<div class="container">
+			<!-- row -->
+			<div class="row">
+				<div class="col-md-12">
+					<h3 class="breadcrumb-header">로그인</h3>
+					<ul class="breadcrumb-tree">
+						<li><a th:href="@{/main/home}">Home</a></li>
+						<li class="active">LOGIN</li>
+					</ul>
+				</div>
+			</div>
+			<!-- /row -->
+		</div>
+		<!-- /container -->
+	</div>
+	<!-- /BREADCRUMB -->
 
-    <style>
-        .gradient-custom {
-            background: #6a11cb;
-            background: -webkit-linear-gradient(to right, rgba(106, 17, 203, 1), rgba(37, 117, 252, 1));
-            background: linear-gradient(to right, rgba(106, 17, 203, 1), rgba(37, 117, 252, 1))
-        }
-    </style>
-</head>
-<body class="gradient-custom">
-<section class="d-row vh-100">
-    <div class="text-center w-100">
-        <img src="/img/hwanpago-logo-white.png" style="width: 30%;">
-    </div>
-    <div class="container-fluid row justify-content-center align-content-center m-0">
-        <div class="card bg-dark" style="border-radius: 1rem;">
-            <div class="card-body p-5 text-center">
-                <h1 class="text-white">LOGIN</h1>
-                <p class="text-white-50 mt-2 mb-5">서비스 사용을 위해 로그인을 해주세요!</p>
-
-                <div class = "mb-2">
-                    <a href="/oauth2/authorization/google">
-                        <img src="/img/google.png">
-                    </a>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
+	<!-- SECTION -->
+	<div class="section">
+		<!-- container -->
+		<div class="container">
+			<!-- row -->
+			<div class="row">
+				<!-- Login Details -->
+				<div class="col-md-12 login-details">
+					<div class="section-title text-center">
+						<h3 class="title">LOGIN</h3>
+					</div>
+					<div class="login-summary">
+						<div class="login-col">
+							<div><strong>서비스 사용을 위해 로그인 해주세요!</strong></div>
+						</div>
+						<div class="login-col">
+							<div>
+								<a href="/oauth2/authorization/google">
+									<img src="/img/google.png">
+								</a>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- /Login Details -->
+			</div>
+			<!-- /row -->
+		</div>
+	</div>
+	<!-- /SECTION -->
+</div>
+<!-- /container -->
 </body>
 </html>

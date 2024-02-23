@@ -1,6 +1,8 @@
 package me.ceskim493.springbootdeveloper.controller;
 
 import lombok.RequiredArgsConstructor;
+import me.ceskim493.springbootdeveloper.annotation.LoginUser;
+import me.ceskim493.springbootdeveloper.domain.SessionUser;
 import me.ceskim493.springbootdeveloper.domain.User;
 import me.ceskim493.springbootdeveloper.domain.WishItem;
 import me.ceskim493.springbootdeveloper.dto.CreateWishRequest;
@@ -27,9 +29,9 @@ public class WishApiController {
     // HTTP 메서드가 POST일 때 전달받은 URL과 동일하면 메서드로 매핑
     @PostMapping("/api/wishes")
     // @RequestBody로 요청 본문 값 매핑
-    public ResponseEntity<Void> addWishList(@RequestBody CreateWishRequest request) throws Exception {
+    public ResponseEntity<Void> addWishList(@RequestBody CreateWishRequest request, @LoginUser SessionUser sUser) throws Exception {
 
-        User user = userService.findByEmail(SecurityUtil.getCurrentUserEmail());
+        User user = userService.findByEmail(userService.getSessionUserName(sUser));
 
         WishItem savedItem = wishService.save(request, user);
 
@@ -40,9 +42,9 @@ public class WishApiController {
 
     @PostMapping("/api/wishes/checked")
     // @RequestBody로 요청 본문 값 매핑
-    public ResponseEntity<Void> addWishListToCart(@RequestBody CreateWishRequest request) throws Exception {
+    public ResponseEntity<Void> addWishListToCart(@RequestBody CreateWishRequest request, @LoginUser SessionUser sUser) throws Exception {
 
-        User user = userService.findByEmail(SecurityUtil.getCurrentUserEmail());
+        User user = userService.findByEmail(userService.getSessionUserName(sUser));
 
         cartService.saveAll(request, user);
 
@@ -52,8 +54,8 @@ public class WishApiController {
     }
 
     @GetMapping("/api/wishes")
-    public ResponseEntity<List<WishResponse>> findAllWishItem() {
-        User user = userService.findByEmail(SecurityUtil.getCurrentUserEmail());
+    public ResponseEntity<List<WishResponse>> findAllWishItem(@LoginUser SessionUser sUser) {
+        User user = userService.findByEmail(userService.getSessionUserName(sUser));
 
         List<WishResponse> wishItems = wishService.findAll(user)
                 .stream()
@@ -65,8 +67,8 @@ public class WishApiController {
     }
 
     @DeleteMapping("/api/wishes/checked")
-    public ResponseEntity<Void> deleteWishItem(@RequestBody DeleteWishRequest request) {
-        User user = userService.findByEmail(SecurityUtil.getCurrentUserEmail());
+    public ResponseEntity<Void> deleteWishItem(@RequestBody DeleteWishRequest request, @LoginUser SessionUser sUser) {
+        User user = userService.findByEmail(userService.getSessionUserName(sUser));
 
         wishService.delete(request.getChecked(), user);
 
@@ -75,8 +77,8 @@ public class WishApiController {
     }
 
     @DeleteMapping("/api/wishes")
-    public ResponseEntity<Void> deleteAllWishItems() {
-        User user = userService.findByEmail(SecurityUtil.getCurrentUserEmail());
+    public ResponseEntity<Void> deleteAllWishItems(@LoginUser SessionUser sUser) {
+        User user = userService.findByEmail(userService.getSessionUserName(sUser));
 
         wishService.deleteAll(user);
 

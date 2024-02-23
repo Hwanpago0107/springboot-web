@@ -42,7 +42,7 @@ public class ItemViewController {
 
         model.addAttribute("categories", categoryService.findAll());
 
-        return "newItem";
+        return "admin/newItem";
     }
 
     @GetMapping("/items")
@@ -56,7 +56,7 @@ public class ItemViewController {
 
         model.addAttribute("items", items);
 
-        return  "itemList";
+        return  "admin/itemList";
     }
 
     @GetMapping("/items/{id}")

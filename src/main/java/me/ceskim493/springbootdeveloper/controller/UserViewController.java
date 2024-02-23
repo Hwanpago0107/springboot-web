@@ -5,8 +5,7 @@ import me.ceskim493.springbootdeveloper.annotation.LoginUser;
 import me.ceskim493.springbootdeveloper.domain.SessionUser;
 import me.ceskim493.springbootdeveloper.dto.UserViewResponse;
 import me.ceskim493.springbootdeveloper.service.AdminService;
-import me.ceskim493.springbootdeveloper.service.CartService;
-import me.ceskim493.springbootdeveloper.service.OrderService;
+import me.ceskim493.springbootdeveloper.service.MainService;
 import me.ceskim493.springbootdeveloper.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,12 +18,14 @@ import java.util.List;
 public class UserViewController {
 
     private final UserService userService;
-    private final OrderService orderService;
-    private final CartService cartService;
     private final AdminService adminService;
+    private final MainService mainService;
 
     @GetMapping("/login")
-    public String login() {
+    public String login(Model model, @LoginUser SessionUser sUser) {
+        // MainLayout.html
+        model = mainService.getMainLayout(model, sUser);
+
         return "oauthLogin";
     }
 
@@ -38,12 +39,12 @@ public class UserViewController {
         // AdminLayout.html
         model = adminService.getAdminLayout(model, sUser);
 
-        List<UserViewResponse> users = userService.findAll().stream()
+        List<UserViewResponse> users = userService.findAllValidUser(1).stream()
                 .map(UserViewResponse::new)
                 .toList();
 
         model.addAttribute("users", users);
 
-        return "userList";
+        return "admin/userList";
     }
 }

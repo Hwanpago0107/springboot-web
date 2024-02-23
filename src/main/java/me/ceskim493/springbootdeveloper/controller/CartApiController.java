@@ -1,14 +1,15 @@
 package me.ceskim493.springbootdeveloper.controller;
 
 import lombok.RequiredArgsConstructor;
+import me.ceskim493.springbootdeveloper.annotation.LoginUser;
 import me.ceskim493.springbootdeveloper.domain.CartItem;
+import me.ceskim493.springbootdeveloper.domain.SessionUser;
 import me.ceskim493.springbootdeveloper.domain.User;
 import me.ceskim493.springbootdeveloper.dto.CartResponse;
 import me.ceskim493.springbootdeveloper.dto.CreateCartRequest;
 import me.ceskim493.springbootdeveloper.dto.DeleteCartRequest;
 import me.ceskim493.springbootdeveloper.service.CartService;
 import me.ceskim493.springbootdeveloper.service.UserService;
-import me.ceskim493.springbootdeveloper.util.SecurityUtil;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -25,9 +26,9 @@ public class CartApiController {
     // HTTP 메서드가 POST일 때 전달받은 URL과 동일하면 메서드로 매핑
     @PostMapping("/api/carts")
     // @RequestBody로 요청 본문 값 매핑
-    public ResponseEntity<Void> addCartItem(@RequestBody CreateCartRequest request) throws Exception {
+    public ResponseEntity<Void> addCartItem(@RequestBody CreateCartRequest request, @LoginUser SessionUser sUser) throws Exception {
 
-        User user = userService.findByEmail(SecurityUtil.getCurrentUserEmail());
+        User user = userService.findByEmail(userService.getSessionUserName(sUser));
 
         CartItem savedItem = cartService.save(request, user);
 
@@ -37,8 +38,8 @@ public class CartApiController {
     }
 
     @GetMapping("/api/carts")
-    public ResponseEntity<List<CartResponse>> findAllCartItems() {
-        User user = userService.findByEmail(SecurityUtil.getCurrentUserEmail());
+    public ResponseEntity<List<CartResponse>> findAllCartItems(@LoginUser SessionUser sUser) {
+        User user = userService.findByEmail(userService.getSessionUserName(sUser));
 
         List<CartResponse> cartItems = cartService.findAll(user)
                 .stream()
@@ -50,8 +51,8 @@ public class CartApiController {
     }
 
     @DeleteMapping("/api/carts/checked")
-    public ResponseEntity<Void> deleteItem(@RequestBody DeleteCartRequest request) {
-        User user = userService.findByEmail(SecurityUtil.getCurrentUserEmail());
+    public ResponseEntity<Void> deleteItem(@RequestBody DeleteCartRequest request, @LoginUser SessionUser sUser) {
+        User user = userService.findByEmail(userService.getSessionUserName(sUser));
 
         cartService.delete(user, request.getChecked());
 
