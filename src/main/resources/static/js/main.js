@@ -116,7 +116,7 @@
 
 		down.on('click', function () {
 			if (bPrice) {
-				var value = parseInt($input.val().replaceAll(",", "")) - 100;
+				var value = parseInt($input.val().replaceAll(",", "")) - 10000;
 				value = value < 1 ? 1 : value;
 				$input.val(value);
 				$input.change();
@@ -132,7 +132,7 @@
 
 		up.on('click', function () {
 			if (bPrice) {
-				var value = parseInt($input.val().replaceAll(",", "")) + 100;
+				var value = parseInt($input.val().replaceAll(",", "")) + 10000;
 				value = value < 1 ? 1 : value;
 				$input.val(value);
 				$input.change();
@@ -182,12 +182,12 @@
 				priceSlider.noUiSlider.destroy();
 			}
 			noUiSlider.create(priceSlider, {
-				start: [1000, 9999999],
+				start: [priceInputMin.value, priceInputMax.value],
 				connect: true,
-				step: 100,
+				step: 10000,
 				range: {
-					'min': 1000,
-					'max': 9999999
+					'min': 10000,
+					'max': 99999999
 				},
 				format: wNumb({
 					decimals: 0,
@@ -262,6 +262,16 @@ function getStore(id, pageNumber, kind) {
 		kind = "";
 	}
 
+	let priceInputMin = $("#price-min").val() == null ? "" : $("#price-min").val();
+	let priceInputMax = $("#price-max").val() == null ? "" : $("#price-max").val();
+
+    let categories = "";
+    let categoryArr = [];
+    $(".category_checkbox").each(function () {
+        if (this.checked) categoryArr.push(this.value);
+    });
+    categories = categoryArr.join(",");
+
 	const form = document.createElement("form");
 	form.setAttribute("charset", "UTF-8");
 	form.setAttribute("method", "GET");
@@ -296,6 +306,24 @@ function getStore(id, pageNumber, kind) {
 	input5.setAttribute("name", "kind");
 	input5.setAttribute("value", kind);
 	form.appendChild(input5);
+
+	var input6 = document.createElement("input");
+	input6.setAttribute("type", "hidden");
+	input6.setAttribute("name", "price_min");
+	input6.setAttribute("value", priceInputMin);
+	form.appendChild(input6);
+
+	var input7 = document.createElement("input");
+	input7.setAttribute("type", "hidden");
+	input7.setAttribute("name", "price_max");
+	input7.setAttribute("value", priceInputMax);
+	form.appendChild(input7);
+
+    var input8 = document.createElement("input");
+    input8.setAttribute("type", "hidden");
+    input8.setAttribute("name", "categories");
+    input8.setAttribute("value", categories);
+	form.appendChild(input8);
 
 	document.body.appendChild(form);
 	form.submit();

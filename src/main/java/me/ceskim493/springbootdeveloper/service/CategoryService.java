@@ -47,6 +47,10 @@ public class CategoryService {
                 .orElseThrow(() -> new IllegalArgumentException("unexpected Category"));
     }
 
+    public List<Category> findCategoriesByCategoryIds(List<Long> categories) {
+        return categoryRepository.findCategoriesByIdIn(categories);
+    }
+
     @Transactional
     public Category update(long id, CreateCategoryRequest request) throws Exception {
         Category category = categoryRepository.findById(id)
@@ -168,11 +172,13 @@ public class CategoryService {
         return categories;
     }
 
-    public List<Item> search(Long category_id, String searchText, String sortBy) {
-        List<Category> categories = new ArrayList<>();
-        categories.add(findById(category_id));
+    public List<Item> search(List<Category> categories, String searchText, String sortBy, int priceMin, int priceMax) {
         categories = findChildsByCategories(categories);
 
-        return itemRepository.search(categories, searchText, sortBy);
+        return itemRepository.search(categories, searchText, sortBy, priceMin, priceMax);
+    }
+
+    public List<Category> findBrandCategoriesByCategories(List<Long> categories) {
+        return setItemCountsToCategories(categoryRepository.findBrandsCategoriesByDepth1(categories));
     }
 }

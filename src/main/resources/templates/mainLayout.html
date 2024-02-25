@@ -86,14 +86,14 @@
                     <div class="header-search">
                         <form method="get" action="/stores">
                             <select class="input-select" name="category_id">
-                                <option value="0" th:selected="${depth1Cate?.id} == 0">전체</option>
+                                <option value="0" th:selected="${currentCateIds?.get(0) == 0}">전체</option>
                                 <option th:each="category : ${depth1}" th:value="${category.id}"
-                                            th:text="${category.name}"
-                                            th:selected="${depth1Cate?.id} == ${category.id}"></option>
+                                            th:text="${category.name}" th:selected="${currentCateIds?.get(0) == category.getId()}"></option>
                             </select>
                             <input class="input" placeholder="Search here" name="search_text">
                             <input class="input" type="Number" name="page_number" value="1" hidden="hidden">
                             <input class="input" type="Number" name="page_limit" value="3" hidden="hidden">
+                            <input class="input" type="text" name="kind" value="all" hidden="hidden">
                             <button class="search-btn" id="search-btn" type="submit">Search</button>
                         </form>
                     </div>
@@ -192,7 +192,7 @@
             <ul class="main-nav nav navbar-nav">
                 <li class="active"><a th:href="@{/main/home}">Home</a></li>
                 <li><a th:onclick="|getStore(0, 1, 'hotdeal')|" style="color: red;">핫딜</a></li>
-                <li><a th:onclick="|getStore(0, 1)|">전체</a></li>
+                <li><a th:onclick="|getStore(0, 1, 'all')|">전체</a></li>
                 <li th:each="category : ${depth1}">
                     <a th:onclick="|getStore(${category.id}, 1)|" th:text="${category.name}"></a>
                 </li>

@@ -1,6 +1,7 @@
 package me.ceskim493.springbootdeveloper.controller;
 
 import lombok.RequiredArgsConstructor;
+import me.ceskim493.springbootdeveloper.dto.BrandResponse;
 import me.ceskim493.springbootdeveloper.dto.CategoryResponse;
 import me.ceskim493.springbootdeveloper.dto.CreateCategoryRequest;
 import me.ceskim493.springbootdeveloper.service.CategoryService;
@@ -8,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Arrays;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -61,6 +63,21 @@ public class CartegoryApiController {
 
         List<CategoryResponse> categories = categoryService.findChildCategoriesByParent(id).stream()
                 .map(CategoryResponse::new)
+                .toList();
+
+        return ResponseEntity.ok()
+                .body(categories);
+    }
+
+    @GetMapping("/api/brands/{categoryIds}")
+    public ResponseEntity<List<BrandResponse>> findBrandCategoriesByCategories(@PathVariable String categoryIds) {
+
+        List<Long> categoryList = Arrays.stream(categoryIds.split(","))
+                .map(l -> Long.valueOf(l))
+                .toList();
+
+        List<BrandResponse> categories = categoryService.findBrandCategoriesByCategories(categoryList).stream()
+                .map(BrandResponse::new)
                 .toList();
 
         return ResponseEntity.ok()

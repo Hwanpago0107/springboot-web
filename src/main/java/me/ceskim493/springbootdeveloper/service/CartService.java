@@ -27,7 +27,7 @@ public class CartService {
         // 사용자가 갖고 있는 카트가 없으면 만들어준다.
         Cart cart = cartRepository.findCartByUser(user);
         if (cart == null) {
-            cart = new Cart();
+            cart = new Cart(user);
             cartRepository.save(cart);
         }
 
@@ -65,7 +65,7 @@ public class CartService {
         // 사용자가 갖고 있는 카트가 없으면 만들어준다.
         Cart cart = cartRepository.findCartByUser(user);
         if (cart == null) {
-            cart = new Cart();
+            cart = new Cart(user);
             cartRepository.save(cart);
         }
 

@@ -76,8 +76,8 @@ public class ItemService {
         return item;
     }
 
-    public List<Item> findByDiscountGreaterThanEqual(Float discount) {
-        return itemRepository.findByDiscountGreaterThanEqual(discount);
+    public List<Item> findHotdealItems(Float discount, int priceMin, int priceMax) {
+        return itemRepository.findItemsByDiscountAndPriceBetweenMinAndMax(discount, priceMin, priceMax);
     }
 
     public List<Item> findBySaleCountsLimit5() {

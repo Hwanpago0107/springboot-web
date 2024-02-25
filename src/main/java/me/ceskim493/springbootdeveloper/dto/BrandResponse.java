@@ -6,19 +6,15 @@ import me.ceskim493.springbootdeveloper.domain.Category;
 
 @NoArgsConstructor
 @Getter
-public class CategoryViewResponse {
+public class BrandResponse {
 
-    private Long id;
+    private Long category_id;
     private String name;
-    private Category parent;
     private int count;
-    private String depth;
 
-    public CategoryViewResponse(Category category) {
-        this.id = category.getId();
+    public BrandResponse(Category category) {
+        this.category_id = category.getId();
         this.name = category.getName();
-        this.parent = category.getParent();
         this.count = category.getCount();
-        this.depth = category.getDepth();
     }
 }

@@ -65,7 +65,7 @@ public class MainController {
                     .toList();
 
             // 핫딜 상품리스트
-            List<ItemListViewResponse> hotdeals = itemService.findByDiscountGreaterThanEqual(0.3F).stream()
+            List<ItemListViewResponse> hotdeals = itemService.findHotdealItems(0.3F, 0, 99999999).stream()
                     .map(ItemListViewResponse::new)
                     .toList();
 

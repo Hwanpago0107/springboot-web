@@ -92,7 +92,7 @@ values  ('item', 9, 'REIKA 카메라', 400000, 800, 0, 'product09.png', '/upload
 INSERT INTO users (id, email, name, nickname, role, valid)
 values (4, 'test123@gmail.com', '임꺽정', '임꺽정', 'USER', 1);
 INSERT INTO users (id, email, name, nickname, role, valid)
-values (3, 'test222@gmail.com', '홍길동', '홍길동', 'USER', 1);
+values (5, 'test222@gmail.com', '홍길동', '홍길동', 'USER', 1);
 
 select * from users;
 
@@ -151,6 +151,11 @@ VALUES (25, '줌배율', '2X,3X,5X,10x,100x', 9);
 --Cart
 INSERT INTO Cart (id, user_id)
 values  (1, 1);
+
+select * from Cart;
+
+update Cart set user_id = 3 where id = 1;
+commit;
 
 --CartItem
 INSERT INTO CartItem (id, quantity, cart_id, item_id, options)
@@ -303,9 +308,7 @@ commit;]]></console>
     <last-used-providers />
   </component>
   <component name="DBNavigator.Project.DatabaseFileManager">
-    <open-files>
-      <object connection-id="d0d3338a-8875-4185-a874-c993f4d3f7e1" object-ref="consoles/Connection" />
-    </open-files>
+    <open-files />
   </component>
   <component name="DBNavigator.Project.DatabaseSessionManager">
     <connection id="d0d3338a-8875-4185-a874-c993f4d3f7e1" />

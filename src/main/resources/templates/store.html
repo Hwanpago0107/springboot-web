@@ -14,7 +14,8 @@
 						<li><a th:href="@{/main/home}">Home</a></li>
 						<li th:if="${kind == 'hotdeal'}">HOT DEAL</li>
 						<li th:if="${kind != 'hotdeal' && parents != null}" th:each="i : ${#numbers.sequence(parents.size()-1, 0, -1)}" th:with="category=${parents[i]}">
-							<a th:onclick="|getStore(${category.getId}, 1)|" th:text="${category.getName()}"></a>
+							<a th:onclick="|getStore(${category.getId}, 1, this.getAttribute('data'))|" th:text="${category.getName()}"
+							   th:data="${kind}" th:classappend="${'2'.equals(category.getDepth())} ? 'nolink' : ''"></a>
 						</li>
 					</ul>
 					<ul class="breadcrumb-tree" th:unless="${parents != null && parents.size() > 0}">
@@ -38,10 +39,13 @@
 				<div id="aside" class="col-md-3">
 					<!-- aside Widget -->
 					<div class="aside">
-						<h3 class="aside-title">Categories</h3>
+						<h3 class="aside-title" th:if="${currentDepth != '3'}">Categories</h3>
+						<input type="hidden" th:value="${currentDepth}" id="current_depth">
 						<div class="checkbox-filter">
-							<div class="input-checkbox" th:each="category : ${depth1}">
-								<input type="checkbox" th:id="|category-${category.getId()}|">
+							<div class="input-checkbox depth1-checkbox" th:each="category : ${depth1}" th:if="${currentCateIds.get(0) == category.getId() || currentCateIds.get(0) == 0 || kind == 'all'}">
+								<input type="checkbox" class="category_checkbox" th:id="|category-${category.getId()}|"
+									   th:checked="${currentCateIds.get(0) == category.getId() || currentCateIds.contains(category.getId()) || kind == 'all'}"
+										th:value="${category.getId()}">
 								<label th:for="|category-${category.getId()}|">
 									<span></span>
 									<h5 th:text="${category.getName()}"
@@ -56,32 +60,11 @@
 
 					<!-- aside Widget -->
 					<div class="aside">
-						<h3 class="aside-title">Price</h3>
-						<div class="price-filter">
-							<div id="price-slider"></div>
-							<div class="input-number price-min">
-								<input id="price-min" type="text">
-								<span class="qty-up">+</span>
-								<span class="qty-down">-</span>
-								<input class="price-yn" type="hidden" value="Y">
-							</div>
-							<span>-</span>
-							<div class="input-number price-max">
-								<input id="price-max" type="text">
-								<span class="qty-up">+</span>
-								<span class="qty-down">-</span>
-								<input class="price-yn" type="hidden" value="Y">
-							</div>
-						</div>
-					</div>
-					<!-- /aside Widget -->
-
-					<!-- aside Widget -->
-					<div class="aside">
 						<h3 class="aside-title">Brand</h3>
-						<div class="checkbox-filter">
-							<div class="input-checkbox" th:each="category : ${brands}">
-								<input type="checkbox" th:id="|brand-${category.getId()}|">
+						<div class="checkbox-filter brand">
+							<div class="input-checkbox depth3-checkbox" th:each="category : ${brands}">
+								<input type="checkbox" class="brand_checkbox" th:id="|brand-${category.getId()}|"
+									   th:value="${category.getId()}">
 								<label th:for="|brand-${category.getId()}|">
 									<span></span>
 									<h6 th:text="${category.getName()}"
@@ -89,6 +72,29 @@
 									<small th:text="|(${category.getCount()})|"
 										   style="display: inline-block;"></small>
 								</label>
+							</div>
+						</div>
+					</div>
+					<!-- /aside Widget -->
+
+					<!-- aside Widget -->
+					<div class="aside">
+						<h3 class="aside-title" style="display: inline-block;">Price</h3>
+						<a class="primary-btn" style="cursor: pointer; float: right;" th:onclick="|getStore(${currentCateIds.get(0)}, ${currentPage}, '')|">검색</a>
+						<div class="price-filter">
+							<div id="price-slider"></div>
+							<div class="input-number price-min">
+								<input id="price-min" type="text" th:value="${currentPriceMin}">
+								<span class="qty-up">+</span>
+								<span class="qty-down">-</span>
+								<input class="price-yn" type="hidden" value="Y">
+							</div>
+							<span>-</span>
+							<div class="input-number price-max">
+								<input id="price-max" type="text" th:value="${currentPriceMax}">
+								<span class="qty-up">+</span>
+								<span class="qty-down">-</span>
+								<input class="price-yn" type="hidden" value="Y">
 							</div>
 						</div>
 					</div>
@@ -122,7 +128,7 @@
 						<div class="store-sort">
 							<label>
 								Sort By:
-								<select class="input-select" id="sort_by" th:onchange="|getStore(${currentCate.id}, 1)|">
+								<select class="input-select" id="sort_by" th:onchange="|getStore(${currentCateIds.get(0)}, 1)|">
 									<option value="popular" th:selected="${sortBy} == 'popular'">Popular</option>
 									<option value="price" th:selected="${sortBy} == 'price'">Price</option>
 								</select>
@@ -130,7 +136,7 @@
 
 							<label>
 								Show:
-								<select class="input-select" id="page_limit" th:onchange="|getStore(${currentCate.id}, 1)|">
+								<select class="input-select" id="page_limit" th:onchange="|getStore(${currentCateIds.get(0)}, 1)|">
 									<option value="3" th:selected="${currentLimit} == 3">3</option>
 									<option value="6" th:selected="${currentLimit} == 6">6</option>
 									<option value="9" th:selected="${currentLimit} == 9">9</option>
@@ -195,7 +201,7 @@
 							<li><a href="#"><i class="fa fa-angle-left"></i></a></li>
 							<li th:each="page : ${#numbers.sequence(startPage, endPage)}"
 							th:text="${page}"
-								th:onclick="|getStore(${currentCate.id}, ${page}, this.getAttribute('data'))|"
+								th:onclick="|getStore(${currentCateIds.get(0)}, ${page}, this.getAttribute('data'))|"
 								th:classappend="${page == currentPage} ? 'active' : ''"
 								th:data="${kind}"
 								style="cursor: pointer;"></li>
@@ -211,6 +217,7 @@
 		<!-- /container -->
 	</div>
 	<!-- /SECTION -->
+	<script src="/js/store.js"></script>
 </div>
 </body>
 </html>

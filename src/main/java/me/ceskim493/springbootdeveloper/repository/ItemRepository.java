@@ -10,7 +10,12 @@ import java.util.Collection;
 import java.util.List;
 
 public interface ItemRepository extends JpaRepository<Item, Long> {
-    List<Item> findByDiscountGreaterThanEqual(Float discount);
+    @Query(value = "select i from Item i " +
+            "where i.discount >= :discount " +
+            "and i.price * (1-i.discount) between :priceMin and :priceMax")
+    List<Item> findItemsByDiscountAndPriceBetweenMinAndMax(@Param("discount") Float discount,
+                                                           @Param("priceMin") int priceMin,
+                                                           @Param("priceMax") int priceMax);
 
     @Query(value = "select i from Item i, " +
             "(select i.id as item_id from Item i, OrderItem o " +
@@ -29,10 +34,13 @@ public interface ItemRepository extends JpaRepository<Item, Long> {
             "on i.id = o.item.id " +
             "where i.category in (:categories) " +
             "and i.name like %:searchText% " +
+            "and i.price * (1-i.discount) between :priceMin and :priceMax " +
             "order by " +
             "case when :sortBy = 'popular' then case when :sortBy = 'popular' then o.count end end desc, " +
             "case when :sortBy = 'price' then case when :sortBy = 'price' then i.price end end asc ")
     List<Item> search(@Param("categories") Collection<Category> categories,
                       @Param("searchText") String searchText,
-                      @Param("sortBy") String sortBy);
+                      @Param("sortBy") String sortBy,
+                      @Param("priceMin") int priceMin,
+                      @Param("priceMax") int priceMax);
 }

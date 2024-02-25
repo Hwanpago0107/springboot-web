@@ -13,7 +13,8 @@
 					<ul class="breadcrumb-tree">
 						<li><a th:href="@{/main/home}">Home</a></li>
 						<li th:if="${parents != null}" th:each="i : ${#numbers.sequence(parents.size()-1, 0, -1)}" th:with="category=${parents[i]}">
-							<a th:onclick="|getStore(${category.getId()}, 1)|" th:text="${category.getName()}"></a>
+							<a th:onclick="|getStore(${category.getId()}, 1)|" th:text="${category.getName()}"
+							   th:classappend="${'2'.equals(category.getDepth())} ? 'nolink' : ''"></a>
 						</li>
 						<li class="active" th:text="${product?.getName()}"></li>
 					</ul>

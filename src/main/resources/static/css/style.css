@@ -2446,3 +2446,9 @@ textarea.input {
   -ms-transform: translate(-50%, -5px);
   transform: translate(-50%, -5px);
 }
+
+a.nolink {
+  pointer-events: none;
+  cursor: default;
+}
+
