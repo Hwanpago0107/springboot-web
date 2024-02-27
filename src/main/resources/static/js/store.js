@@ -34,7 +34,7 @@ function getBrands(em) {
 		for (const data of datas) {
 			htmlText += "<div class='input-checkbox depth3-checkbox'>";
 			htmlText += "<input type='checkbox' class='brand_checkbox' id='brand-" + data.category_id +"' value=" + data.category_id +" ";
-			htmlText += "checked=true>";
+			htmlText += "checked=true disabled>";
 			htmlText += "<label for='brand-" + data.category_id +"'>";
 			htmlText += "<span></span>";
 			htmlText +=	"<h6 style='display:inline-block;'>" + data.name + "</h6>";

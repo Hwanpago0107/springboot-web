@@ -262,15 +262,21 @@ function getStore(id, pageNumber, kind) {
 		kind = "";
 	}
 
-	let priceInputMin = $("#price-min").val() == null ? "" : $("#price-min").val();
-	let priceInputMax = $("#price-max").val() == null ? "" : $("#price-max").val();
+	let priceInputMin = "";
+	let priceInputMax = "";
 
-    let categories = "";
-    let categoryArr = [];
-    $(".category_checkbox").each(function () {
-        if (this.checked) categoryArr.push(this.value);
-    });
-    categories = categoryArr.join(",");
+	let categories = "";
+
+	if (kind == "") {
+		priceInputMin = $("#price-min").val() == null ? "" : $("#price-min").val();
+		priceInputMax = $("#price-max").val() == null ? "" : $("#price-max").val();
+
+		let categoryArr = [];
+		$(".category_checkbox").each(function () {
+			if (this.checked) categoryArr.push(this.value);
+		});
+		categories = categoryArr.join(",");
+	}
 
 	const form = document.createElement("form");
 	form.setAttribute("charset", "UTF-8");

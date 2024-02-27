@@ -26,6 +26,16 @@ public interface ItemRepository extends JpaRepository<Item, Long> {
             "where i.id = a.item_id")
     List<Item> findBySaleCountsLimit5();
 
+    @Query(value = "select i from Item i, " +
+            "(select i.id as item_id from Item i, OrderItem o " +
+            "where i.id = o.item.id " +
+            "and i.category in :categories " +
+            "group by i.id " +
+            "order by sum(o.count) desc " +
+            "limit 5) a " +
+            "where i.id = a.item_id")
+    List<Item> findBySaleCountsLimit5InCategories(@Param("categories") List<Category> categories);
+
     List<Item> findAllByCategoryAndAndNameContainsIgnoreCase(Category category, String name);
 
     List<Item> findAllByNameContainsIgnoreCase(String name);

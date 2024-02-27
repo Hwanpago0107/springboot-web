@@ -44,11 +44,16 @@
 
                     <td><button type="button" id="register-admin-btn"
                                 class="btn btn-primary btn-sm"
-                                th:if="${!'ROLE_SUPER_ADMIN'.equals(user.getRole())}"
+                                th:if="${'ROLE_USER'.equals(user.getRole())}"
                                 th:onclick="|registerAdmin(${user.getId()})|">관리자 등록</button>
+                        <button type="button" id="modify-user-btn"
+                                class="btn btn-danger btn-sm"
+                                th:if="${('ROLE_ADMIN'.equals(user.getRole()) || 'ROLE_USER'.equals(user.getRole()))
+                                        && !userInfo.getId().equals(user.getId())}"
+                                th:onclick="|modifyUser(${user.getId()})|">삭제</button>
                         <button type="button" id="delete-user-btn"
                                 class="btn btn-danger btn-sm"
-                                th:if="${!'ROLE_SUPER_ADMIN'.equals(user.getRole())
+                                th:if="${'ROLE_GUEST'.equals(user.getRole())
                                         && !userInfo.getId().equals(user.getId())}"
                                 th:onclick="|deleteUser(${user.getId()})|">삭제</button>
                     </td>

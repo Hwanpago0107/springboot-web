@@ -86,9 +86,9 @@
                     <div class="header-search">
                         <form method="get" action="/stores">
                             <select class="input-select" name="category_id">
-                                <option value="0" th:selected="${currentCateIds?.get(0) == 0}">전체</option>
+                                <option value="0" th:selected="${currentCategory?.getId() == 0}">전체</option>
                                 <option th:each="category : ${depth1}" th:value="${category.id}"
-                                            th:text="${category.name}" th:selected="${currentCateIds?.get(0) == category.getId()}"></option>
+                                            th:text="${category.name}" th:selected="${currentCategory?.getId() == category.getId()}"></option>
                             </select>
                             <input class="input" placeholder="Search here" name="search_text">
                             <input class="input" type="Number" name="page_number" value="1" hidden="hidden">

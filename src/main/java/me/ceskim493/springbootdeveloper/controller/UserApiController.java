@@ -4,6 +4,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import me.ceskim493.springbootdeveloper.domain.User;
 import me.ceskim493.springbootdeveloper.dto.AddUserRequest;
 import me.ceskim493.springbootdeveloper.dto.UserResponse;
 import me.ceskim493.springbootdeveloper.service.UserService;
@@ -42,8 +43,18 @@ public class UserApiController {
     }
 
     @PutMapping("/api/users/{id}/{type}")
-    public ResponseEntity<Void> registerAdmin(@PathVariable("id") long id, @PathVariable("type") String type) {
+    public ResponseEntity<Void> modifyUserStat(@PathVariable("id") long id, @PathVariable("type") String type) {
         userService.updateUser(id, type);
+
+        return ResponseEntity.ok()
+                .build();
+    }
+
+    @DeleteMapping("/api/users/{id}")
+    public ResponseEntity<Void> deleteUSer(@PathVariable("id") long id) {
+
+        User user = userService.findById(id);
+        if ("ROLE_GUEST".equals(user.getUserRole())) userService.deleteUser(user);
 
         return ResponseEntity.ok()
                 .build();

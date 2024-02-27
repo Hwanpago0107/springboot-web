@@ -2,6 +2,7 @@ package me.ceskim493.springbootdeveloper.controller;
 
 import lombok.RequiredArgsConstructor;
 import me.ceskim493.springbootdeveloper.annotation.LoginUser;
+import me.ceskim493.springbootdeveloper.domain.Role;
 import me.ceskim493.springbootdeveloper.domain.SessionUser;
 import me.ceskim493.springbootdeveloper.dto.UserViewResponse;
 import me.ceskim493.springbootdeveloper.service.AdminService;
@@ -10,6 +11,7 @@ import me.ceskim493.springbootdeveloper.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 
@@ -34,14 +36,21 @@ public class UserViewController {
         return "signup";
     }
 
-    @GetMapping("/users")
-    public String getUsers(Model model, @LoginUser SessionUser sUser) {
+    @GetMapping("/users/{type}")
+    public String getUsers(Model model, @PathVariable String type, @LoginUser SessionUser sUser) {
         // AdminLayout.html
         model = adminService.getAdminLayout(model, sUser);
 
-        List<UserViewResponse> users = userService.findAllValidUser(1).stream()
-                .map(UserViewResponse::new)
-                .toList();
+        List<UserViewResponse> users = null;
+        if ("guest".equals(type)) {
+            users = userService.findAllByRole(Role.GUEST).stream()
+                    .map(UserViewResponse::new)
+                    .toList();
+        } else {
+            users = userService.findAllValidUser(1).stream()
+                    .map(UserViewResponse::new)
+                    .toList();
+        }
 
         model.addAttribute("users", users);
 

@@ -70,7 +70,7 @@ public class MainController {
                     .toList();
 
             // Top Selling (상위 5품목)
-            List<ItemListViewResponse> top5 = itemService.findBySaleCountsLimit5().stream()
+            List<ItemListViewResponse> top5 = itemService.findBySaleCountsLimit5(null).stream()
                     .map(ItemListViewResponse::new)
                     .toList();
 

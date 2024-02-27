@@ -149,31 +149,29 @@ public class ItemViewController {
         // MainLayout.html
         model = mainService.getMainLayout(model, sUser);
 
-        List<Long> currentCateIds = new ArrayList<>();
+        // 현재 속해있는 카테고리(depth1)
+        Category currentCategory = categoryService.findById(id);
+
         List<Category> categoryList = new ArrayList<>();
         if (id == 0L && categories.length() > 0) {
             List<Long> categoryIds = Arrays.stream(categories.split(","))
                     .map(a -> Long.valueOf(a)).toList();
 
             categoryList = categoryService.findCategoriesByCategoryIds(categoryIds);
-            currentCateIds.add(0L);
         } else {
-            categoryList.add(categoryService.findById(id));
+            categoryList.add(currentCategory);
         }
 
-        String currentDepth = categoryList.get(0).getDepth();
-
         // 선택한 카테고리의 브랜드(depth3)를 전부가져온다.
-        List<CategoryViewResponse> brands = categoryService.findBrandsByCategory(id).stream()
+        List<Category> brandCategories = categoryService.findBrandsByCategory(id);
+
+        List<CategoryViewResponse> brands = brandCategories.stream()
                 .map(CategoryViewResponse::new)
                 .toList();
 
         int pageNum = pageNumber - 1;
         int startNumber = pageNum * pageLimit;
         int endNumber = (pageNum+1) * pageLimit;
-
-        // 현재 속해있는 카테고리의 ID 혹은 ID 리스트
-        currentCateIds.addAll(categoryList.stream().map(Category::getId).toList());
 
         int priceMinNumber = "".equals(priceMin) ? 10000 : Integer.valueOf(priceMin.replaceAll(",", ""));
         int priceMaxNumber = "".equals(priceMax) ? 99999999 : Integer.valueOf(priceMax.replaceAll(",", ""));
@@ -224,14 +222,17 @@ public class ItemViewController {
                 .toList();
 
         // Top Selling 목록 상위 5품목
-        List<ItemListViewResponse> top5 = itemService.findBySaleCountsLimit5().stream()
+        List<ItemListViewResponse> top5 = itemService.findBySaleCountsLimit5(brandCategories).stream()
                 .map(ItemListViewResponse::new)
                 .toList();
 
+        // 선택한 카테고리 ID 리스트
+        List<Long> currentCategoryIds = new ArrayList<>();
+        currentCategoryIds.addAll(categoryList.stream().mapToLong(Category::getId).boxed().toList());
+
         model.addAttribute("brands", brands);
-        model.addAttribute("parents", parents);
+         model.addAttribute("parents", parents);
         model.addAttribute("items", items);
-        model.addAttribute("currentCateIds", currentCateIds);
         model.addAttribute("top5", top5);
         model.addAttribute("startPage", startPage);
         model.addAttribute("endPage", endPage);
@@ -241,8 +242,8 @@ public class ItemViewController {
         model.addAttribute("currentLimit", pageLimit);
         model.addAttribute("currentPriceMin", priceMinNumber);
         model.addAttribute("currentPriceMax", priceMaxNumber);
-        model.addAttribute("checkedCategories", categoryList);
-        model.addAttribute("currentDepth", currentDepth);
+        model.addAttribute("currentCategory", currentCategory);
+        model.addAttribute("currentCategoryIds", currentCategoryIds);
 
         return "store";
     }

@@ -80,8 +80,15 @@ public class ItemService {
         return itemRepository.findItemsByDiscountAndPriceBetweenMinAndMax(discount, priceMin, priceMax);
     }
 
-    public List<Item> findBySaleCountsLimit5() {
-        return itemRepository.findBySaleCountsLimit5();
+    public List<Item> findBySaleCountsLimit5(List<Category> categories) {
+        List<Item> items = null;
+        if (categories != null && categories.size() > 0) {
+            items = itemRepository.findBySaleCountsLimit5InCategories(categories);
+        } else {
+            items = itemRepository.findBySaleCountsLimit5();
+        }
+
+        return items == null ? new ArrayList<>() : items;
     }
 
     public List<Item> findAll() {

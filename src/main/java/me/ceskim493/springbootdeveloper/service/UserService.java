@@ -49,6 +49,9 @@ public class UserService {
     public List<User> findAllValidUser(int valid) {
         return userRepository.findAllByIsValid(valid);
     }
+    public List<User> findAllByRole(Role role) {
+        return userRepository.findAllByRole(role);
+    }
 
     public String getSessionUserName(SessionUser user) {
         return user == null ? "Guest@mail.com" : user.getName();
@@ -76,5 +79,9 @@ public class UserService {
             // 삭제 상태로 만듦
             user.setIsValid(0);
         }
+    }
+
+    public void deleteUser(User user) {
+        userRepository.delete(user);
     }
 }
