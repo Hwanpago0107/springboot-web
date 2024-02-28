@@ -35,8 +35,8 @@ public class AddItemRequest {
                 .discount(discount)
                 .category(item.getCategory())
                 .description(description)
-                .detailImgName(detailImgName)
-                .detailImgPath(detailImgPath)
+                .detailImgName(item.getDetailImgName())
+                .detailImgPath(item.getDetailImgPath())
                 .build();
     }
 }

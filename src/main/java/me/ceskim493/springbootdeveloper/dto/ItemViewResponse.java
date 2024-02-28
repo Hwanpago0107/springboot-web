@@ -24,6 +24,8 @@ public class ItemViewResponse {
     private Category category;
     private String description;
     private List<Option> options = new ArrayList<>();
+    private String detailImgName;
+    private String detailImgPath;
 
     public ItemViewResponse(Item item) {
         this.id = item.getId();
@@ -37,5 +39,7 @@ public class ItemViewResponse {
         this.category = item.getCategory();
         this.description = item.getDescription();
         this.options = item.getOptions();
+        this.detailImgName = item.getDetailImgName();
+        this.detailImgPath = item.getDetailImgPath();
     }
 }

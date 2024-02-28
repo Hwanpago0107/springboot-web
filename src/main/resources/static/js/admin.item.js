@@ -33,6 +33,7 @@ if (createItemButton) {
         const blob = new Blob([body], {type: 'application/json'});
         formData.append("request", blob);
         formData.append("file", this.imgFile.files[0]);
+        formData.append("file2", this.detailImgFile.files[0]);
         function success() {
             alert("등록이 완료되었습니다.");
             location.replace("/items");
@@ -79,6 +80,7 @@ if (modifyItemButton) {
         const blob = new Blob([body], {type: 'application/json'});
         formData.append("request", blob);
         formData.append("file", this.imgFile.files[0]);
+        formData.append("file2", this.detailImgFile.files[0]);
 
         function success() {
             alert("수정이 완료되었습니다.");

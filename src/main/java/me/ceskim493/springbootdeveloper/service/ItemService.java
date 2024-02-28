@@ -33,11 +33,15 @@ public class ItemService {
     private final OptionRepository optionRepository;
 
     @Transactional
-    public Item save(AddItemRequest request, MultipartFile imgFile) throws Exception {
+    public Item save(AddItemRequest request, MultipartFile imgFile, MultipartFile detailImgFile) throws Exception {
         Item item = new Item();
 
         if (imgFile != null) {
-            item = makeFile(imgFile);
+            item = makeFile(item, imgFile, 0);
+        }
+
+        if (detailImgFile != null) {
+            item = makeFile(item, detailImgFile, 1);
         }
 
         Category category = new Category();
@@ -82,7 +86,7 @@ public class ItemService {
 
     public List<Item> findBySaleCountsLimit5(List<Category> categories) {
         List<Item> items = null;
-        if (categories != null && categories.size() > 0) {
+        if (categories != null) {
             items = itemRepository.findBySaleCountsLimit5InCategories(categories);
         } else {
             items = itemRepository.findBySaleCountsLimit5();
@@ -96,16 +100,17 @@ public class ItemService {
     }
 
     @Transactional
-    public Item update(long id, UpdateItemRequest request, MultipartFile imgFile) throws Exception {
+    public Item update(long id, UpdateItemRequest request, MultipartFile imgFile, MultipartFile detailImgFile) throws Exception {
         Item item = itemRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("not found " + id));
 
         //수정 시 업로드 되는 파일이 있으면 파일도 추가
         if (imgFile != null) {
-            Item newItem = makeFile(imgFile);
-            item.setFileName(newItem.getFileName());
-            item.setFilePath(newItem.getFilePath());
-            item.setFileSize(newItem.getFileSize());
+            makeFile(item, imgFile, 0);
+        }
+
+        if (detailImgFile != null) {
+            makeFile(item, detailImgFile, 1);
         }
 
         Category category = new Category();
@@ -118,7 +123,7 @@ public class ItemService {
 
         item.update(request.getName(), request.getPrice(), request.getStockQuantity(),
                 request.getDiscount(), item.getFileName(), item.getFilePath(), item.getFileSize(), item.getCategory(),
-                request.getDescription(), request.getDetailImgName(), request.getDetailImgPath());
+                request.getDescription(), item.getDetailImgName(), item.getDetailImgPath());
 
         //Option은 다 지우고 다시 만들어준다.
         optionRepository.deleteAllByItem_Id(id);
@@ -146,7 +151,7 @@ public class ItemService {
         itemRepository.delete(item);
     }
 
-    public Item makeFile(MultipartFile imgFile) throws Exception {
+    public Item makeFile(Item item, MultipartFile imgFile, int type) throws Exception {
         String originFileName = imgFile.getOriginalFilename();
         String imgName = "";
         Long fileSize = imgFile.getSize();
@@ -170,10 +175,14 @@ public class ItemService {
 
         imgFile.transferTo(saveFile);
 
-        Item item = new Item();
-        item.setFileName(imgName);
-        item.setFilePath("/static/upload/img/" + imgName);
-        item.setFileSize(fileSize);
+        if (type == 0) { // 기본이미지
+            item.setFileName(imgName);
+            item.setFilePath("/static/upload/img/" + imgName);
+            item.setFileSize(fileSize);
+        } else if (type == 1) { // 상세이미지
+            item.setDetailImgName(imgName);
+            item.setDetailImgPath("/static/upload/img/" + imgName);
+        }
 
         return item;
     }

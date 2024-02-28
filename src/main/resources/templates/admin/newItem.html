@@ -46,6 +46,11 @@
                     <input type="text" disabled th:if="${aItem.id} != null" class="form-control adm-small-input" id="uploadedFile" th:value="${aItem.fileName}">
                     <input type="file" class="form-control" placeholder=".jpg .png 파일" id="imgFile" name="imgFile" style="margin-top: 10px; width: calc(95% + 8px);">
                 </section>
+                <section class="mb-4">
+                    <div class="adm-small-head">상세 이미지 파일</div>
+                    <input type="text" disabled th:if="${aItem.id} != null" class="form-control adm-small-input" th:value="${aItem.getDetailImgName()}">
+                    <input type="file" class="form-control" placeholder=".jpg .png 파일" id="detailImgFile" name="imgFile" style="margin-top: 10px; width: calc(95% + 8px);">
+                </section>
                 <section class="mb-4" id="option_list">
                     <div class="adm-small-head" style="width: 5%; vertical-align: middle;">옵션명/값</div>
                     <button type="button" onclick="addOption()" class="btn btn-secondary btn-sm"

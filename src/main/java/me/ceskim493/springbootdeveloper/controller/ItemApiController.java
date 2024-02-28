@@ -32,9 +32,10 @@ public class ItemApiController {
     @PostMapping("/api/items")
     // @RequestBody로 요청 본문 값 매핑
     public ResponseEntity<Item> addItem(@RequestPart(value = "request") AddItemRequest request,
-                                        @RequestPart(value = "file", required = false) MultipartFile imgFile) throws Exception {
+                                        @RequestPart(value = "file", required = false) MultipartFile imgFile,
+                                        @RequestPart(value = "file2", required = false) MultipartFile detailImgFile) throws Exception {
 
-        Item savedItem = itemService.save(request, imgFile);
+        Item savedItem = itemService.save(request, imgFile, detailImgFile);
 
         // 요청한 자원이 성공적으로 생성되었으며 저장된 아이템 정보를 응답 객체에 담아 전송
         return ResponseEntity.status(HttpStatus.CREATED)
@@ -55,8 +56,9 @@ public class ItemApiController {
     @PutMapping("/api/items/{id}")
     public ResponseEntity<Item> update(@PathVariable long id,
                                        @RequestPart(value = "request") UpdateItemRequest request,
-                                       @RequestPart(value = "file", required = false) MultipartFile imgFile) throws Exception {
-        Item updatedItem = itemService.update(id, request, imgFile);
+                                       @RequestPart(value = "file", required = false) MultipartFile imgFile,
+                                       @RequestPart(value = "file2", required = false) MultipartFile detailImgFile) throws Exception {
+        Item updatedItem = itemService.update(id, request, imgFile, detailImgFile);
 
         return ResponseEntity.ok()
                 .build();
