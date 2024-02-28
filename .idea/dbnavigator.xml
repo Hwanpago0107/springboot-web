@@ -88,11 +88,11 @@ values  ('item', 9, 'REIKA 카메라', 400000, 800, 0, 'product09.png', '/upload
 
 -- users
 INSERT INTO users (id, email, name, nickname, role, valid)
-values (2, 'blessu0107@gmail.com', 'SH K', 'SH K', 'SUPERADMIN', 1);
+values (1, 'blessu0107@gmail.com', 'SH K', 'SH K', 'SUPERADMIN', 1);
 INSERT INTO users (id, email, name, nickname, role, valid)
-values (3, 'test123@gmail.com', '임꺽정', '임꺽정', 'USER', 1);
+values (2, 'test123@gmail.com', '임꺽정', '임꺽정', 'USER', 1);
 INSERT INTO users (id, email, name, nickname, role, valid)
-values (4, 'test222@gmail.com', '홍길동', '홍길동', 'USER', 1);
+values (3, 'test222@gmail.com', '홍길동', '홍길동', 'USER', 1);
 
 select * from users;
 
@@ -150,7 +150,7 @@ VALUES (25, '줌배율', '2X,3X,5X,10x,100x', 9);
 
 --Cart
 INSERT INTO Cart (id, user_id)
-values  (1, 2);
+values  (1, 1);
 
 --CartItem
 INSERT INTO CartItem (id, quantity, cart_id, item_id, options)
@@ -172,13 +172,13 @@ values  (4, '00002', '부산시 해운대구 해운대로 2길', '엘시티 5001
 
 ----orders
 INSERT INTO orders (order_id, orderdate, status, delivery_id, user_id, payment, order_note)
-values  (1, sysdate() , 'ORDER', 1, 2, '1', '배송빠르게 부탁드려요');
+values  (1, sysdate() , 'ORDER', 1, 1, '1', '배송빠르게 부탁드려요');
 INSERT INTO orders (order_id, orderdate, status, delivery_id, user_id, payment, order_note)
-values  (2, sysdate(), 'ORDER', 2, 2, '3', '문앞에 놔주세요');
+values  (2, sysdate(), 'ORDER', 2, 1, '3', '문앞에 놔주세요');
 INSERT INTO orders (order_id, orderdate, status, delivery_id, user_id, payment, order_note)
-values  (3, sysdate() , 'ORDER', 3, 3, '1', '배송 느리게 부탁드립니다.');
+values  (3, sysdate() , 'ORDER', 3, 2, '1', '배송 느리게 부탁드립니다.');
 INSERT INTO orders (order_id, orderdate, status, delivery_id, user_id, payment, order_note)
-values  (4, sysdate(), 'ORDER', 4, 4, '2', '경비실에 맡겨주세요.');
+values  (4, sysdate(), 'ORDER', 4, 3, '2', '경비실에 맡겨주세요.');
 
 ----OrderItem
 INSERT INTO OrderItem (order_item_id, count, orderprice, item_id, order_id, options)
@@ -208,7 +208,7 @@ select 11, 8, (ceil(price * (1-discount)) * 8), 6, 4, '크기: 13인치, 사양:
 
 -- Wish
 INSERT INTO Wish (id, user_id)
-values  (1, 2);
+values  (1, 1);
 
 -- WishItem
 INSERT INTO WishItem (id, item_id, wish_id, options)
